@@ -9,11 +9,13 @@
   "author": "hbomb",
   "license": "ISC",
   "dependencies": {
+    "MD5": "^1.2.2",
     "body-parser": "^1.12.4",
     "express": "^4.12.4",
     "express-error": "0.0.7",
     "hbs": "^3.0.1",
     "lodash": "^3.9.1",
-    "request": "^2.55.0"
+    "request": "^2.55.0",
+    "serve-spm": "^1.0.0"
   }
 }

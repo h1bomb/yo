@@ -8,13 +8,17 @@
 </head>
 
 <body>
-  body: {{{body}}}
+
+  body: <div id="pjax-container">{{{body}}}</div>
 
   <hr/>
   post body
   <hr/>
 
   {{> partial5 }}
+  <script type="text/javascript" src="/sea.js"></script>
+  <script type="text/javascript">
+    seajs.use('index');
+  </script>
 </body>
-
 </html>
