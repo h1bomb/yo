@@ -4,6 +4,10 @@ var express = require('express');
 var env = process.env.NODE_ENV || 'development'; //获取环境参数
 
 //中间件
+var favicon = require('serve-favicon'); //favicon
+var morgan = require('morgan'); //log日志
+var session = require('cookie-session'); //session
+var cookieParser = require('cookie-parser') //cookies
 var hbs = require('hbs'); //handlebars视图插件
 var bodyParser = require('body-parser'); //body序列化插件
 var expressError = require('express-error'); //异常跟踪
@@ -43,6 +47,22 @@ module.exports = function yo(options) {
 
     var app = express();
 
+    app.set('trust proxy', 1);
+
+    //session中间件
+    app.use(session({
+        keys: ['yo:secc']
+    }));
+
+    //cookies解析中间件
+    app.use(cookieParser());
+
+    //日志中间件
+    app.use(morgan('combined'));
+
+    //faviocn中间件
+    app.use(favicon(options.public + '/favicon.ico'));
+
     //spm调试中间件
     if (env == 'development') {
         app.use(serveSPM(options.appPath, {
@@ -78,13 +98,13 @@ module.exports = function yo(options) {
         app.use(proxy);
         app.use(pjax);
 
-        if (env == 'development') {
-            app.use(expressError.express3({
-                contextLinesCount: 3,
-                handleUncaughtException: true,
-                title: 'YO!'
-            }));
-        };
+        // if (env == 'development') {
+        //     app.use(expressError.express3({
+        //         contextLinesCount: 3,
+        //         handleUncaughtException: true,
+        //         title: 'YO!'
+        //     }));
+        // };
 
     });
 
