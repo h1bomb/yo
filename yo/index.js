@@ -98,13 +98,13 @@ module.exports = function yo(options) {
         app.use(proxy);
         app.use(pjax);
 
-        // if (env == 'development') {
-        //     app.use(expressError.express3({
-        //         contextLinesCount: 3,
-        //         handleUncaughtException: true,
-        //         title: 'YO!'
-        //     }));
-        // };
+        if (env == 'development') {
+            app.use(expressError.express3({
+                contextLinesCount: 3,
+                handleUncaughtException: true,
+                title: 'YO!'
+            }));
+        };
 
     });
 

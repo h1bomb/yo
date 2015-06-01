@@ -18,7 +18,8 @@
     "dependencies": {
       "jquery-pjax": "1.0.1",
       "jquery": "2.1.3",
-      "nprogress": "0.1.6"
+      "nprogress": "0.1.6",
+      "import-style": "1.0.0"
     },
     "devDependencies": {
       "expect.js": "0.3.1"

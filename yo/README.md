@@ -11,7 +11,7 @@ yo是一个基于express的前端表层的框架。使用handlebars作为模板�
 * 引入了SPM的调试中间件，可以进行代码的预处理依赖和调试（支持handlebars,es6,seajs预处理）
 
 待实现功能：
-
+* 开发，测试，生产三个环境的yo应用开发过程
 * SPM持续集成部署（含CDN）
 * 后端mock服务的自动生成
 * PageCache的实现
