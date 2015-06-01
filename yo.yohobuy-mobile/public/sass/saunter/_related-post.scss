@@ -1,0 +1,42 @@
+$hack_safair_begin:'[;';
+$hack_safair_end:';]';
+.related-post {
+    margin: 30rem / $pxConvertRem 0 0 0;
+
+    h2 {
+        @include relatedTitle;
+    }
+
+    .post-list {
+        background: #fff;
+        padding: 0 0 30rem / $pxConvertRem 0;
+        border-top: 1px solid #e0e0e0;
+
+        li {
+            padding: 30rem / $pxConvertRem 0 0 0;
+            margin: 0 0 10rem / $pxConvertRem 0;
+
+            a {
+                display: block;
+            }
+
+            img {
+                float: left;
+                margin: 0 0 0 30rem / $pxConvertRem;
+                width: 182rem / $pxConvertRem;
+                height: 162rem / $pxConvertRem;
+            }
+            
+            span {
+                float: left;
+                width: 360rem / $pxConvertRem;
+                #{$hack_safair_begin}width: 360rem / $pxConvertRem#{$hack_safair_end};
+                margin: 20rem / $pxConvertRem 0 0 30rem / $pxConvertRem;
+                line-height: 45rem / $pxConvertRem;
+                color: #444;
+                font-size: 28rem / $pxConvertRem;
+                
+            }
+        }
+    }
+}

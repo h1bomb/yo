@@ -1,0 +1,37 @@
+@import "compass/css3";
+
+.article-author {
+    border-bottom: 1px solid #e0e0e0;
+    background: #fff;
+
+    .link-container {
+        display: block;
+        height: 100%;
+        
+         > * {
+            margin-left: 30rem / $pxConvertRem;
+        }
+    }
+    
+    .avatar {
+        float: left;
+        margin-top: 20rem / $pxConvertRem;
+        width: 50rem / $pxConvertRem;
+        height: 50rem / $pxConvertRem;
+        @include border-radius(50rem / $pxConvertRem);
+    }
+    
+    .name {
+        float: left;
+        font-size: 28rem / $pxConvertRem;
+        color: #000;
+        padding: 30rem / $pxConvertRem 0;
+    }
+    
+    .intro {
+        float: left;
+        font-size: 28rem / $pxConvertRem;
+        color: #b0b0b0;
+        padding: 30rem / $pxConvertRem 0;
+    }
+}

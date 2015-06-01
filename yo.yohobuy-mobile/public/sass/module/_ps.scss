@@ -1,0 +1,182 @@
+@import "../common/time-view-like-share", "../common/good-info", "../common/loader", "../common/load-more";
+
+.ps-container {
+    .ps-block {
+        margin-bottom: 30rem / $pxConvertRem;
+        border-bottom: 1px solid #e0e0e0;
+        border-top: 1px solid #e0e0e0;
+        background-color: #fff;
+
+        &.header, &.infos {
+            border-top: none;
+        }
+
+        &.infos {
+            margin-bottom: 0;
+            background-color: #f0f0f0;
+        }
+    }
+
+    .header {
+        position: relative;
+
+        .banner {
+            width: 100%;
+            height: 310rem / $pxConvertRem;
+        }
+
+        .logo {
+            position: absolute;
+            border: 1px solid #b5b5b5;
+            height: 168rem / $pxConvertRem;
+            width: 168rem / $pxConvertRem;
+            top: 226rem / $pxConvertRem;
+            left: 50rem / $pxConvertRem;
+        }
+
+        .header-content {
+            padding: 0 30rem / $pxConvertRem;
+        }
+
+        .name-islike-container {
+            padding-left: 248rem / $pxConvertRem;
+            margin-top: 24rem / $pxConvertRem;
+            font-size: 34rem / $pxConvertRem;
+        }
+
+        .name {
+            color: #000;
+            height: 41rem / $pxConvertRem;
+            width: 295rem / $pxConvertRem;
+        }
+
+        .brand-islike {
+            position: relative;
+            float: right;
+            color: #b0b0b0;
+            height: 1.5rem;
+            width: 1.5rem;
+            line-height: 1.5rem;
+            text-align: center;
+            top: -0.25rem;
+            left: -0.25rem;
+
+            &.like {
+                color: #f00;
+            }
+        }
+
+        .intro {
+            margin-top: 49rem / $pxConvertRem;
+            font-size: 24rem / $pxConvertRem;
+            color: #444;
+            line-height: 150%;
+        }
+
+        .more-intro {
+            padding: 30rem / $pxConvertRem 0;
+            font-size: 28rem / $pxConvertRem;
+            line-height: 104%;
+            color: #bbb;
+            text-align: right;
+        }
+    }
+
+    .new-arrival {
+        padding-left: 0 30rem / $pxConvertRem;
+
+        .new-arrival-header {
+            padding-left: 222rem / $pxConvertRem;
+            padding-top: 33rem / $pxConvertRem;
+
+            .header-text {
+                font-size: 28rem / $pxConvertRem;
+                color: #000;
+                line-height: 122%;
+                font-weight: bold;
+            }
+        }
+
+        .new-arrival-content {
+            padding: 20rem / $pxConvertRem 14rem / $pxConvertRem;
+        }
+
+        .more-goods-container {
+            height: 90rem / $pxConvertRem;
+            padding: 0 30rem / $pxConvertRem;
+            border-top: 1px solid #e0e0e0;
+            color: #000;
+        }
+
+        .mg-text {
+            height: 100%;
+            line-height: 90rem / $pxConvertRem;
+            color: #000;
+            text-decoration: none;
+            display: block;
+            font-size: 16px;
+        }
+
+        .more-prods {
+            float: right;
+            color: #b0b0b0;
+        }
+
+        .new-arrival-header .more-prods {
+            margin-right: 30rem / $pxConvertRem;
+            margin-top: 10rem / $pxConvertRem;
+        }
+
+    }
+
+
+    .info-title {
+        margin: 0 29rem / $pxConvertRem;
+        border: 1px solid #e0e0e0;
+        border-bottom: none;
+        line-height: 72rem / $pxConvertRem;
+        font-size: 30rem / $pxConvertRem;
+        color: #b0b0b0;
+        text-align: center;
+        background-color: #fff;
+    }
+
+    .info-block {
+        width: 100%;
+        border-bottom: 1px solid #e0e0e0;
+        margin-bottom: 30rem / $pxConvertRem;
+        background-color: #fff;
+        padding-bottom: 30rem / $pxConvertRem;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        .info-block-img {
+            width: 100%;
+        }
+
+        .info-eximg-container {
+            padding: 0 30rem / $pxConvertRem;
+            margin-top: 32rem / $pxConvertRem;
+
+            .info-block-title {
+                line-height: 44rem / $pxConvertRem;
+                color: #000;
+                font-size: 40rem / $pxConvertRem;
+                font-weight:bold;
+            }
+
+            .info-block-content {
+                margin: 16rem / $pxConvertRem 0 0 0;
+                line-height: 46rem / $pxConvertRem;
+                font-size: 28rem / $pxConvertRem;
+                color: #444;
+            }
+
+            .time-view-like-share {
+                margin-top: 16rem / $pxConvertRem;
+            }
+        }
+    }
+}

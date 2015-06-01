@@ -1,0 +1,22 @@
+.more-good {
+    margin-bottom: 30rem / $pxConvertRem;
+    background-color: #fff;
+    line-height: 88rem / $pxConvertRem;
+    border-bottom: 1px solid #e0e0e0;
+    border-top: 1px solid #e0e0e0;
+
+    a {
+        display: block;
+        padding-left: 30rem / $pxConvertRem;
+        text-decoration: none;
+        color: #444;
+        font-size: 30rem / $pxConvertRem;
+    }
+
+    i {
+        float: right;
+        margin: 0 30rem / $pxConvertRem 0 0;
+        font-size: 28rem / $pxConvertRem;
+        color: #b0b0b0
+    }
+}

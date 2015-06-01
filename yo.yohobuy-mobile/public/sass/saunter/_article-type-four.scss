@@ -1,0 +1,14 @@
+.article-type-four {
+    padding: 0 0 8rem / $pxConvertRem 0;
+    background: #fff;
+
+    img {
+        float: right;
+        width: 315rem / $pxConvertRem;
+        height: 420rem / $pxConvertRem;
+    }
+
+    img:first-child {
+        float: left;
+    }
+}

@@ -1,0 +1,25 @@
+@import "../common/brands";
+
+@mixin relatedTitle {
+    margin: 0 29rem / $pxConvertRem;
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-bottom: none;
+    line-height: 72rem / $pxConvertRem;
+    font-size: 30rem / $pxConvertRem;
+    color: #b0b0b0;
+    text-align: center;
+}
+
+.related-brand {
+    margin: 30rem / $pxConvertRem 0 0 0;
+    
+    h2 {
+        @include relatedTitle;
+    }
+
+    .brand-list {
+        border-top: 1px solid #e0e0e0;
+        border-bottom: 1px solid #e0e0e0;
+    }
+}

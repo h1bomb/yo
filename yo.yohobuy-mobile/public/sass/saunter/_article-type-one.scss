@@ -1,0 +1,10 @@
+$pxConvertRem : 40;
+
+.article-type-one {
+    padding: 0 0 5rem / $pxConvertRem 0;
+    background: #fff;
+}
+.article-type-one .img {
+    width: 100%;
+    height: 640rem / $pxConvertRem;
+}

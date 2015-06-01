@@ -1,0 +1,15 @@
+<div class="time-view-like-share clearfix">
+    <i class="iconfont">&#xe603;</i>
+    {{publishTime}}&nbsp;&nbsp;&nbsp;&nbsp;
+    <i class="iconfont">&#xe602;</i>
+    {{pageView}}
+    <div class="like-share-container">
+        {{# like}}
+            <a href="javascript:;" class="iconfont like-btn">&#xe601;</a>
+            <span class="like-count"></span>
+        {{/ like}}
+        {{# share}}
+            <a href="{{.}}" class="iconfont share-btn">&#xe600;</a>
+        {{/ share}}
+    </div>
+</div>

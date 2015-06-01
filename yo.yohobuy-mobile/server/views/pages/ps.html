@@ -1,0 +1,55 @@
+<div class="ps-container">
+    {{# data}}
+        <div class="header brand-info ps-block" data-id="{{id}}">
+            <img class="banner lazy" data-original="{{banner}}">
+            <img class="logo lazy" data-original="{{logo}}">
+            <div class="header-content">
+                <p class="name-islike-container">
+                    <span class="name">{{name}}</span>
+                    <a id="brand-like" class="brand-islike iconfont {{# isLike}}like{{/ isLike}}" href="{{likeUrl}}">
+                        &#xe605;
+                    </a>
+                </p>
+                <p id="intro" class="intro">
+                    {{intro}}
+                </p>
+                <div id="more-intro" class="more-intro">
+                    <span class="more-intro-text more">more</span>
+                    <span class="more-intro-icon more iconfont down">&#xe609;</span>
+                    <span class="more-intro-icon more iconfont up hide">&#xe608;</span>
+                </div>
+            </div>
+        </div>
+        <div class="new-arrival ps-block">
+            {{# newArrival}}
+                <div class="new-arrival-header">
+                    <span class="header-text">NEW ARRIVAL</span>
+                    <a class="more-prods iconfont" href="{{moreUrl}}">&#xe606;</a>
+                </div>
+                <div class="new-arrival-content clearfix">
+                        {{# naList}}
+                        {{> common/good_info}}
+                        {{/ naList}}
+                </div>
+                <div class="more-goods-container">
+                    <a class="mg-text" href="{{moreUrl}}">
+                        更多商品
+                        <span class="more-prods iconfont">&#xe604;</span>
+                    </a>
+                </div>
+            {{/ newArrival}}
+        </div>
+        {{# article}}
+            <div class="infos ps-block">
+                <div class="info-title-container">
+                    <h2 class="info-title">相关资讯</h2>
+                </div>
+                <div id="info-content" class="info-content">
+                    {{# info}}
+                        {{> ps/info_item}}
+                    {{/ info}}
+                </div>
+            </div>
+        {{/ article}}
+    {{/ data}}
+</div>

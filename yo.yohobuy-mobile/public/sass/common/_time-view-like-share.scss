@@ -1,0 +1,43 @@
+.time-view-like-share {
+    color: #b0b0b0;
+    line-height: 38rem / $pxConvertRem;
+    height: 38rem / $pxConvertRem;
+    font-size: 24rem / $pxConvertRem;
+
+    .iconfont {
+        vertical-align: 9%;
+        margin-right: 4rem / $pxConvertRem;
+        font-size: 24rem / $pxConvertRem;
+    }
+
+    .like-share-container {
+        display: inline-block;
+        float: right;
+        
+        > * {
+            float: left;
+        }
+        
+        .like-btn, .share-btn {
+            position: relative;
+            height: 60rem / $pxConvertRem;
+            line-height: 60rem / $pxConvertRem;
+            display: inline-block;
+            
+            color: #b0b0b0;
+            width: 60rem / $pxConvertRem;
+            top: -14rem / $pxConvertRem;
+            font-size: 34rem / $pxConvertRem;
+            text-align: center;
+            margin-right: 0;
+        }
+        
+        .share-btn {
+            margin-left: 20rem / $pxConvertRem;
+        }
+        
+        .like-btn.like {
+            color: #444;
+        }
+    }
+}

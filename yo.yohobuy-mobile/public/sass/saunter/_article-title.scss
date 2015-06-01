@@ -1,0 +1,13 @@
+@import "../common/time-view-like-share";
+
+.article-title {
+    padding: 16rem / $pxConvertRem 0 26rem / $pxConvertRem 30rem / $pxConvertRem;
+    background: #fff;
+
+    .title {
+        line-height: 60rem / $pxConvertRem;
+        color: #000;
+        font-size: 40rem / $pxConvertRem;
+        font-weight:bold;
+    }
+}

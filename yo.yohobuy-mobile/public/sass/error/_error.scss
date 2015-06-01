@@ -1,0 +1,37 @@
+.err-page {
+	text-align: center;
+	height: 480rem / $pxConvertRem;
+	width: 480rem / $pxConvertRem;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-top: -240rem / $pxConvertRem;
+	margin-left: -240rem / $pxConvertRem;
+}
+
+.err-bg {
+	width: 168rem / $pxConvertRem;
+	height: 168rem / $pxConvertRem;
+	margin: 0 auto;
+	background-image: image-url('err-bg.png');
+	background-size: 100% 100%;
+}
+
+.err-tip {
+	font-size: 24rem / $pxConvertRem;
+	margin-top: 40rem / $pxConvertRem;
+}
+
+.err-reload {
+	display: block;
+	position: absolute;
+	bottom: 30rem / $pxConvertRem;
+	
+	span {
+		font-size: 30rem / $pxConvertRem;
+		color: #fff;
+		background-color: #444;
+		padding: 30rem / $pxConvertRem 180rem / $pxConvertRem;
+		@include border-radius(5px);
+	}
+}

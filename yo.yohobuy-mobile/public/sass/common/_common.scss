@@ -1,0 +1,84 @@
+@import "compass", "compass/reset";
+$pxConvertRem : 40;
+
+body {
+    font-family: helvetica,Arial,"黑体";
+    background: #f0f0f0;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+ol, ul {
+    list-style: none;
+}
+
+.hide {
+    display: none !important;
+}
+
+a {
+    text-decoration: none;
+}
+/**
+ * 闭合浮动
+ * @Doc: http://nicolasgallagher.com/micro-clearfix-hack/
+ */
+
+.clearfix:before,
+.clearfix:after {
+    content: "";
+    display: table;
+}
+
+.clearfix:after {
+    clear: both; 
+}
+
+.clearfix { 
+    *zoom: 1; /* IE6-7 触发 hasLayout */
+} 
+
+
+/**
+ * 字体图标样式
+ */
+@font-face {
+    font-family: "iconfont";
+    src: font-url('iconfont.eot'); /* IE9*/
+    src: font-url('iconfont.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+         font-url('iconfont.woff') format('woff'), /* chrome、firefox */
+         font-url('iconfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+         font-url('iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    text-decoration: none;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: 0.2px;
+    -moz-osx-font-smoothing: grayscale;
+}
+.icon-sharedviewicon:before {
+    content: "\e60c";
+}
+.icon-sharedtimeicon:before {
+    content: "\e60d";
+}
+.icon-sharedlikebuttomhighlighted:before {
+    content: "\e60f";
+}
+.icon-sharedenterbuttomnormal:before {
+    content: "\e612";
+}
+
+@mixin retina-sprite($map, $sprite, $scale) {
+    $width: image-width(sprite-file($map, $sprite));
+    $height: image-height(sprite-file($map, $sprite));
+    $offsetY: ceil(nth(sprite-position($map, $sprite), 2) / $scale);
+    background: sprite-url($map) 0 $offsetY no-repeat;
+    $zoomX: ceil(image_width(sprite-path($map)) / $scale);
+    $zoomY: auto;
+    @include background-size($zoomX $zoomY);
+    display: block;
+}

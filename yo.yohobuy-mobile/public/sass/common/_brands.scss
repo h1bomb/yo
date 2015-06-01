@@ -1,0 +1,48 @@
+.brand-list {
+    padding: 30rem / $pxConvertRem 0 30rem / $pxConvertRem;
+    background: #fff;
+
+    .brand {
+        float: left;
+        width: 158rem / $pxConvertRem;
+        height: 128rem / $pxConvertRem;
+        border-right: 1px solid #e0e0e0;
+        margin-bottom: 10rem / $pxConvertRem;
+
+        a {
+            display: block;
+            text-decoration: none;
+        }
+
+        .brand-logo {
+            display: table-cell;
+            width: 158rem / $pxConvertRem;
+            height: 94rem / $pxConvertRem;
+            vertical-align: middle;
+
+            img {
+                display: block;
+                max-width: 158rem / $pxConvertRem;
+                max-height: 94rem / $pxConvertRem;
+                vertical-align: middle;
+                margin: 0 auto;
+            }
+        }
+        
+        .brand-name {
+            margin: 10rem / $pxConvertRem 0 0 0;
+            line-height: 24rem / $pxConvertRem;
+            font-size: 18rem / $pxConvertRem;
+            color: #babac2;
+            text-align: center;
+            text-decoration: none;
+            border-bottom: none;
+            overflow: hidden;
+        }
+        
+    }
+
+    .brand:nth-child(4n) {
+        border-right: none;
+    }
+}

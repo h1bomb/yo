@@ -1,0 +1,91 @@
+<div class="template-container">
+    {{# data}}
+        {{# blocks}}
+            <div class="tpl-block clearfix {{# img}}img{{/ img}}{{# text}}img{{/ text}}{{#brands}}brands{{/brands}}{{# recommendation}}reco{{/ recommendation}}{{# goods}}goods{{/ goods}}">
+                {{# img}}
+                    <a class="img-container" href="{{url}}">
+                        <img class="img lazy" data-original="{{src}}" alt="{{alt}}">
+                    </a>
+                {{/ img}}
+                {{# text}}
+                    <p class="text">{{&.}}</p>
+                {{/ text}}
+                {{> common/brands}}
+                {{# recommendation.recos}}
+                    <div class="reco-good-info">
+                        <div class="img-container">
+                            <a href="{{url}}">
+                                <img class="thumb lazy" data-original="{{thumb}}">
+                            </a>
+                        </div>
+                        <div class="text-container">
+                            <a class="name" href="{{url}}">{{name}}</a>
+                            <div class="sale-price">
+                                ￥{{salePrice}}
+                            </div>
+                            <div class="price">
+                                ￥{{price}}
+                            </div>
+                        </div>
+                    </div>
+                {{/ recommendation.recos}}
+    
+                {{# goods}}
+                    <div class="goods-container">
+                        <ul id="goods-nav" class="goods-nav">
+                            <li class="nav-item new-patterns-nav focus">最新</li>
+                            <li class="nav-item sales-volume-nav">销量</li>
+                            <li class="nav-item price-nav">
+                                价格
+                                <span class="sort">
+                                    <i class="up iconfont cur">&#xe608;</i>
+                                    <i class="down iconfont">&#xe609;</i>
+                                </span>
+                            </li>
+                            <li class="nav-item screen-nav">筛选</li>
+                        </ul>
+                        <div id="goods-content" class="goods-content clearfix">
+                            <div class="new-patterns-container">
+                                {{# newPatterns}}
+                                    {{> common/good_info}}
+                                {{/ newPatterns}}
+                            </div>
+                            <div class="sales-volume-container hide">
+                                {{# salesVolume}}
+                                    {{> common/good_info}}
+                                {{/ salesVolume}}
+                            </div>
+                            <div class="price-container hide">
+                                {{# price}}
+                                    {{> common/good_info}}
+                                {{/ price}}
+                            </div>
+                            <div id="screen-mask" class="screen-mask hide"></div>
+                            <div id="screen-content" class="screen-content hide">
+                                <ul class="classify">
+                                    {{! [品牌,品类,颜色,尺码,价格,折扣]}}
+                                    {{# classify}}
+                                        <li class="{{type}} c-item {{#isActive}}active{{/ isActive}} {{# isHide}}hide{{/ isHide}}">
+                                            {{name}}：
+                                            <h1 id="show-{{type}}" class="chosed default">所有{{name}}</h1>
+                                        </li>
+                                    {{/ classify}}
+                                </ul>
+                                <div class="sub-classify-container">
+                                    {{! 构造对应主类信息的子类容器}}
+                                    {{# classify}}
+                                        <ul id="sub-{{type}}" class="sub-classify {{^ isActive}} hide {{/ isActive}}" data-type="{{type}}"></ul>
+                                    {{/ classify}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{> common/load_more}}
+                {{/ goods}}
+            </div>
+        {{/blocks}}
+        <input id="promotion" type="hidden" value="{{promotionId}}">
+        <input id="client-type" type="hidden" value="{{clientType}}">
+        <input id="content-code" type="hidden" value="{{contentCode}}">
+    {{/ data}}
+</div>

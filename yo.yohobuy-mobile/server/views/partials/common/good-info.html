@@ -1,0 +1,39 @@
+<div class="good-info" data-id="{{id}}">
+    <div class="good-detail-img">
+        <a class="good-islike {{# isLike}}good-like{{/ isLike}} iconfont" href="{{likeUrl}}">&#xe605;</a>
+        <a class="good-thumb" href="{{url}}">
+            <img class="lazy" data-original="{{thumb}}">
+        </a>
+        <div class="tag-container">
+            {{# isNew}}
+                <div class="good-tag new-tag clearfix">
+                    <span>新品到着</span>
+                    <em>NEW</em>
+                </div>
+            {{/ isNew}}
+            {{# isSale}}
+                <div class="good-tag sale-tag clearfix">
+                    <span>打折商品</span>
+                    <em>SALE</em>
+                </div>
+            {{/ isSale}}
+            {{# isFew}}
+                <div class="good-tag few-tag clearfix">
+                    <span>即将售罄</span>
+                    <em>FEW</em>
+                </div>
+            {{/ isFew}}
+        </div>
+    </div>
+    <div class="good-detail-text">
+        <div class="name">
+            <a href="{{url}}">{{name}}</a>
+        </div>
+        <div class="price">
+            <span class="sale-price {{^price}}no-price{{/price}}">￥{{salePrice}}</span>
+            {{#price}}
+                <span class="market-price">￥{{.}}</span>
+            {{/price}}
+        </div>
+    </div>
+</div>

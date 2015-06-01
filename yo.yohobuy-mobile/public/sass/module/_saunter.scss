@@ -1,0 +1,10 @@
+@import "../saunter/article-author", "../saunter/article", "../saunter/related-brand", "../saunter/article-tag", "../saunter/related-post", "../common/more-prods";
+
+#wrapper.no-android {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: hidden;
+}

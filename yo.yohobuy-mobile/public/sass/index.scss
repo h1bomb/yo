@@ -1,0 +1,27 @@
+@import "common/common", "module/saunter", "module/tag", "module/ps", "module/template", "error/error";
+
+//恢复样式覆盖
+b {
+	font-weight: bold;
+}
+
+i {
+	font-style: italic;
+}
+
+//登录提示
+.login-tip {
+	display: none;
+	position: fixed;
+	z-index: 1000;
+	height: 60px;
+	line-height: 60px;
+	text-align: center;
+	width: 140px;
+	font-weight: bold;
+	background-color: #ccc;
+	opacity: 0.7;
+	filter: Alpha(opacity=70);
+	
+	@include border-radius(10px);
+}

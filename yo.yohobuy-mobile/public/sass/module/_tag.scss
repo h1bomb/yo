@@ -1,0 +1,31 @@
+@import "../common/tag-content", "../common/load-more";
+
+.editor-header {
+    padding: (36rem / $pxConvertRem) 0 (40rem / $pxConvertRem) 0;
+    background: #fff;
+    border-bottom: 1px solid #e0e0e0;
+    .avatar {
+        float: left;
+        margin-left: 30rem / $pxConvertRem;
+        img {
+            width: 100rem / $pxConvertRem;
+            height: 100rem / $pxConvertRem;
+            border-radius: 50%;
+        }
+    }
+    .text {
+        float: left;
+        margin: 0 0 0 (32rem / $pxConvertRem);
+        width: 475rem / $pxConvertRem;
+        .name {
+            font-size: 32rem / $pxConvertRem;
+            line-height: 40rem / $pxConvertRem;
+        }
+        .info {
+            margin: (6rem / $pxConvertRem) 0 0 0;
+            color: #bdbdbf;
+            font-size: 24rem / $pxConvertRem;
+            line-height: 32rem / $pxConvertRem;
+        }
+    }
+}

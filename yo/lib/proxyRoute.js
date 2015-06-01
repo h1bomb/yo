@@ -14,6 +14,7 @@ exports.interfacesConfig = {};
 var parseConfig = function(app) {
     _.forEach(exports.interfacesConfig, function(val) {
         var domain = val.domain;
+        val.route = val.route || val.url; //如果route没有配置则读取url作为路由
         console.log('[' + val.method + ']' + domain + val.route);
 
         app[val.method.toLowerCase()](val.route, function(req, res, next) {

@@ -1,0 +1,23 @@
+.detail-tag {
+    margin: 28rem / $pxConvertRem 0 0 0;
+    padding: 0 0 30rem / $pxConvertRem 0;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+    background: #fff;
+
+    li {
+        float: left;
+        margin: 31rem / $pxConvertRem 0 0 31rem / $pxConvertRem;
+
+        a {
+            display: block;
+            padding: 0 36rem / $pxConvertRem;
+            height: 50rem / $pxConvertRem;
+            line-height: 50rem / $pxConvertRem;
+            font-size: 30rem / $pxConvertRem;
+            color: #fff;
+            background: #000;
+            text-decoration: none;
+        }
+    }
+}

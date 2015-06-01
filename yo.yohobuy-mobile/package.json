@@ -1,0 +1,51 @@
+{
+  "name": "yohobuy-mobile",
+  "version": "1.1.4",
+  "description": "yohobuy-mobile frontend",
+  "keywords": [],
+  "homepage": "",
+  "author": "xuqi <xuqi9010@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "spm": {
+    "main": "index.js",
+    "dependencies": {
+      "jquery": "1.8.3",
+      "mlellipsis": "0.0.6",
+      "lazyload": "1.9.6",
+      "iscroll": "5.1.2",
+      "mustache": "2.0.0",
+      "underscore": "1.6.0"
+    },
+    "devDependencies": {
+      "expect.js": "0.3.1"
+    },
+    "buildArgs": "--idleading {{}}"
+  },
+  "devDependencies": {
+    "spm": "3"
+  },
+  "scripts": {
+    "test": "spm test",
+    "build": "spm build"
+  },
+  "main": "app.js",
+  "directories": {
+    "example": "examples",
+    "test": "tests"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.12.2",
+    "express": "^4.12.3",
+    "gulp": "^3.8.11",
+    "gulp-compass": "^2.0.4",
+    "gulp-concat": "^2.5.2",
+    "gulp-develop-server": "^0.4.2",
+    "gulp-ftp": "^1.0.3",
+    "gulp-util": "^3.0.4",
+    "hbs": "^3.0.1"
+  }
+}

@@ -1,0 +1,156 @@
+@import "clothes-type/*.png";
+$pxConvertRem : 40;
+
+.thumb-container {
+    font-size: 0;
+    padding: 30rem / $pxConvertRem 0 0 30rem / $pxConvertRem;
+    z-index: 10;
+    background-color: transparent;
+    background-image: image-url('thumb-container-bg.png');
+    background-repeat: no-repeat;
+    background-size: 200% 100%;
+
+    &.fixed-top {
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+    }
+
+    &.fixed-bottom {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #fff;
+
+        .thumb.focus .arrow {
+            display: none;
+        }
+    }
+
+    &.absolute {
+        position: absolute;
+        left: 0;
+        right: 0;
+    }
+
+    &.static {
+        position: static;
+    }
+
+    .thumb {
+        display: inline-block;
+        position: relative;
+        margin-right: 22rem / $pxConvertRem;
+        padding-bottom: 30rem / $pxConvertRem;  
+
+        &:last-child {
+            margin-right: 0;
+        }
+
+        &.focus {
+            .thumb-img {
+                border-color: #000;
+            }
+
+            .arrow {
+                display: block;
+                position: absolute;
+                width: 25rem / $pxConvertRem;
+                height: 14rem / $pxConvertRem;
+                bottom: -1px;
+                left: 50%;
+                margin: 0 0 0 -16rem / $pxConvertRem;
+                z-index: 12;
+                background: image-url('arrow.png') no-repeat;
+                background-size: 100% 100%;
+            }
+        }
+
+        .thumb-img {
+            height: 134rem / $pxConvertRem;
+            width: 96rem / $pxConvertRem;
+            border: 1px solid transparent;
+        }
+    }
+    
+}
+
+.article-type-three {
+    background: #fff;
+
+    .prod-list {
+        padding: 28rem / $pxConvertRem 0 0 15rem / $pxConvertRem;
+    }
+}
+
+$clothes: sprite-map("clothes-type/*.png");
+.clothe-type {
+    position: absolute;
+    right: 6rem / $pxConvertRem;
+    bottom: 34rem / $pxConvertRem;
+    width: 20px;
+    height: 20px;
+    @include border-radius(50%); 
+    
+    &.bag {
+        @include retina-sprite ($clothes, bag, 80/20);
+        background-color: #fff; 
+        background-size: 100%;
+    }
+    
+    &.cloth {
+        @include retina-sprite ($clothes, cloth, 80/20);
+        background-color: #fff; 
+        background-size: 100%;
+    }
+    
+    &.dress {
+        @include retina-sprite ($clothes, dress, 80/20);
+        background-color: #fff; 
+        background-size: 100%;
+    }
+    
+    &.headset {
+        @include retina-sprite ($clothes, headset, 80/20);
+        background-color: #fff; 
+        background-size: 100%;
+    }
+    
+    &.lamp {
+        @include retina-sprite ($clothes, lamp, 80/20);
+        background-color: #fff; 
+        background-size: 100%;
+    }
+    
+    &.pants {
+        @include retina-sprite ($clothes, pants, 80/20);
+        background-color: #fff; 
+        background-size: 100%;
+    }
+    
+    &.shoe {
+        @include retina-sprite ($clothes, shoe, 80/20);
+        background-color: #fff; 
+        background-size: 100%;
+    }
+    
+    &.swim-suit {
+        @include retina-sprite ($clothes, swim-suit, 80/20);
+        background-color: #fff; 
+        background-size: 100%;
+    }
+    
+    &.under {
+        @include retina-sprite ($clothes, under, 80/20);
+        background-color: #fff; 
+        background-size: 100%;
+    }
+    
+    &.watch {
+        @include retina-sprite ($clothes, watch, 80/20);
+        background-color: #fff; 
+        background-size: 100%;
+    }
+}

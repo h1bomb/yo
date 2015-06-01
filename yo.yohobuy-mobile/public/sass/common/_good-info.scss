@@ -1,0 +1,92 @@
+.good-info {
+    float: left;
+    width: 276rem / $pxConvertRem;
+    height: 466rem / $pxConvertRem;
+    margin: 0 (15rem / $pxConvertRem);
+}
+
+.good-detail-img {
+    position: relative;
+    .good-islike {
+        position: absolute;
+        width: 60rem / $pxConvertRem;
+        height: 60rem / $pxConvertRem;
+        top: 0rem / $pxConvertRem;
+        right: 0rem / $pxConvertRem;
+        line-height: 60rem / $pxConvertRem;
+        font-size: 30rem / $pxConvertRem;
+        text-align: center;
+        color: #b0b0b0;
+        text-decoration: none;
+    }
+    .good-like {
+        color: #d72928;
+    }
+    img {
+        display: block;
+        width: 100%;
+        height: 366rem / $pxConvertRem;
+    }
+}
+
+.good-detail-img .tag-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    .good-tag {
+        position: relative;
+        padding: 0 (10rem / $pxConvertRem);
+        height: 24rem / $pxConvertRem;
+        line-height: 24rem / $pxConvertRem;
+        color: #fff;
+        font-size: 18rem / $pxConvertRem;
+        span {
+            position: relative;
+            z-index: 2;
+            float: left;
+        }
+        em {
+            position: relative;
+            z-index: 2;
+            float: right;
+        }
+    }
+    .new-tag {
+        background: #86bf4a;
+    }
+    .sale-tag {
+        background: #d62927;
+    }
+    .few-tag {
+        background: #ff9e0d;
+    }
+}
+
+.good-detail-text {
+    .name a {
+        display: block;
+        line-height: 56rem / $pxConvertRem;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        text-decoration: none;
+        font-size: 22rem / $pxConvertRem;
+        color: #444;
+    }
+    .price {
+        line-height: 22rem / $pxConvertRem;
+        font-size: 22rem / $pxConvertRem;
+        .sale-price {
+            color: #d62927;
+        }
+        .sale-price.no-price {
+            color: #000;
+        }
+        .market-price {
+            margin: 0 0 0 (5rem / $pxConvertRem);
+            color: #b0b0b0;
+            text-decoration: line-through;
+        }
+    }
+}

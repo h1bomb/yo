@@ -1,0 +1,61 @@
+@import "../common/time-view-like-share";
+
+.tag-content {
+    margin: 30rem / $pxConvertRem 0 0 0;
+    padding: 0 0 24rem / $pxConvertRem 0;
+    border-top: 1px solid #e0e0e0;
+    border-bottom: 1px solid #e0e0e0;
+    background: #fff;
+}
+
+.tag-img {
+    position: relative;
+    width: 100%;
+
+    .tag-match {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 130rem / $pxConvertRem;
+        height: 50rem / $pxConvertRem;
+        line-height: 50rem / $pxConvertRem;
+        font-size: 28rem / $pxConvertRem;
+        color: #fff;
+        background: #000;
+        text-align: center;
+        text-decoration: none;
+    }
+
+    img {
+        display: block;
+        width: 100%;
+    }
+}
+
+.tag-article {
+    margin: 32rem / $pxConvertRem 0 0 0;
+    padding: 0 40rem / $pxConvertRem 0 30rem / $pxConvertRem;
+    
+    .tag-title-container {
+        text-decoration: none;
+        color: #000;
+    }
+    
+    .tag-title{
+        line-height: 44rem / $pxConvertRem;
+        color: #000;
+        font-size: 40rem / $pxConvertRem;
+        font-weight:bold;
+    }
+
+    .tag-text {
+        margin: 16rem / $pxConvertRem 0 0 0;
+        line-height: 46rem / $pxConvertRem;
+        font-size: 28rem / $pxConvertRem;
+        color: #444;
+    }
+
+    .time-view-like-share {
+        margin-top: 16rem / $pxConvertRem;
+    }
+}

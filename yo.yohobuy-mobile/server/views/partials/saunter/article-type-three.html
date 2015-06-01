@@ -1,0 +1,21 @@
+{{# collocation}}
+    <div class="article-type-three">
+        <ul class="thumb-container clearfix">
+            {{# list}}
+                <li class="thumb">
+                    <img class="thumb-img lazy" data-original="{{thumb}}">
+                    <span class="clothe-type {{type}}"></span>
+                </li>
+            {{/ list}}
+        </ul>
+        <div class="prod-list clearfix">
+            {{# list}}
+                <div class="prod hide">
+                    {{# products}}
+                        {{> common/good_info}}
+                    {{/ products}}
+                </div>
+            {{/ list}}
+        </div>
+    </div>
+{{/ collocation}}

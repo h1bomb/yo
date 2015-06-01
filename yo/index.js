@@ -68,6 +68,8 @@ module.exports = function yo(options) {
         app.use(serveSPM(options.appPath, {
             log: console.log
         }));
+        //静态目录
+        app.use(express.static(options.public));
     }
 
     //声明小部件目录
@@ -83,8 +85,6 @@ module.exports = function yo(options) {
         extended: false
     }));
 
-    //静态目录
-    app.use(express.static(options.public));
 
 
     /**
