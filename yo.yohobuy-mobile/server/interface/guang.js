@@ -1,69 +1,38 @@
 exports.domain = 'http://localhost:3000';
 exports.res =
     [{
-            method: 'GET',
-            url: '/',
-            params: []
-        }, {
-            method: 'GET',
-            url: '/optimize',
-            params: []
-        }, {
-            method: 'GET',
-            url: '/tag',
-            params: []
-        }, {
-            method: 'GET',
-            url: '/tags/get',
-            params: []
-        }, {
-            method: 'GET',
-            url: '/editor',
-            params: []
-        }, {
-            method: 'GET',
-            url: '/ps',
-            params: []
-        }, {
-            method: 'GET',
-            url: '/tpl',
-            params: []
-        }, {
-            method: 'GET',
-            url: '/activity/classification',
-            params: []
-        }, {
-            method: 'GET',
-            url: '/activity/search',
-            params: []
-        }, {
-            method: 'GET',
-            url: '/favorite/product',
-            params: []
-        }, {
-            method: 'GET',
-            url: '/favorite/brand',
-            params: []
-        }, {
-            method: 'GET',
-            url: '/favorite/praise',
-            params: []
-        }, {
-            method: 'GET',
-            url: '/common/articletpl',
-            params: []
-        }, {
-            method: 'GET',
-            url: '/common/goodinfo',
-            params: []
-        }, {
-            method: 'GET',
-            url: '/common/tagtpl',
-            params: []
-        }, {
-            method: 'GET',
-            url: '/err',
-            params: []
-        }
-
-    ];
+    method: 'GET',
+    view: 'pages/saunter'
+    url: '/',
+    params: []
+}, {
+    method: 'GET',
+    view: 'pages/saunter-optimize'
+    url: '/optimize',
+    params: []
+}, {
+    method: 'GET',
+    view: 'pages/tag'
+    url: '/tag',
+    params: []
+}, {
+    method: 'GET',
+    view: 'pages/tag',
+    url: '/editor',
+    params: []
+}, {
+    method: 'GET',
+    view: 'pages/ps',
+    url: '/ps',
+    params: []
+}, {
+    method: 'GET',
+    view: 'pages/template',
+    url: '/tpl',
+    params: []
+}, {
+    method: 'GET',
+    view: 'error/error',
+    url: '/err',
+    params: []
+}];
