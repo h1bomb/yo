@@ -1,7 +1,8 @@
 var yo = require('../../yo/index');
 
 var app = yo({
-    appPath: __dirname + '/../'
+    appPath: __dirname + '/../',
+    tempExt: 'html'
 });
 
-require('./stub/router')(app);
+require('./stub/routers')(app);

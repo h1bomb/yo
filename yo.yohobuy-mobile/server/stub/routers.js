@@ -1,20 +1,22 @@
-var getData = require('./data'),
+var path = require('path'),
+    fs = require('fs'),
+    getData = require('./data'),
     articlePath = path.normalize(path.join(__dirname, '../views/partials/ps/info-item.html')),
     goodsPath = path.normalize(path.join(__dirname, '../views/partials/common/good-info.html')),
     tagPath = path.normalize(path.join(__dirname, '../views/partials/common/tag-content.html'));
 var stub = {
-    '/': {
+    '/stub': {
         data: getData('saunter'),
-        isSaunter: true,
+        module: 'saunter',
         isLogin: 'N'
     },
-    '/optimize': {
+    '/stub/optimize': {
         data: getData('saunter'),
-        isSaunterOptimize: true
+        module: 'saunter',
     },
-    '/tag': {
+    '/stub/tag': {
         data: getData('tag'),
-        isTag: true,
+        module: 'tag',
         isLogin: 'N'
     },
     '/tags/get': {
@@ -24,19 +26,19 @@ var stub = {
             infos: getData('matchs')
         }
     },
-    '/editor': {
+    '/stub/editor': {
         data: getData('editor'),
-        isEditor: true,
+        module: 'tag',
         isLogin: 'Y'
     },
-    '/ps': {
+    '/stub/ps': {
         data: getData('ps'),
-        isPs: true,
+        module: 'ps',
         isLogin: 'Y'
     },
-    '/tpl': {
+    '/stub/tpl': {
         data: getData('tpl'),
-        isTemplate: true,
+        module: 'template',
         isLogin: 'Y'
     },
     '/activity/classification': {
@@ -105,7 +107,8 @@ var stub = {
 
             fs.readFile(
                 path.normalize(path.join(__dirname, '../views/partials/common/time-view-like-share.html')),
-                'utf8', function(err, subData) {
+                'utf8',
+                function(err, subData) {
                     if (err) {
                         res.send({
                             success: false
@@ -137,7 +140,8 @@ var stub = {
 
             fs.readFile(
                 path.normalize(path.join(__dirname, '../views/partials/common/time-view-like-share.html')),
-                'utf8', function(err, subData) {
+                'utf8',
+                function(err, subData) {
                     if (err) {
                         res.send({
                             success: false
@@ -148,21 +152,25 @@ var stub = {
                 });
         });
     },
-    '/err': {
+    '/stub/err': {
         reloadUrl: '',
     }
 }
 
 module.exports = function(app) {
-    var route, proc;
+    var route;
     for (route in stub) {
-        app.get(route, function(req, res) {
-            proc = stub[get];
-            if (typeof proc === 'function') {
-                proc(req, res);
-            } else {
-                res.send(proc);
-            }
-        })；
+        var func = procFunc(stub[route]);
+        app.get(route, func);
+    }
+}
+
+function procFunc(proc) {
+    if (typeof proc === 'function') {
+        return proc;
+    } else {
+        return function(req, res) {
+            res.send(proc);
+        }
     }
 }

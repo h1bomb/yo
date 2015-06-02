@@ -1,32 +1,4 @@
-<script src="http://localhost:8000/static/js/sea.js?nowrap"></script>
-<script>
-    seajs.config({
-        base: 'http://localhost:8000/'
-    })
+<script src="/sea.js"></script>
+<script type="text/javascript">
+ seajs.use('./js/{{module}}');
 </script>
-<script src="http://localhost:8000/public/dist/libs-dev.js"></script>
-{{! 根据标识字段添加模块对应JS入口文件}}
-{{# isSaunter}}
-    {{> footer_js/saunter}}
-{{/ isSaunter}}
-
-{{# isSaunterOptimize}}
-    {{> footer_js/saunter_optimize}}
-{{/ isSaunterOptimize}}
-
-{{# isTag}}
-    {{> footer_js/tag}}
-{{/ isTag}}
-
-{{# isTemplate}}
-    {{> footer_js/template}}
-{{/ isTemplate}}
-
-{{# isPs}}
-    {{> footer_js/ps}}
-{{/ isPs}}
-
-{{! 与tag页入口相同}}
-{{# isEditor}}
-    {{> footer_js/tag}}
-{{/ isEditor}}

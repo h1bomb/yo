@@ -30,7 +30,9 @@ module.exports = function yo(options) {
         console.error('appPath 不能为空');
         return;
     }
-
+    if (!options.spm) {
+        options.spm = options.appPath + '/spm';
+    }
     if (!options.partials) {
         options.partials = options.appPath + '/server/views/partials';
     }
@@ -43,6 +45,7 @@ module.exports = function yo(options) {
     if (!options.interfaces) {
         options.interfaces = options.appPath + '/server/interface'
     }
+    options.tempExt = options.tempExt || 'hbs';
     options.port = options.port || 3000;
 
     var app = express();
@@ -65,7 +68,7 @@ module.exports = function yo(options) {
 
     //spm调试中间件
     if (env == 'development') {
-        app.use(serveSPM(options.appPath, {
+        app.use(serveSPM(options.spm, {
             log: console.log
         }));
         //静态目录
@@ -76,7 +79,8 @@ module.exports = function yo(options) {
     hbs.registerPartials(options.partials);
 
     //设置handlebars视图引擎
-    app.set('view engine', 'hbs');
+    app.set('view engine', options.tempExt);
+    app.engine(options.tempExt, hbs.__express);
     app.set('views', options.views);
 
     //body 序列化

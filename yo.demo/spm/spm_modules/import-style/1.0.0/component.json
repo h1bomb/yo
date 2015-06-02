@@ -1,0 +1,10 @@
+{
+  "name": "import-style",
+  "repo": "popomore/import-style",
+  "version": "1.0.0",
+  "description": "embedding style text in JavaScript code",
+  "main": "index.js",
+  "scripts": [
+    "index.js"
+  ]
+}

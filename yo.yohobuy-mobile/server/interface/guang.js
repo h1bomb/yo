@@ -1,38 +1,45 @@
 exports.domain = 'http://localhost:3000';
 exports.res =
     [{
-    method: 'GET',
-    view: 'pages/saunter'
-    url: '/',
-    params: []
-}, {
-    method: 'GET',
-    view: 'pages/saunter-optimize'
-    url: '/optimize',
-    params: []
-}, {
-    method: 'GET',
-    view: 'pages/tag'
-    url: '/tag',
-    params: []
-}, {
-    method: 'GET',
-    view: 'pages/tag',
-    url: '/editor',
-    params: []
-}, {
-    method: 'GET',
-    view: 'pages/ps',
-    url: '/ps',
-    params: []
-}, {
-    method: 'GET',
-    view: 'pages/template',
-    url: '/tpl',
-    params: []
-}, {
-    method: 'GET',
-    view: 'error/error',
-    url: '/err',
-    params: []
-}];
+        route: '/',
+        method: 'GET',
+        view: 'pages/saunter',
+        url: '/stub/',
+        params: []
+    }, {
+        route: '/optimize',
+        method: 'GET',
+        view: 'pages/saunter-optimize',
+        url: '/stub/optimize',
+        params: []
+    }, {
+        route: '/tag',
+        method: 'GET',
+        view: 'pages/tag',
+        url: '/stub/tag',
+        params: []
+    }, {
+        route: '/editor',
+        method: 'GET',
+        view: 'pages/tag',
+        url: '/stub/editor',
+        params: []
+    }, {
+        route: '/ps',
+        method: 'GET',
+        view: 'pages/ps',
+        url: '/stub/ps',
+        params: []
+    }, {
+        route: '/tpl',
+        method: 'GET',
+        view: 'pages/template',
+        url: '/stub/tpl',
+        params: []
+    }, {
+        route: '/err',
+        method: 'GET',
+        view: 'error/error',
+        url: '/stub/err',
+        params: []
+    }];
