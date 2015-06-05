@@ -15,6 +15,7 @@ var proxyRoute = require('./lib/proxyRoute');
 var validate = require('./mid/validate'); //验证中间件
 var proxy = require('./mid/proxy'); //接口代理中间件
 var pjax = require('./mid/pjax'); //pjax插件
+var staticWare = require('./mid/static'); //设置展示环境插件
 var serveSPM = require('serve-spm'); //spm调试中间件
 
 
@@ -71,6 +72,9 @@ module.exports = function yo(options) {
         app.use(serveSPM(options.spm, {
             log: console.log
         }));
+    }
+
+    if (env == 'development' || env == 'test') {
         //静态目录
         app.use(express.static(options.public));
     }
@@ -100,6 +104,7 @@ module.exports = function yo(options) {
         }
         app.use(validate);
         app.use(proxy);
+        app.use(staticWare);
         app.use(pjax);
 
         if (env == 'development') {
@@ -114,5 +119,6 @@ module.exports = function yo(options) {
 
     //监听应用
     app.listen(options.port);
+    console.log('当前环境：' + env);
     return app;
 }

@@ -9,7 +9,7 @@ exports.res =
     }, {
         route: '/optimize',
         method: 'GET',
-        view: 'pages/saunter-optimize',
+        view: 'pages/saunter',
         url: '/stub/optimize',
         params: []
     }, {

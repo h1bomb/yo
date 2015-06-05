@@ -1,6 +1,6 @@
 {
   "name": "yohobuy-mobile",
-  "version": "1.1.4",
+  "version": "2.1.4",
   "description": "yohobuy-mobile frontend",
   "keywords": [],
   "homepage": "",
@@ -19,12 +19,24 @@
       "mustache": "2.0.0",
       "underscore": "1.6.0"
     },
+    "inside": {
+      "iscroll": "iscroll/iscroll-probe"
+    },
     "devDependencies": {
       "expect.js": "0.3.1"
     },
     "buildArgs": "--idleading {{}}"
   },
   "devDependencies": {
+    "father": "^1.0.0",
+    "gulp": "^3.8.11",
+    "gulp-compass": "^2.0.4",
+    "gulp-concat": "^2.5.2",
+    "gulp-develop-server": "^0.4.2",
+    "gulp-ftp": "^1.0.3",
+    "gulp-spm": "^0.11.3",
+    "gulp-uglify": "^1.2.0",
+    "gulp-util": "^3.0.4",
     "spm": "3"
   },
   "scripts": {
@@ -37,15 +49,5 @@
     "test": "tests"
   },
   "license": "ISC",
-  "dependencies": {
-    "body-parser": "^1.12.2",
-    "express": "^4.12.3",
-    "gulp": "^3.8.11",
-    "gulp-compass": "^2.0.4",
-    "gulp-concat": "^2.5.2",
-    "gulp-develop-server": "^0.4.2",
-    "gulp-ftp": "^1.0.3",
-    "gulp-util": "^3.0.4",
-    "hbs": "^3.0.1"
-  }
+  "dependencies": {}
 }

@@ -1,4 +1,16 @@
+{{# development}}
 <script src="/sea.js"></script>
+{{/ development}}
+{{# test}}
+<script src="dist/libs-all.js"></script>
+<script src="dist/index-debug.js"></script>
+{{/ test}}
+{{# production}}
+<script src="dist/libs-min.js"></script>
+<script src="dist/index.js"></script>
+{{/ production}}
+{{# module}}
 <script type="text/javascript">
- seajs.use('./js/{{module}}');
+ seajs.use('js/{{../module}}');
 </script>
+{{/ module}}

@@ -19,7 +19,7 @@ module.exports = function proxy(req, res, next) {
 		qs: input.params
 	}, function(error, response, body) {
 		if (response && response.statusCode == 200) {
-			res.proxyData = body;
+			res.proxyData = JSON.parse(body);
 			next();
 		} else {
 			if (response) {

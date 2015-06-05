@@ -16,7 +16,7 @@ module.exports = function pjax(req, res, next) {
         ret = {},
         defaultView = getView(req.input.config.route),
         view = req.input.config.view || defaultView;
-    res.locals = JSON.parse(res.proxyData);
+    res.locals = res.proxyData;
 
     if (~accept.indexOf("html")) {
         if (req.headers['x-pjax']) {
