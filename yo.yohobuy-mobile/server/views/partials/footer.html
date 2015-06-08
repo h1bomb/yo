@@ -1,14 +1,14 @@
-{{# development}}
+{{# _env.development}}
 <script src="/sea.js"></script>
-{{/ development}}
-{{# test}}
-<script src="dist/libs-all.js"></script>
-<script src="dist/index-debug.js"></script>
-{{/ test}}
-{{# production}}
-<script src="dist/libs-min.js"></script>
-<script src="dist/index.js"></script>
-{{/ production}}
+{{/ _env.development}}
+{{# _env.test}}
+<script src="{{libs}}"></script>
+<script src="{{js}}"></script>
+{{/ _env.test}}
+{{# _env.production}}
+<script src="{{libs}}"></script>
+<script src="{{js}}"></script>
+{{/ _env.production}}
 {{# module}}
 <script type="text/javascript">
  seajs.use('js/{{../module}}');

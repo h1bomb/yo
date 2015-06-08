@@ -14,8 +14,10 @@ var gulp = require('gulp'),
     mkdirp = require('mkdirp'),
     uglify = require('gulp-uglify'),
     Package = require('father').SpmPackage,
-    transport = require('gulp-spm');
-
+    transport = require('gulp-spm'),
+    md5 = require("gulp-md5"),
+    request = require('request'),
+    rmdir = require('rmdir');
 
 var config = JSON.parse(fs.readFileSync('./package.json').toString());
 var assets_dir = 'dist/' + config.name + '/assets';
@@ -27,6 +29,8 @@ var dist_dir = {
     image: assets_dir + '/images',
     font: assets_dir + '/fonts'
 };
+
+var cdn_domain = 'http://cdn.yoho.cn/';
 
 var ftpConfig = {
     host: '58.213.133.26',
@@ -89,7 +93,7 @@ gulp.task('assets', function() {
 });
 
 //STEP2:compass整合所有css到index后发布到发布目录
-gulp.task('compass-production', ['assets'], function() {
+gulp.task('compass-production', ['assets', 'libs-build'], function() {
     gulp.src('sass/index.scss')
         .pipe(
             compass({
@@ -108,7 +112,7 @@ gulp.task('compass-production', ['assets'], function() {
 });
 
 //spm build
-gulp.task('build', ['libs-build', 'index-build'], function() {
+gulp.task('build', ['libs-build', 'index-build', 'config-libs', 'compass-production'], function() {
     gulp.src(dist_dir.js + '/**')
         .pipe(gulp.dest(public_dir + '/dist'));
 });
@@ -154,9 +158,42 @@ gulp.task('concat-libs', ['pre-libs'], function() {
 //压缩库文件
 gulp.task('min-libs', ['pre-libs'], function() {
     return gulp.src([public_dir + '/sea.js', dist_dir.js + '/libs.js'])
-        .pipe(concat('libs-min.js'))
+        .pipe(concat('deps.js'))
         .pipe(uglify())
-        .pipe(gulp.dest(dist_dir.js));
+        .pipe(md5())
+        .pipe(gulp.dest('./dist/libs'));
+
+});
+
+
+gulp.task('config-libs', ['libs-build'], function() {
+    var files = fs.readdirSync('./dist/libs'),
+        preStr = 'exports.staticDir = ',
+        i, data, depsFile;
+    for (i = 0; i < files.length; i++) {
+        if (files[i].indexOf('deps_') > -1) {
+            data = {
+                test: {
+                    libs: '/dist/libs-all.js',
+                    js: '/dist/index-debug.js'
+                },
+                production: {
+                    libs: cdn_domain + 'libs/' + files[i],
+                    js: cdn_domain + config.name + '/' + config.version + '/index.js',
+                    css: cdn_domain + config.name + '/' + config.version + '/index.css'
+                }
+            };
+            depsFile = files[i];
+            //写入静态文件配置
+            fs.writeFileSync('../server/staticConfig.js', preStr + JSON.stringify(data));
+        }
+    }
+
+    request(cdn_domain + 'libs/' + depsFile, function(error, response, body) {
+        if (response.statusCode == 200) {
+            rmdir('./dist/libs', function() {});
+        }
+    })
 });
 
 //库文件执行

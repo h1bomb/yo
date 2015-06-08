@@ -46,6 +46,20 @@ module.exports = function yo(options) {
     if (!options.interfaces) {
         options.interfaces = options.appPath + '/server/interface'
     }
+
+    if (!options.envStatic) {
+        options.envStatic = {
+            test: {
+                libs: '/dist/libs-all.js',
+                js: '/dist/index-debug.js'
+            },
+            production: {
+                libs: '/dist/libs-min.js',
+                js: '/dist/index.js'
+            }
+        }
+    }
+
     options.tempExt = options.tempExt || 'hbs';
     options.port = options.port || 3000;
 
@@ -104,7 +118,7 @@ module.exports = function yo(options) {
         }
         app.use(validate);
         app.use(proxy);
-        app.use(staticWare);
+        app.use(staticWare(options.envStatic));
         app.use(pjax);
 
         if (env == 'development') {
