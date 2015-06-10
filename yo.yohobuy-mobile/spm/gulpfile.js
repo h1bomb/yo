@@ -165,7 +165,7 @@ gulp.task('min-libs', ['pre-libs'], function() {
 
 });
 
-
+//配置静态文件目录
 gulp.task('config-libs', ['libs-build'], function() {
     var files = fs.readdirSync('./dist/libs'),
         preStr = 'exports.staticDir = ',

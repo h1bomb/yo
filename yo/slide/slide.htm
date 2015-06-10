@@ -1,0 +1,226 @@
+<!--
+    Powered By nodePPT - This is probably the best web presentation tool so far!
+    version: 1.2.3
+    site: https://github.com/ksky521/nodePPT
+-->
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>yo框架说明 - By Hbomb</title>
+    <link rel="stylesheet" media="all" href="./css/nodeppt.css">
+    <link rel="stylesheet" media="only screen and (max-device-width: 480px)" href="./css/phone.css">
+    <link rel="stylesheet" media="print" href="./css/pdf.css">
+    <link rel="stylesheet" href="./js/highlight/styles/monokai_sublime.css">
+    <link rel="stylesheet" href="./css/font-awesome.css">
+</head>
+<body>
+<div class="slides">
+    <slides id="container">
+        <slide class="slide fill" style="background-image:url('http://git.dev.yoho.cn/uploads/hbomb/yoweb/9becd67cb2/20150224074944369.jpg');background-size:100% 100%;"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>yo是什么？</h1>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>yo是一个基于express的前端表现层的框架。</h1>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>核心理念</h1>
+<h2>简化前端开发流程</h2>
+<h2>实现前后端分离</h2>
+<h2>基于接口定义的分离</h2>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>使用第三方</h1>
+<h2>express --&gt; web框架</h2>
+<h2>handlebars --&gt; 模板引擎</h2>
+<h2>spm --&gt; 构建,包管理</h2>
+<h2>PJAX --&gt; 渐进使用history.pushstate</h2>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>已有功能：</h1>
+<ul>
+<li>后端接口适配</li>
+<li>handlebars模板渲染</li>
+<li>基于pjax：pushstate+Ajax</li>
+<li>SPM的调试中间件</li>
+<li>开发，测试，生产环境的流程和构建</li>
+<li>SPM集成部署到CDN</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2>YO系统架构体系</h2>
+<p><img src="http://git.dev.yoho.cn/uploads/hbomb/yoweb/645ee01dc9/%E7%B3%BB%E7%BB%9F%E6%8B%93%E6%89%91%E5%9B%BE.png" alt="all"></p>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>注意事项</h1>
+<ul>
+<li>前端可以是nginx做一层反向代理</li>
+<li>Node App为业务粒度</li>
+<li>多个Node App通过内存数据库做状态共享。</li>
+<li>对于SOA 服务封装的API，进行接口交互。</li>
+<li>Node APP不会调用SOA服务或者数据库。</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>使用中间件扩展</h1>
+<h2>基础</h2>
+<h2>功能</h2>
+<h2>开发</h2>
+<h2>自定义</h2>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2>中间件</h2>
+<p><img src="http://git.dev.yoho.cn/uploads/hbomb/yoweb/f26792f5a0/Node_APP_Proxy_Server__2_.png" alt="middleware"></p>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article>
+<h2>不同环境的构建和使用</h2>
+<p><img src="http://git.dev.yoho.cn/uploads/hbomb/yoweb/86bff00358/frontend_env_.png" alt="env"></p>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>yo的app构建：</h1>
+<h1>Gulp，SPM，compass</h1>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>环境</h1>
+<ul>
+<li>开发环境：使用spm-serve，调用spm目录下的js</li>
+<li>测试环境：使用了public目录。</li>
+<li>生产环境：部署到CDN。</li>
+</ul>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>关于CDN的存储说明</h1>
+<p><img src="http://git.dev.yoho.cn/uploads/hbomb/yoweb/5e2460048d/CDN.png" alt="cdn"></p>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>YO使用方法</h1>
+
+</article></section></slide>
+<slide class="slide fill" style="background:#fff"><section class="slide-wrapper"><article>
+<p><img src="http://git.dev.yoho.cn/uploads/hbomb/yoweb/6e8abbcdae/path.png" alt="path"></p>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>新建项目</h1>
+<p><code>app.js</code></p>
+<pre><code class="javascript">var yo = require(&#39;../../yo/index&#39;);  //引用YO框架
+var staticDir = require(&#39;./staticConfig&#39;).staticDir; //获取静态文件的不同环境配置
+var app = yo({    //初始化yo的app
+    appPath: __dirname + &#39;/../&#39;, //应用所在目录
+    tempExt: &#39;html&#39;, //模板引擎的扩展名
+    envStatic: staticDir //静态文件的环境配置
+});
+
+require(&#39;./stub/routers&#39;)(app);//添加桩服务
+</code></pre>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>启动服务步骤</h1>
+<p><code>git clone http://git.dev.yoho.cn/hbomb/yoweb.git</code></p>
+<p>到YO，SPM目录下面，分别运行如下命令：</p>
+<p><code>npm install -d</code></p>
+<p>如果没有安装gulp的，需要安装下<code>npm install gulp</code>,
+如果没有安装compass，需要安装下<code>gem install compass</code>。</p>
+<p>在SPM目录下，执行<code>spm install</code></p>
+<p>运行服务：<code>gulp</code> 。</p>
+<p>具体的gulp的任务可以看下gulpfile。</p>
+
+</article></section></slide>
+<slide class="slide"><section class="slide-wrapper"><article class="flexbox vcenter">
+<h1>待实现功能：</h1>
+<ul>
+<li>多应用下，session的存储介质适配</li>
+<li>后端mock服务的自动生成</li>
+<li>PageCache的实现</li>
+<li>服务端处理逻辑的规划</li>
+<li>yo框架的适配层演进的规划</li>
+</ul>
+
+</article></section></slide>
+        <slide class="slide thank-you-slide segue nobackground">
+            <article class="flexbox vcenter auto-fadein">
+                <h2>Q &amp; A</h2>
+                <h2>Thank You!</h2>
+            </article>
+        </slide>
+        <!--slide class="slide logoslide dark nobackground">
+            <article class="flexbox vcenter">
+              <h2 style="color: white;">Powered By nodePPT v1.2.3</h2>
+            </article>
+          </slide-->
+        <div class="slideTip" id="tip"></div>
+    </slides>
+</div>
+<canvas id="drawBoard" class="draw-board" width="900" height="700"></canvas>
+<div class="progress"><span id="progress"></span></div>
+<div id="_buttons">
+    <div class="_btn-box" id="_btn-box" style="display:none;">
+        <button class="fa fa-arrow-circle-left" id="_btn-prev"></button>
+        <button class="fa fa-arrow-circle-right" id="_btn-next"></button>
+        <button class="fa fa-paint-brush" id="_btn-brush"></button>
+        <button class="fa fa-compress" id="_btn-overview" data-toggle="fa fa-expand"></button>
+    </div>
+    <button class="fa fa-bars" id="_btn-bar"  data-toggle="fa fa-close"></button>
+</div>
+<script src="./js/mixjs/lib/mix.0.3.0.min.js"></script>
+<script>
+var base = location.protocol + '//' + location.host;
+
+var path = location.pathname.split('/').filter(function(v){
+    return !!v;
+});
+path.pop();
+path = path.join('/');
+MixJS.config({
+    baseURL: [ base, path, 'js'].join('/')+'/'
+});
+
+</script>
+<script src="./js/mixjs/lib/event/broadcast.js"></script>
+<script src="./js/nodeppt.js"></script>
+<script>
+Slide.init({
+    containerID: 'container',
+    drawBoardID: 'drawBoard',
+    slideClass: '.slide',
+    buildClass: '.build',
+    progressID: 'progress',
+    transition: 'move',
+    width: 1100,
+    dir: './',
+    
+    //打开下面的注释就开启postMessage方式
+    //访问网址127.0.0.1:8080/ppt/demo#client
+    control:{
+        type: 'postMessage',
+        args:{
+            isControl:  false
+        }
+    },
+    
+    tipID: 'tip'
+});
+MixJS.loadJS('highlight/hljs-0.8.js',function(){
+    hljs.tabReplace = '  ';
+    hljs.initHighlightingOnLoad();
+});
+</script>
+
+<link rel="stylesheet" href="./css/theme.moon.css">
+<!--placeholder-->
+</body>
+</html>
