@@ -40,7 +40,9 @@ var ftpConfig = {
 
 // 本地运行时
 // 启动
-gulp.task('default', ['server', 'server:restart', 'compass-watch', 'compass']);
+gulp.task('start', ['server', 'server:restart', 'compass-watch', 'compass']);
+
+gulp.task('default', ['compass', 'compass-production','build']);
 
 // start express server
 gulp.task('server', function() {
