@@ -1,15 +1,3 @@
-#
-# Node.js Dockerfile
-#
-# https://github.com/dockerfile/nodejs
-#
-
-# Pull base image.
-FROM node
-
-
-# Define working directory.
-WORKDIR /data
-
-# Define default command.
-CMD ["bash"]
+FROM node:0.12.4
+# replace this with your application's default port
+EXPOSE 8888
