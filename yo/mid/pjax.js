@@ -18,13 +18,13 @@ module.exports = function pjax(req, res, next) {
         view = req.input.config.view || defaultView;
     res.locals = res.proxyData;
 
-    if (~accept.indexOf("html")) {
+    if (~accept.indexOf("json")) {
+        res.send(JSON.stringify(res.proxyData));
+    } else {
         if (req.headers['x-pjax']) {
             res.locals.layout = false;
         }
         res.render(view);
-    } else {
-        res.send(JSON.stringify(res.proxyData));
     }
 }
 
