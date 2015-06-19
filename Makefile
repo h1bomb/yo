@@ -1,3 +1,4 @@
+all: package installCompass spmpackage gulptask 
 package:
 	npm install -g  -d cnpm --registry=https://registry.npm.taobao.org 
 	cnpm install -g -d gulp
