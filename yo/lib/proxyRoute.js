@@ -19,7 +19,7 @@ var parseConfig = function(app) {
 
         app[val.method.toLowerCase()](val.route, function(req, res, next) {
             req.proxyParams = {
-                params: req.params,
+                params: _.merge(req.params, req.query),
                 body: req.body
             };
             next();

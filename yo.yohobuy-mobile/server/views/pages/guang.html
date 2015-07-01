@@ -1,17 +1,7 @@
 <div class="tag-container">
     {{# data}}
-        {{# author}}
-            <div id="author-infos" class="editor-header clearfix" data-id="{{id}}">
-                <div class="avatar">
-                    <img src="{{avatar}}">
-                </div>
-                <div class="text">
-                    <p class="name">{{name}}</p>
-                    <p class="info">{{info}}</p>
-                </div>
-            </div>
-        {{/ author}}
-    
+        {{> common/catnav}}
+        {{> common/slider}}
         <div id="tag-list">
             {{#content}}
                 {{> common/tag_content}}
@@ -22,5 +12,6 @@
         <input id="page" type="hidden" value="{{page}}">
         <input id="gender" type="hidden" value="{{gender}}">
         <input id="client-type" type="hidden" value="{{client_type}}">
+        <input id="sort_id" type="hidden" value="{{sort_id}}">
     {{/ data}}
 </div>

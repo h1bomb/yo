@@ -13,12 +13,6 @@ exports.res =
         url: '/stub/optimize',
         params: []
     }, {
-        route: '/tag',
-        method: 'GET',
-        view: 'pages/tag',
-        url: '/stub/tag',
-        params: []
-    }, {
         route: '/editor',
         method: 'GET',
         view: 'pages/tag',

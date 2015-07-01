@@ -1,4 +1,5 @@
 @import "compass", "compass/reset";
+@import "./navbar";
 $pxConvertRem : 40;
 
 body {
@@ -39,7 +40,7 @@ a {
 
 
 /**
- * 字体图标样式
+ * 字体图标样式 
  */
 @font-face {
     font-family: "iconfont";
@@ -49,7 +50,15 @@ a {
          font-url('iconfont.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
          font-url('iconfont.svg#iconfont') format('svg'); /* iOS 4.1- */
 }
-
+ 
+@font-face{
+    font-family: 'navbar';
+    src: font-url('navbar.eot'); /* IE9*/
+    src: font-url('navbar.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+    font-url('navbar.woff') format('woff'), /* chrome、firefox */
+    font-url('navbar.ttf') format('truetype'), /* chrome、firefox、opera、Safari, Android, iOS 4.2+*/
+    font-url('navbar.svg#iconfont') format('svg'); /* iOS 4.1- */
+}
 .iconfont {
     font-family: "iconfont" !important;
     font-size: 16px;

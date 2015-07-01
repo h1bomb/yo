@@ -7,8 +7,11 @@
         <meta content="telephone=no" name="format-detection"> 
         {{> header}}
     </head>
-    <body>
-        {{{body}}}
+    <body class="haveNav">
+        {{> common/navbar}}
+        <div id="pjax-container">
+           {{{body}}}
+        </div>
         <div id="login-tip" class="login-tip">未登录</div>
         <input id="is-login" type="hidden" value="{{isLogin}}">
     </body>

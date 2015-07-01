@@ -1,21 +1,33 @@
 var _ = require('lodash');
 
 /**
- * pjaxcha插件
+ * pjax插件
  * @param  {Request}
  * @param  {Response}
  * @param  {Function}
  * @return {[type]}
  */
 module.exports = function pjax(req, res, next) {
-    if (!req.input) {
-        res.sendStatus(404);
+    var accept = req.headers.accept || "",
+        ret = {};
+    if (!req.input || req.input.error) {
+        if (~accept.indexOf("json")) {
+            res.status(404).send(JSON.stringify({
+                code: 404,
+                message: req.input ? req.input.message : ''
+            }));
+        } else {
+            res.locals = {
+                reloadUrl: req.url
+            };
+            res.render('error/error');
+        }
         return;
     }
-    var accept = req.headers.accept || "",
-        ret = {},
-        defaultView = getView(req.input.config.route),
+
+    var defaultView = getView(req.input.config.route),
         view = req.input.config.view || defaultView;
+
     res.locals = res.proxyData;
 
     if (~accept.indexOf("json")) {

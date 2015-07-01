@@ -6,8 +6,10 @@
 
 var $ = require('jquery'),
     ellipsis = require('mlellipsis'),
-    Mustache = require('mustache');
-
+    flexslider = require('flexslider'),
+    Mustache = require('mustache'),
+    NProgress = require('nprogress-183');
+require('jquery-pjax-183');
 require('lazyload');
 
 /**
@@ -16,7 +18,7 @@ require('lazyload');
 exports.init = function() {
     var tpl;
 
-    $(function() {
+    var _init = function() {
         var $tagList = $('#tag-list'),
             $loadMore = $('#load-more-info'),
             $loadStatus = $loadMore.children('.status'),
@@ -29,6 +31,11 @@ exports.init = function() {
             hasAuthor = false,
             authorId;
 
+        //初始化 slider
+        $('.flexslider').flexslider({
+            animation: "slide",
+            directionNav: false
+        });
         //是否包含作者信息
         if ($('#author-infos').length > 0) {
             hasAuthor = true;
@@ -39,7 +46,9 @@ exports.init = function() {
         var page = 1,
             query = $('#query').val(), //无author时
             gender = $('#gender').val(),
-            clientType = $('#client-type').val();
+            clientType = $('#client-type').val(),
+            sortId = $('#sort_id').val();
+
 
         //定位登录提示相关变量
         var $loginTip = $('#login-tip'),
@@ -129,6 +138,7 @@ exports.init = function() {
                 setting = {
                     page: ++page,
                     id: authorId,
+                    sort_id: sortId,
                     client_type: clientType
                 };
             } else {
@@ -136,6 +146,7 @@ exports.init = function() {
                     page: ++page,
                     query: query,
                     gender: gender,
+                    sort_id: sortId,
                     client_type: clientType
                 };
             }
@@ -143,7 +154,8 @@ exports.init = function() {
             canScroll = false;
             $.ajax({
                 type: 'GET',
-                url: '/tags/get',
+                url: '/tag',
+                dataType: 'json',
                 data: setting
             }).then(function(data) {
                 var html = '',
@@ -159,7 +171,7 @@ exports.init = function() {
                         $noMore.removeClass('hide');
                     }
 
-                    infos = res.infos;
+                    infos = res.content;
                     for (i = 0; i < infos.length; i++) {
                         html += Mustache.render(tpl, infos[i]);
                     }
@@ -201,6 +213,19 @@ exports.init = function() {
         } else {
             $loading.removeClass('hide');
         }
-    });
+    };
+
+    $(function() {
+        //初始化pjax
+        $(document).pjax('a', '#pjax-container');
+        $(document).on('pjax:start', function() {
+            NProgress.start();
+        });
+        $(document).on('pjax:end', function() {
+            NProgress.done();
+            _init();
+        });
+        _init();
+    })
 };
 exports.init();

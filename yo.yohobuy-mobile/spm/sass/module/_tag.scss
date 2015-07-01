@@ -1,4 +1,4 @@
-@import "../common/tag-content", "../common/load-more";
+@import "../common/tag-content", "../common/load-more","../common/flexslider","../common/catnav";
 
 .editor-header {
     padding: (36rem / $pxConvertRem) 0 (40rem / $pxConvertRem) 0;
@@ -26,6 +26,6 @@
             color: #bdbdbf;
             font-size: 24rem / $pxConvertRem;
             line-height: 32rem / $pxConvertRem;
-        }
+        } 
     }
 }

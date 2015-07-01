@@ -17,7 +17,11 @@
       "lazyload": "1.9.6",
       "iscroll": "5.1.2",
       "mustache": "2.0.0",
-      "underscore": "1.6.0"
+      "underscore": "1.6.0",
+      "flexslider": "2.5.2",
+      "jquery-pjax-183": "1.0.0",
+      "nprogress-183": "0.1.6",
+      "import-style": "1.0.0"
     },
     "inside": {
       "iscroll": "iscroll/iscroll-probe"

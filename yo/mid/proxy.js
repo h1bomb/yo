@@ -1,5 +1,5 @@
 var request = require('request');
-
+var _ = require('lodash');
 /**
  * 接口代理中间件
  * @param  Request
@@ -8,25 +8,56 @@ var request = require('request');
  * @return void
  */
 module.exports = function proxy(req, res, next) {
-	var input = req.input;
+	var input = req.input,
+		apiNum = 1,
+		ret = {},
+		count = 0;
+
 	if (!input) {
 		next();
 		return;
 	}
-	request({
-		url: input.config.domain + input.config.url,
-		method: input.config.method,
-		qs: input.params
-	}, function(error, response, body) {
-		if (response && response.statusCode == 200) {
-			res.proxyData = JSON.parse(body);
-			next();
-		} else {
-			if (response) {
-				next(new Error('error: ' + response.statusCode));
+	if (input.error) {
+		next();
+		return;
+	}
+
+	if (input.config.apis) {
+		apiNum = input.config.apis.length;
+		_.forEach(input.config.apis, function(v, k) {
+			v.domain = v.domain ? v.domain : input.config.domain;
+			callApi(input.config.domain, v, input.params[k], apiNum, next, res);
+		})
+	} else {
+		callApi(input.config.domain, input.config, input.params[0], apiNum, next, res);
+	}
+
+	function callApi(domain, api, params, apiNum, next, res) {
+		request({
+			url: domain + api.url,
+			method: api.method,
+			qs: params
+		}, function(error, response, body) {
+			if (response && response.statusCode == 200) {
+				if (apiNum > 1) {
+					ret[api.method + domain + api.url] = JSON.parse(body);
+				} else {
+					ret = JSON.parse(body);
+				}
+
+				res.proxyData = ret;
+				count++;
+
+				if (apiNum == count) {
+					next();
+				}
 			} else {
-				next(new Error('api server error!'));
+				if (response) {
+					next(new Error('error: ' + response.statusCode));
+				} else {
+					next(new Error('api server error!'));
+				}
 			}
-		}
-	});
+		});
+	}
 }
