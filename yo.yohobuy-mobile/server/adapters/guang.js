@@ -22,5 +22,8 @@ exports.get = function(data, req, res) {
         });
     });
     tagRet.data.sort_id = sort_id;
+    if (tagRet.data.gender == '2,3') {
+        tagRet.isGirls = true;
+    }
     return tagRet;
 }

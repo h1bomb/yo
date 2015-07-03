@@ -64,11 +64,18 @@ article, aside, details, figcaption, figure, footer, header, hgroup, main, menu,
   -moz-osx-font-smoothing: grayscale;
 }
 
+.girlsColor {
+  background-color: #ff3366;
+}
+
+.defColor {
+  background-color: #222;
+}
+
 .listNavigator {
   position: fixed;
   top: 0px;
   left: 0px;
-  background-color: #222;
   height: 44px;
   width: 100%;
   line-height: 44px;

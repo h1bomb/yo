@@ -1,16 +1,23 @@
 {{# _env.development}}
 <script src="/sea.js"></script>
+<script type="text/javascript">
+ seajs.use('js/{{../module}}');
+</script>
 {{/ _env.development}}
 {{# _env.test}}
 <script src="{{libs}}"></script>
 <script src="{{js}}"></script>
+<script type="text/javascript">
+ seajs.use('yohobuy-mobile/js/{{../module}}');
+</script>
 {{/ _env.test}}
 {{# _env.production}}
 <script src="{{libs}}"></script>
 <script src="{{js}}"></script>
+<script type="text/javascript">
+ seajs.use('yohobuy-mobile/js/{{../module}}');
+</script>
 {{/ _env.production}}
 {{# module}}
-<script type="text/javascript">
- seajs.use('js/{{../module}}');
-</script>
+
 {{/ module}}

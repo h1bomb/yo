@@ -42,7 +42,7 @@ var ftpConfig = {
 // 启动
 gulp.task('start', ['server', 'server:restart', 'compass-watch', 'compass']);
 
-gulp.task('default', ['compass', 'compass-production','build']);
+gulp.task('default', ['compass', 'compass-production', 'build']);
 
 // start express server
 gulp.task('server', function() {
@@ -152,6 +152,7 @@ gulp.task('clear-libs', ['concat-libs', 'min-libs'], function() {
 
 //合并库文件
 gulp.task('concat-libs', ['pre-libs'], function() {
+    delLibsMainModule();
     return gulp.src([public_dir + '/sea.js', dist_dir.js + '/libs.js'])
         .pipe(concat('libs-all.js'))
         .pipe(gulp.dest(dist_dir.js));
@@ -204,7 +205,7 @@ gulp.task('libs-build', ['pre-libs', 'concat-libs', 'min-libs', 'clear-libs']);
 //库文件的入口文件和过程文件的生成
 function libPkgPre() {
     var obj = {
-            name: config.name,
+            name: '',
             version: config.version,
             spm: config.spm
         },
@@ -212,7 +213,7 @@ function libPkgPre() {
         key,
         libDir = dist_dir.js + '';
     obj.spm.main = 'libs.js';
-    obj.spm.buildArgs = '--idleading {{}} --include all';
+    obj.spm.buildArgs = '--idleading {{name}} --include all';
 
     libCon = JSON.stringify(obj);
     fs.renameSync('package.json', 'package_bak.json');
@@ -232,4 +233,13 @@ function libPkgPre() {
 
     fs.writeFileSync('libs.js', libsjs); //写入口文件
     return libDir;
+}
+
+//删除库模块的入口模块
+function delLibsMainModule() {
+    var path = dist_dir.js + '/libs.js';
+    var jsStr = fs.readFileSync(path).toString();
+    var position = jsStr.indexOf('});');
+    jsStr = jsStr.substr(position + 4);
+    fs.writeFileSync(path, jsStr);
 }
