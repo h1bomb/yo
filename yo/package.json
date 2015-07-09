@@ -1,6 +1,6 @@
 {
   "name": "yoweb",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Construction of the presentation layer solution is based on express, handlebars",
   "main": "index.js",
   "scripts": {
