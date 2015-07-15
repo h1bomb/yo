@@ -4,6 +4,7 @@ var apis = {
         method: 'GET',
         view: 'pages/guang',
         url: '/guang/api/v1/article/getList',
+        cache: 300,
         params: [{
             name: 'page',
             def: 1,
@@ -32,6 +33,7 @@ var apis = {
         route: '/cat',
         method: 'GET',
         url: '/guang/api/v1/category/get',
+        cache: 600
     }
 }
 exports.apis = apis;

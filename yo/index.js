@@ -18,6 +18,7 @@ var adapter = require('./mid/adapter'); //接口数据适配中间件
 var staticWare = require('./mid/static'); //设置展示环境插件
 var serveSPM = require('serve-spm'); //spm调试中间件
 var errorhandler = require('errorhandler'); //错误处理
+var cache = require('./mid/cache'); //缓存中间件
 
 /**
  * yo的入口
@@ -118,6 +119,9 @@ module.exports = function yo(options) {
     proxyRoute.init(app, options.interfaces, function(err) {
         if (err) {
             throw new Error(err);
+        }
+        if (options.cache) {
+            app.use(cache(options.cache));
         }
         app.use(validate);
         app.use(proxy);

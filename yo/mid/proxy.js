@@ -33,24 +33,32 @@ module.exports = function proxy(req, res, next) {
 	}
 
 	function callApi(domain, api, params, apiNum, next, res) {
+		if (res.getCache) {
+			res.getCache(domain, api.url, params, function(err, body) {
+				if (!err && body) {
+					procRet(domain, api, apiNum, next, res, body);
+				} else {
+					callServer(domain, api, params, apiNum, next, res);
+				}
+			});
+		} else {
+			callServer(domain, api, params, apiNum, next, res);
+		}
+	}
+
+
+	function callServer(domain, api, params, apiNum, next, res) {
 		request({
 			url: domain + api.url,
 			method: api.method,
 			qs: params
 		}, function(error, response, body) {
 			if (response && response.statusCode == 200) {
-				if (apiNum > 1) {
-					ret[api.method + domain + api.url] = JSON.parse(body);
-				} else {
-					ret = JSON.parse(body);
+				if (res.setCache) {
+					console.log(api);
+					res.setCache(domain, api.url, params, body, api.cache);
 				}
-
-				res.proxyData = ret;
-				count++;
-
-				if (apiNum == count) {
-					next();
-				}
+				procRet(domain, api, apiNum, next, res, body);
 			} else {
 				if (response) {
 					next(new Error('error: ' + response.statusCode));
@@ -59,5 +67,20 @@ module.exports = function proxy(req, res, next) {
 				}
 			}
 		});
+	}
+
+	function procRet(domain, api, apiNum, next, res, body) {
+		if (apiNum > 1) {
+			ret[api.method + domain + api.url] = JSON.parse(body);
+		} else {
+			ret = JSON.parse(body);
+		}
+
+		res.proxyData = ret;
+		count++;
+
+		if (apiNum == count) {
+			next();
+		}
 	}
 }
