@@ -32,13 +32,28 @@ module.exports = function proxy(req, res, next) {
 		callApi(input.config.domain, input.config, input.params[0], apiNum, next, res);
 	}
 
+	/**
+	 * 调用API
+	 * @param  {string}   domain 域名
+	 * @param  {string}   api    接口
+	 * @param  {array}   params 传参
+	 * @param  {number}   apiNum 接口数量
+	 * @param  {Function} next   next触发函数
+	 * @param  {Object}   res    请求返回
+	 * @return {void}          无
+	 */
 	function callApi(domain, api, params, apiNum, next, res) {
 		if (res.getCache) {
-			res.getCache(domain, api.url, params, function(err, body) {
+
+			var key = res.genKey(domain, api.url, JSON.stringify(params));
+
+			res.getCache(key, function(err, body) {
 				if (!err && body) {
+					console.log(key + ' cached!');
 					procRet(domain, api, apiNum, next, res, body);
 				} else {
 					callServer(domain, api, params, apiNum, next, res);
+					console.log(key + '  cache expired!');
 				}
 			});
 		} else {
@@ -46,7 +61,16 @@ module.exports = function proxy(req, res, next) {
 		}
 	}
 
-
+	/**
+	 * 调用服务
+	 * @param  {string}   domain 域名
+	 * @param  {string}   api    接口
+	 * @param  {array}   params 传参
+	 * @param  {number}   apiNum 接口数量
+	 * @param  {Function} next   next触发函数
+	 * @param  {Object}   res    请求返回
+	 * @return {void}          无
+	 */
 	function callServer(domain, api, params, apiNum, next, res) {
 		request({
 			url: domain + api.url,
@@ -55,8 +79,10 @@ module.exports = function proxy(req, res, next) {
 		}, function(error, response, body) {
 			if (response && response.statusCode == 200) {
 				if (res.setCache) {
-					console.log(api);
-					res.setCache(domain, api.url, params, body, api.cache);
+
+					var key = res.genKey(domain, api.url, JSON.stringify(params));
+
+					res.setCache(key, body, api.cache);
 				}
 				procRet(domain, api, apiNum, next, res, body);
 			} else {
@@ -69,6 +95,16 @@ module.exports = function proxy(req, res, next) {
 		});
 	}
 
+	/**
+	 * 处理结果
+	 * @param  {string}   domain 域名
+	 * @param  {string}   api    接口
+	 * @param  {number}   apiNum 接口数量
+	 * @param  {Function} next   next触发函数
+	 * @param  {Object}   res    请求返回
+	 * @param  {Object}   body   请求结果
+	 * @return {void}          无
+	 */
 	function procRet(domain, api, apiNum, next, res, body) {
 		if (apiNum > 1) {
 			ret[api.method + domain + api.url] = JSON.parse(body);

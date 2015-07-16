@@ -10,18 +10,25 @@ module.exports = function(options) {
     });
 
     return function pjax(req, res, next) {
-        res.setCache = function(domain, api, params, val, expire) {
-            var key = md5(domain + api + JSON.stringify(params));
+        res.setCache = function(key, val, expire) {
             var expire = expire || 500;
             client.set(key, val);
             client.expire(key, expire);
 
         }
-        res.getCache = function(domain, api, params, callback) {
-            var key = md5(domain + api + JSON.stringify(params));
+        res.getCache = function(key, callback) {
             client.get(key, function(err, res) {
                 callback(err, res);
             });
+        }
+
+        res.genKey = function() {
+            var arr = _.toArray(arguments);
+            if (arr.length > 0) {
+                return md5(arr.join(''));
+            } else {
+                return false;
+            }
         }
 
         next();
