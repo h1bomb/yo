@@ -56,6 +56,12 @@ var loadConfig = function(path, callback) {
     });
 }
 
+/**
+ * 生成key
+ * @param  {string} method 方法
+ * @param  {string} route  路由
+ * @return {string}        返回MD5的key
+ */
 exports.genKey = function(method, route) {
     return md5(method + route);
 }
