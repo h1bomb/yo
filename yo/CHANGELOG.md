@@ -11,3 +11,10 @@ v1.0.1
 
 * yo：非依赖api组合
 * yo.yohobuymobile:实践pjax，api组合，逛首页实现
+
+v1.0.2
+
+*redis 接口缓存
+
+v1.0.3
+*dockerfile编写为持续集成做准备
