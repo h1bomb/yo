@@ -1,4 +1,4 @@
-all: package installCompass spmpackage gulptask 
+all: package spmpackage gulptask 
 package:
 	npm install -g  -d cnpm --registry=https://registry.npm.taobao.org 
 	cnpm install -g -d gulp
@@ -8,12 +8,6 @@ package:
 	cd ./yo.demo/spm && cnpm install -d 
 	cd ./yo.yohobuy-mobile/server && cnpm install -d
 	cd ./yo.yohobuy-mobile/spm && cnpm install -d
-installCompass:
-	gem sources --remove https://ruby.taobao.org/
-	gem sources --remove https://rubygems.org/
-	gem sources -a https://ruby.taobao.org/
-	gem sources -l
-	gem install compass -V
 spmpackage:
 	spm config set registry http://spm.yoho.cn
 	cd ./yo.demo/spm && spm install
