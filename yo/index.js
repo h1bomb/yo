@@ -6,7 +6,8 @@ var env = process.env.NODE_ENV || 'development'; //获取环境参数
 //中间件
 var favicon = require('serve-favicon'); //favicon
 var morgan = require('morgan'); //log日志
-var session = require('cookie-session'); //session
+var session = require('express-session');
+var RedisStore = require('connect-redis')(session);
 var cookieParser = require('cookie-parser') //cookies
 var hbs = require('hbs'); //handlebars视图插件
 var bodyParser = require('body-parser'); //body序列化插件
@@ -67,14 +68,25 @@ module.exports = function yo(options) {
     options.tempExt = options.tempExt || 'hbs';
     options.port = options.port || 3000;
 
+    if (options.session) {
+        options.session.secret = options.session.secret || 'yo web app';
+        options.session.resave = options.session.resave || false;
+        options.session.saveUninitialized = options.session.saveUninitialized || true;
+    }
+
+
+    if (options.seStore) {
+        options.session.store = new RedisStore(options.seStore);
+    }
+
     var app = express();
 
     app.set('trust proxy', 1);
 
     //session中间件
-    app.use(session({
-        keys: ['yo:secc']
-    }));
+    if (options.session) {
+        app.use(session(options.session));
+    }
 
     //cookies解析中间件
     app.use(cookieParser());

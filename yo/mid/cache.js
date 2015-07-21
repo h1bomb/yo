@@ -25,7 +25,7 @@ module.exports = function(options) {
         res.genKey = function() {
             var arr = _.toArray(arguments);
             if (arr.length > 0) {
-                return md5(arr.join(''));
+                return 'cache:' + md5(arr.join(''));
             } else {
                 return false;
             }

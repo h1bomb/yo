@@ -1,15 +1,11 @@
 all: package spmpackage gulptask 
 package:
-	npm install -g  -d cnpm --registry=https://registry.npm.taobao.org 
-	cnpm install -g -d gulp
-	cnpm install -g -d spm
 	cd ./yo/ && cnpm install -d
 	cd ./yo.demo/server/ && cnpm install -d
 	cd ./yo.demo/spm && cnpm install -d 
 	cd ./yo.yohobuy-mobile/server && cnpm install -d
 	cd ./yo.yohobuy-mobile/spm && cnpm install -d
 spmpackage:
-	spm config set registry http://spm.yoho.cn
 	cd ./yo.demo/spm && spm install
 	cd ./yo.yohobuy-mobile/spm && spm install
 gulptask:
