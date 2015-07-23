@@ -10,4 +10,3 @@ spmpackage:
 	cd ./yo.yohobuy-mobile/spm && spm install
 gulptask:
 	cd ./yo.yohobuy-mobile/spm && gulp
-	cd ./yo.yohobuy-mobile/spm && gulp start
