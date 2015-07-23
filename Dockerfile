@@ -17,15 +17,15 @@ WORKDIR /Code
 
 
 
-RUN npm install -g  -d cnpm --registry=https://registry.npm.taobao.org \
-    && cnpm install -g -d gulp \
-    && cnpm install -g -d spm@3.4.3 \
-    && spm config set registry http://spm.yoho.cn
+RUN npm install -g  -d cnpm --registry=https://registry.npm.taobao.org 
+RUN cnpm install -g -d gulp 
+RUN cnpm install -g -d spm@3.4.3 
+RUN spm config set registry http://spm.yoho.cn
 
 ADD ./yo /Code/yo
 ADD ./yo.yohobuy-mobile /Code/yo.yohobuy-mobile
 ADD ./yo.demo /Code/yo.demo
-ADD ./Makefile /Code
+ADD ./Makefile /Code/Makefile
 
 RUN make
 
