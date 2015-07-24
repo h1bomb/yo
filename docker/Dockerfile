@@ -25,7 +25,7 @@ RUN cnpm install -g -d gulp
 RUN cnpm install -g -d spm@3.4.3
 
 # 添加代码到工作目录
-ADD ../../yo /Code/yo
+RUN git clone https://git.coding.net/hbomb/yo.git
 
 # 运行构建脚本
 RUN  cd yo && make

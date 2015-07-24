@@ -26,7 +26,7 @@ RUN cnpm install -g -d spm@3.4.3
 RUN spm config set registry http://spm.yoho.cn
 
 # 添加代码到工作目录
-ADD ../../yo /Code/yo
+RUN git clone http://git.dev.yoho.cn/hbomb/yoweb.git
 
 # 运行构建脚本
 RUN echo "192.168.102.78 spm.yoho.cn" >> /etc/hosts && cd yo && make

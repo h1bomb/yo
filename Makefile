@@ -1,6 +1,6 @@
 all: package spmpackage gulptask 
 package:
-	cd ./examples/yo/ && cnpm install -d
+	cnpm install -d
 	cd ./examples/yo.demo/server/ && cnpm install -d
 	cd ./examples/yo.demo/spm && cnpm install -d 
 	cd ./examples/yo.yohobuy-mobile/server && cnpm install -d
