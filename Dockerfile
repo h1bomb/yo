@@ -28,4 +28,7 @@ ADD ./Makefile /Code/Makefile
 ADD ./run.sh /Code/run.sh
 
 RUN make
+
+EXPOSE 3000
+
 CMD ["sh","./run.sh"]

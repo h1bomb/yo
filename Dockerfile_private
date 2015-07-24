@@ -29,4 +29,6 @@ ADD ./Makefile /Code/Makefile
 ADD ./run.sh /Code/run.sh
 
 RUN echo "192.168.102.78 spm.yoho.cn" >> /etc/hosts&&make
+
+EXPOSE 3000
 CMD ["sh","./run.sh"]
