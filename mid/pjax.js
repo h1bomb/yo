@@ -7,11 +7,11 @@ var _ = require('lodash');
  * @param  {Function}
  * @return {[type]}
  */
-module.exports = function(req, res, next) {
-    var accept = req.headers.accept || "",
-        ret = {};
+module.exports = function(req, res) {
+    var accept = req.headers.accept || "";
+
     if (!req.input || req.input.error) {
-        if (~accept.indexOf("json")) {
+        if (accept.indexOf("json") > -1) {
             res.status(404).send(JSON.stringify({
                 code: 404,
                 message: req.input ? req.input.message : ''
@@ -29,7 +29,7 @@ module.exports = function(req, res, next) {
 
     res.locals = res.proxyData;
 
-    if (~accept.indexOf("json")) {
+    if (accept.indexOf("json") > -1) {
         res.send(JSON.stringify(res.proxyData));
     } else {
         if (req.headers['x-pjax']) {
@@ -37,7 +37,7 @@ module.exports = function(req, res, next) {
         }
         res.render(view);
     }
-}
+};
 
 /**
  * 得到默认的视图

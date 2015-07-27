@@ -9,5 +9,5 @@ module.exports = function(options) {
             res.proxyData._env[env] = options[env];
         }
         next();
-    }
-}
+    };
+};

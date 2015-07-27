@@ -36,5 +36,5 @@ module.exports = function(dir) {
             }
         }
         next();
-    }
-}
+    };
+};

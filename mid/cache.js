@@ -11,16 +11,16 @@ module.exports = function(options) {
 
     return function(req, res, next) {
         res.setCache = function(key, val, expire) {
-            var expire = expire || 500;
+            var expireTime = expire || 500;
             client.set(key, val);
-            client.expire(key, expire);
+            client.expire(key, expireTime);
 
-        }
+        };
         res.getCache = function(key, callback) {
-            client.get(key, function(err, res) {
-                callback(err, res);
+            client.get(key, function(err, ret) {
+                callback(err, ret);
             });
-        }
+        };
 
         res.genKey = function() {
             var arr = _.toArray(arguments);
@@ -29,7 +29,7 @@ module.exports = function(options) {
             } else {
                 return false;
             }
-        }
+        };
 
         next();
     };

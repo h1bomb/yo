@@ -36,7 +36,7 @@ module.exports = function(req, res, next) {
             }
         });
     } else {
-        valret = validate(config, req)
+        valret = validate(config, req);
         params.push(valret.ret);
         messages = valret.msgs;
         if (valret.err) {
@@ -52,7 +52,7 @@ module.exports = function(req, res, next) {
     };
     next();
 
-}
+};
 
 
 function validate(config, req) {
@@ -67,15 +67,13 @@ function validate(config, req) {
         var flag1 = false,
             flag2 = false;
         if (val) {
-            if (v.maxLength && v.minLength) {
-                if (val.length < Number(v.maxLength) + 1 && val.length > Number(v.minLength) - 1) {
-                    flag1 = true;
-                }
+            if (v.maxLength && v.minLength && val.length < Number(v.maxLength) + 1 && val.length > Number(v.minLength) - 1) {
+                flag1 = true;
             }
             if (v.reg && v.reg.test(val)) {
                 flag2 = true;
             }
-            if (flag1 === true && flag2 === true) {
+            if (flag1 && flag2) {
                 ret[v.name] = val;
             } else if (!v.reg && !v.maxLength && !v.minLength) {
                 ret[v.name] = val;
@@ -100,5 +98,5 @@ function validate(config, req) {
         msgs: messages,
         err: error,
         ret: ret
-    }
+    };
 }
