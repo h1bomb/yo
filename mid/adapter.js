@@ -11,24 +11,26 @@ module.exports = function(dir) {
         methods = ['get', 'post', 'head', 'delete', 'put'];
 
     //读取适配逻辑目录，载入适配逻辑
-    fs.readdir(dir, function(err, files) {
-        if (err) {
-            return;
-        }
-        _.forEach(files, function(val) {
-            var m = require((dir + '/' + val).replace('.js', ''));
+    var files = fs.readdirSync(dir);
+    if (!files) {
+        return;
+    }
 
-            _.forEach(methods, function(v) {
-                if (m[v]) {
-                    adapters[v + val.replace('.js', '')] = m[v];
-                }
-            });
+    _.forEach(files, function(val) {
+        var m = require((dir + '/' + val).replace('.js', ''));
+
+        _.forEach(methods, function(v) {
+            if (m[v]) {
+                adapters[v + val.replace('.js', '')] = m[v];
+            }
         });
     });
     //返回中间件
     return function(req, res, next) {
         if (res.proxyData && typeof res.proxyData === 'object') {
-            var key = req.method.toLowerCase() + req.route.path.replace('/', '');
+            var m = req.route.path.replace('/', '');
+            m = m.replace(/\//g, '_');
+            var key = req.method.toLowerCase() + m;
             if (adapters[key]) {
                 res.proxyData = adapters[key](res.proxyData, req, res);
             }

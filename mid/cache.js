@@ -4,12 +4,12 @@ var _ = require('lodash'),
 
 
 module.exports = function(options) {
-    client = redis.createClient(options.port, options.ip);
+    var client = redis.createClient(options.port, options.ip);
     client.on("error", function(err) {
         console.log("Error " + err);
     });
 
-    return function pjax(req, res, next) {
+    return function(req, res, next) {
         res.setCache = function(key, val, expire) {
             var expire = expire || 500;
             client.set(key, val);

@@ -7,7 +7,7 @@ var _ = require('lodash');
  * @param  {Function}
  * @return {[type]}
  */
-module.exports = function pjax(req, res, next) {
+module.exports = function(req, res, next) {
     var accept = req.headers.accept || "",
         ret = {};
     if (!req.input || req.input.error) {
@@ -25,8 +25,7 @@ module.exports = function pjax(req, res, next) {
         return;
     }
 
-    var defaultView = getView(req.input.config.route),
-        view = req.input.config.view || defaultView;
+    var view = req.input.config.view || getView(req.input.config.route);
 
     res.locals = res.proxyData;
 
@@ -52,6 +51,11 @@ function getView(route) {
     _.forEach(defaultViewArr, function(val) {
         if (val.indexOf(':') < 0 && val !== '') {
             defaultView.push(val);
+        } else if (val.indexOf(':') > -1) {
+            var ret = val.split(':');
+            if (ret[0]) {
+                defaultView.push(val[0]);
+            }
         }
     });
 
