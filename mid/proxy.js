@@ -1,5 +1,8 @@
-var request = require('request');
-var _ = require('lodash');
+var request = require('request'),
+  _ = require('lodash'),
+  ret = {},
+  count = 0;
+
 /**
  * 接口代理中间件
  * @param  Request
@@ -9,9 +12,10 @@ var _ = require('lodash');
  */
 module.exports = function(req, res, next) {
   var input = req.input,
-    apiNum = 1,
-    ret = {},
-    count = 0;
+    apiNum = 1;
+
+  ret = {};
+  count = 0;
 
   if (!input) {
     next();
@@ -22,100 +26,106 @@ module.exports = function(req, res, next) {
     return;
   }
 
+  //接口传参
+  var params = {
+    domain: input.config.domain, //接口域名
+    api: input.config, //接口配置
+    params: input.params[0], //传参处理
+    apiNum: apiNum, //接口数量
+    next: next, //express next
+    res: res //express 请求返回对象
+  }
+
+  //根据接口配置调用
   if (input.config.apis) {
+
     apiNum = input.config.apis.length;
+    params.apiNum = apiNum;
+
     _.forEach(input.config.apis, function(v, k) {
       v.domain = v.domain ? v.domain : input.config.domain;
-      callApi(input.config.domain, v, input.params[k], apiNum, next, res);
+
+      var p = _.clone(params);
+      p.api = v;
+      p.params = input.params[k];
+      callApi(p);
     });
   } else {
-    callApi(input.config.domain, input.config, input.params[0], apiNum, next, res);
-  }
-
-  /**
-   * 调用API
-   * @param  {string}   domain 域名
-   * @param  {string}   api    接口
-   * @param  {array}   params 传参
-   * @param  {number}   apiNum 接口数量
-   * @param  {Function} next   next触发函数
-   * @param  {Object}   res    请求返回
-   * @return {void}          无
-   */
-  function callApi(domain, api, params, apiNum, next, res) {
-    if (res.getCache) {
-
-      var key = res.genKey(domain, api.url, JSON.stringify(params));
-
-      res.getCache(key, function(err, body) {
-        if (!err && body) {
-          console.log(key + ' cached!');
-          procRet(domain, api, apiNum, next, res, body);
-        } else {
-          callServer(domain, api, params, apiNum, next, res);
-          console.log(key + '  cache expired!');
-        }
-      });
-    } else {
-      callServer(domain, api, params, apiNum, next, res);
-    }
-  }
-
-  /**
-   * 调用服务
-   * @param  {string}   domain 域名
-   * @param  {string}   api    接口
-   * @param  {array}   params 传参
-   * @param  {number}   apiNum 接口数量
-   * @param  {Function} next   next触发函数
-   * @param  {Object}   res    请求返回
-   * @return {void}          无
-   */
-  function callServer(domain, api, params, apiNum, next, res) {
-    request({
-      url: domain + api.url,
-      method: api.method,
-      qs: params
-    }, function(error, response, body) {
-      if (response && response.statusCode === 200) {
-        if (res.setCache) {
-          var key = res.genKey(domain, api.url, JSON.stringify(params));
-
-          res.setCache(key, body, api.cache);
-        }
-        procRet(domain, api, apiNum, next, res, body);
-      } else {
-        if (response) {
-          next(new Error('error: ' + response.statusCode));
-        } else {
-          next(new Error('api server error!'));
-        }
-      }
-    });
-  }
-
-  /**
-   * 处理结果
-   * @param  {string}   domain 域名
-   * @param  {string}   api    接口
-   * @param  {number}   apiNum 接口数量
-   * @param  {Function} next   next触发函数
-   * @param  {Object}   res    请求返回
-   * @param  {Object}   body   请求结果
-   * @return {void}          无
-   */
-  function procRet(domain, api, apiNum, next, res, body) {
-    if (apiNum > 1) {
-      ret[api.method + domain + api.url] = JSON.parse(body);
-    } else {
-      ret = JSON.parse(body);
-    }
-
-    res.proxyData = ret;
-    count++;
-
-    if (apiNum === count) {
-      next();
-    }
+    callApi(params);
   }
 };
+
+/**
+ * 处理结果
+ * @param  {Object} params 参数
+ * @return {void}        无
+ */
+function procRet(params) {
+  if (params.apiNum > 1) {
+    ret[params.api.method + params.domain + params.api.url] = JSON.parse(params.body);
+  } else {
+    ret = JSON.parse(params.body);
+  }
+  params.res.proxyData = ret;
+  count++;
+  if (params.apiNum === count) {
+    params.next();
+  }
+}
+
+
+/**
+ * 调用API
+ * @param  {Object}   params  domain 域名  
+ * api 接口 params 传参  apiNum 接口数量 
+ * next触发函数   res    请求返回
+ * @return {void}            无
+ */
+function callApi(params) {
+  if (params.res.getCache) {
+
+    var key = params.res.genKey(params.domain, params.api.url, JSON.stringify(params.params));
+
+    params.res.getCache(key, function(err, body) {
+      if (!err && body) {
+        console.log(key + ' cached!');
+        params.body = body;
+        procRet(params);
+      } else {
+        callServer(params);
+        console.log(key + '  cache expired!');
+      }
+    });
+  } else {
+    callServer(params);
+  }
+}
+
+/**
+ * 调用服务
+ * @param  {Object}   params  传参
+ * @return {void}       无
+ */
+function callServer(params) {
+  request({
+    url: params.domain + params.api.url,
+    method: params.api.method,
+    qs: params.params
+  }, function(error, response, body) {
+    if (response && response.statusCode === 200) {
+      if (params.res.setCache) {
+        var key = params.res.genKey(params.domain, params.api.url, JSON.stringify(params.params));
+
+        params.res.setCache(key, body, params.api.cache);
+      }
+      params.body = body;
+      procRet(params);
+    } else {
+      if (response) {
+        params.next(new Error('error: ' + response.statusCode));
+      } else {
+        params.next(new Error('api server error!'));
+      }
+    }
+  });
+}

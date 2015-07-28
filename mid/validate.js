@@ -54,7 +54,12 @@ module.exports = function(req, res, next) {
 
 };
 
-
+/**
+ * 验证方法
+ * @param  {Object} config 验证配置
+ * @param  {Object} req    请求
+ * @return {Object}        返回验证结果
+ */
 function validate(config, req) {
     var params = config.params || [],
         message = {},

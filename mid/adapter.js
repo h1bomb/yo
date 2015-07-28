@@ -8,12 +8,14 @@ var _ = require('lodash');
 module.exports = function(dir) {
 
     var adapters = {},
-        methods = ['get', 'post', 'head', 'delete', 'put'];
+        methods = ['get', 'post', 'head', 'delete', 'put'],
+        files = [];
 
     //读取适配逻辑目录，载入适配逻辑
-    var files = fs.readdirSync(dir);
-    if (!files) {
-        return;
+    try {
+        files = fs.readdirSync(dir);
+    } catch (err) {
+        console.log('没有配置接口适配目录');
     }
 
     _.forEach(files, function(val) {
