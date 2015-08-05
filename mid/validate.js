@@ -30,7 +30,7 @@ module.exports = function(req, res, next) {
         _.forEach(config.apis, function(v) {
             valret = validate(v, req);
             params.push(valret.ret);
-            _.union(messages, valret.messages);
+            messages = _.union(messages, valret.msgs);
             if (valret.err) {
                 error = true;
             }
@@ -69,6 +69,7 @@ function validate(config, req) {
 
     _.forEach(params, function(v) {
         var val = req.proxyParams.params[v.name] || req.proxyParams.body[v.name];
+        val = val ? val + '' : val;
         var flag1 = false,
             flag2 = false;
         if (val) {
@@ -80,7 +81,7 @@ function validate(config, req) {
             }
             if (flag1 && flag2) {
                 ret[v.name] = val;
-            } else if (!v.reg && !v.maxLength && !v.minLength) {
+            } else if ((!v.reg && flag1) || (flag2 && !v.maxLength && !v.minLength) || (!v.reg && !v.maxLength && !v.minLength)) {
                 ret[v.name] = val;
             } else {
                 message[config.url + ':' + v.name] = v.message;
@@ -91,7 +92,7 @@ function validate(config, req) {
             if (v.def) {
                 ret[v.name] = v.def;
             }
-            if (v.require) {
+            if (v.require && !v.def) {
                 message[v.name] = v.name + '不能为空';
                 messages.push(message);
                 error = true;

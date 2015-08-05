@@ -158,5 +158,89 @@ describe('mid/proxy', function() {
             });
             proxy.__get__('callApi')(params);
         });
+
+
+    });
+    describe('callServer', function() {
+        it('请求返回失败，没有response，期待异常', function(done) {
+            var proxy = rewire("../../mid/proxy");
+            proxy.__set__('request', function(options, callback) {
+                callback(true, null, null);
+            });
+            var callServer = proxy.__get__('callServer');
+
+            callServer({
+                domain: 'xxx',
+                api: {
+                    url: 'xxx',
+                    method: 'get'
+                },
+                params: {},
+                next: function(error) {
+                    expect(error).to.eql(new Error('api server error!'));
+                    done();
+                }
+            });
+        });
+
+        it('请求返回失败，有response，期待异常', function(done) {
+            var proxy = rewire("../../mid/proxy");
+            proxy.__set__('request', function(options, callback) {
+                callback(true, {
+                    'statusCode': 500
+                }, null);
+            });
+
+            var callServer = proxy.__get__('callServer');
+
+            callServer({
+                domain: 'xxx',
+                api: {
+                    url: 'xxx',
+                    method: 'get'
+                },
+                params: {},
+                next: function(error) {
+                    expect(error).to.eql(new Error('error: 500'));
+                    done();
+                }
+            });
+
+        });
+        it('请求返回成功，有使用缓存，期待设置缓存并设置结果', function(done) {
+            var proxy = rewire("../../mid/proxy");
+            proxy.__set__('request', function(options, callback) {
+                callback(false, {
+                    'statusCode': 200
+                }, {});
+            });
+            proxy.__set__('procRet', function(params) {
+                expect(params.body).to.eql({});
+                done();
+            });
+
+            var callServer = proxy.__get__('callServer');
+
+            callServer({
+                domain: 'xxx',
+                api: {
+                    url: 'xxx',
+                    method: 'get'
+                },
+                res: {
+                    setCache: function() {
+
+                    },
+                    genKey: function() {
+                        return 'key';
+                    }
+                },
+                params: {},
+                next: function() {
+
+                }
+            });
+        });
     })
+
 });
