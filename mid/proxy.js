@@ -34,7 +34,7 @@ module.exports = function(req, res, next) {
     apiNum: apiNum, //接口数量
     next: next, //express next
     res: res //express 请求返回对象
-  }
+  };
 
   //根据接口配置调用
   if (input.config.apis) {
@@ -76,8 +76,8 @@ function procRet(params) {
 
 /**
  * 调用API
- * @param  {Object}   params  domain 域名  
- * api 接口 params 传参  apiNum 接口数量 
+ * @param  {Object}   params  domain 域名
+ * api 接口 params 传参  apiNum 接口数量
  * next触发函数   res    请求返回
  * @return {void}            无
  */

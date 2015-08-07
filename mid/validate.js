@@ -70,23 +70,29 @@ function validate(config, req) {
     _.forEach(params, function(v) {
         var val = req.proxyParams.params[v.name] || req.proxyParams.body[v.name];
         val = val ? val + '' : val;
-        var flag1 = false,
-            flag2 = false;
+        var flag1,
+            flag2,
+            maxLength = Number(v.maxLength) + 1,
+            minLength = Number(v.minLength) - 1;
         if (val) {
-            if (v.maxLength && v.minLength && val.length < Number(v.maxLength) + 1 && val.length > Number(v.minLength) - 1) {
-                flag1 = true;
-            }
-            if (v.reg && v.reg.test(val)) {
-                flag2 = true;
-            }
-            if (flag1 && flag2) {
-                ret[v.name] = val;
-            } else if ((!v.reg && flag1) || (flag2 && !v.maxLength && !v.minLength) || (!v.reg && !v.maxLength && !v.minLength)) {
-                ret[v.name] = val;
+            if ((!v.maxLength || !v.minLength) || (val.length < maxLength && val.length > minLength)) {
+                flag1 = 1;
             } else {
+                flag1 = 2;
+            }
+
+            if (!v.reg || v.reg.test(val)) {
+                flag1 = 1;
+            } else {
+                flag2 = 2;
+            }
+
+            if (flag1 === 2 || flag2 === 2) {
                 message[config.url + ':' + v.name] = v.message;
                 messages.push(message);
                 error = true;
+            } else {
+                ret[v.name] = val;
             }
         } else {
             if (v.def) {
