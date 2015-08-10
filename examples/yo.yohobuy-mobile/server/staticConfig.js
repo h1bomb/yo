@@ -1,1 +1,1 @@
-exports.staticDir = {"test":{"libs":"/dist/libs-all.js","js":"/dist/index-debug.js"},"production":{"libs":"http://cdn.yoho.cn/libs/deps_0d90f928e45822d640a4b9e7186eb786.js","js":"http://cdn.yoho.cn/yohobuy-mobile/2.1.4/index.js","css":"http://cdn.yoho.cn/yohobuy-mobile/2.1.4/index.css"}}
+exports.staticDir = {"test":{"libs":"/dist/libs-all.js","js":"/dist/index-debug.js"},"production":{"libs":"http://cdn.yoho.cn/libs/deps_f920fd4ede5c005256f96fa8cd76d6a6.js","js":"http://cdn.yoho.cn/yohobuy-mobile/2.1.5/index.js","css":"http://cdn.yoho.cn/yohobuy-mobile/2.1.5/index.css"}}
