@@ -32,7 +32,6 @@
     "jshint-stylish": "^1.0.2",
     "mocha": "*",
     "expect.js": "*",
-    "muk": "*",
     "rewire": "*"
   }
 }
