@@ -1,6 +1,6 @@
 var expect = require("expect.js");
 var rewire = require("rewire");
-var cache = rewire("../../mid/cache");
+var cache = rewire("../../lib/mid/cache");
 
 var call,
     req = {},

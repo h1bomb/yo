@@ -1,6 +1,6 @@
 var expect = require("expect.js");
 var rewire = require("rewire");
-var staticM = rewire("../../mid/static");
+var staticM = rewire("../../lib/mid/static");
 
 describe('mid/static', function() {
     it('根据环境变量加载不同的配置参数', function() {

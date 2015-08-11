@@ -1,6 +1,6 @@
 var expect = require("expect.js");
 var rewire = require("rewire");
-var proxy = rewire("../../mid/proxy");
+var proxy = rewire("../../lib/mid/proxy");
 
 describe('mid/proxy', function() {
     describe('main', function() {
@@ -97,7 +97,7 @@ describe('mid/proxy', function() {
 
     describe('callApi', function() {
         it('如果没有加载cache中间件，则直接调用server', function(done) {
-            var proxy = rewire("../../mid/proxy");
+            var proxy = rewire("../../lib/mid/proxy");
             var params = {
                 res: {}
             };
@@ -126,7 +126,7 @@ describe('mid/proxy', function() {
                 }
             };
 
-            var proxy = rewire("../../mid/proxy");
+            var proxy = rewire("../../lib/mid/proxy");
             proxy.__set__('procRet', function() {
                 expect(params.body).to.be(true);
                 done();
@@ -152,7 +152,7 @@ describe('mid/proxy', function() {
                 }
             };
 
-            var proxy = rewire("../../mid/proxy");
+            var proxy = rewire("../../lib/mid/proxy");
             proxy.__set__('callServer', function() {
                 done();
             });
@@ -163,7 +163,7 @@ describe('mid/proxy', function() {
     });
     describe('callServer', function() {
         it('请求返回失败，没有response，期待异常', function(done) {
-            var proxy = rewire("../../mid/proxy");
+            var proxy = rewire("../../lib/mid/proxy");
             proxy.__set__('request', function(options, callback) {
                 callback(true, null, null);
             });
@@ -184,7 +184,7 @@ describe('mid/proxy', function() {
         });
 
         it('请求返回失败，有response，期待异常', function(done) {
-            var proxy = rewire("../../mid/proxy");
+            var proxy = rewire("../../lib/mid/proxy");
             proxy.__set__('request', function(options, callback) {
                 callback(true, {
                     'statusCode': 500
@@ -208,7 +208,7 @@ describe('mid/proxy', function() {
 
         });
         it('请求返回成功，有使用缓存，期待设置缓存并设置结果', function(done) {
-            var proxy = rewire("../../mid/proxy");
+            var proxy = rewire("../../lib/mid/proxy");
             proxy.__set__('request', function(options, callback) {
                 callback(false, {
                     'statusCode': 200

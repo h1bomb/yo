@@ -1,6 +1,6 @@
 var expect = require("expect.js");
 var rewire = require("rewire");
-var pjax = rewire("../../mid/pjax");
+var pjax = rewire("../../lib/mid/pjax");
 
 describe('mid/pjax', function() {
     describe('main', function() {
