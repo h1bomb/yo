@@ -3,19 +3,17 @@
   "version": "1.0.4",
   "description": "Construction of the presentation layer solution is based on express, handlebars",
   "main": "index.js",
-  "scripts": {
-    "test": "mocha"
-  },
   "author": "hbomb",
   "license": "MIT",
   "dependencies": {
     "MD5": "^1.2.2",
     "body-parser": "^1.12.4",
-    "cookie-parser": "^1.3.5",
     "connect-redis": "^2.4.0",
-    "express-session": "^1.11.3",
+    "cookie-parser": "^1.3.5",
+    "debug": "^2.2.0",
     "errorhandler": "^1.4.0",
     "express": "^4.12.4",
+    "express-session": "^1.11.3",
     "hbs": "^3.0.1",
     "hiredis": "^0.4.0",
     "lodash": "^3.10.0",
@@ -26,13 +24,14 @@
     "serve-spm": "^1.0.0"
   },
   "devDependencies": {
+    "expect.js": "*",
     "gulp": "^3.8.11",
-    "istanbul": "0.3.17",
+    "gulp-changed": "^1.3.0",
     "gulp-doxx": "0.0.4",
     "gulp-jshint": "^1.10.0",
+    "istanbul": "0.3.17",
     "jshint-stylish": "^1.0.2",
     "mocha": "*",
-    "expect.js": "*",
     "rewire": "*"
   },
   "scripts": {

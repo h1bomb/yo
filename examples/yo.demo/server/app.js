@@ -6,7 +6,10 @@ var app = yo({
 
 app.get('/', function(req, res) {
 
-    res.render('index');
+    res.render('index', function(err, str) {
+        res.send(str);
+    });
+
 });
 
 app.get('/test', function(req, res) {
@@ -25,11 +28,11 @@ app.get('/test2', function(req, res) {
     setTimeout(function() {
         res.write('<h1>2</h1>');
         i++;
-        end()
+        end();
     }, 2000);
     setTimeout(function() {
         res.write('<h1>3</h1>');
         i++;
-        end()
+        end();
     }, 1000);
 });

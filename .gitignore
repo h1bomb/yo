@@ -2,3 +2,4 @@ node_modules/
 examples/yo.demo/spm/spm_modules/
 examples/yo.yohobuy-mobile/public/dist/
 coverage/
+docs/
