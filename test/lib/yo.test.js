@@ -36,6 +36,7 @@ describe('/lib/yo', function() {
 
             });
             yo.__set__('env', 'development');
+            yo.__set__('expressDebug', function() {});
             yo.__set__('errorhandler', function() {
 
             });

@@ -35,7 +35,8 @@ describe('mid/pjax', function() {
             var res = {
                 render: function(view) {
                     res.view = view;
-                }
+                },
+                proxyData: {}
             };
 
             var next = function() {};
