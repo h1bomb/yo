@@ -1,0 +1,18 @@
+<html>
+<head>
+<title>Something wrong!</title>
+</head>
+<body>
+<h1>some wrong!</h1>
+<table>
+{{#each message}}
+ <tr>
+ {{#each this}}
+  <td>{{@key}}</td><td>{{this}}</td>
+ {{/each}}
+ </tr>
+{{/each}}
+</table>
+<a href="{{reloadUrl}}">refresh</a>
+</body>
+</html>

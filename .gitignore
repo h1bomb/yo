@@ -3,3 +3,5 @@ examples/yo.demo/spm/spm_modules/
 examples/yo.yohobuy-mobile/public/dist/
 coverage/
 docs/
+examples/yo.demo/client/spm_modules/
+examples/yo.yohobuy-mobile/server/staticConfig.js
