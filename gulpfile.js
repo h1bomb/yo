@@ -9,7 +9,7 @@ gulp.task('default', ['hint', 'test-cov', 'doc'], function() {
     console.log('DONE!');
 });
 
-//ES6转ES5
+//测试覆盖率
 gulp.task('test-cov', function() {
     exec('istanbul cover node_modules/mocha/bin/_mocha', function(error, stdout, stderr) {
         if (error) {
