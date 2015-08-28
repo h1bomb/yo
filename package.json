@@ -20,7 +20,8 @@
     "redis": "^0.12.1",
     "request": "^2.55.0",
     "serve-favicon": "^2.2.1",
-    "serve-spm": "^1.0.0"
+    "serve-spm": "^1.0.0",
+    "express-debug": "*"
   },
   "devDependencies": {
     "expect.js": "*",
@@ -30,7 +31,6 @@
     "gulp-jshint": "^1.10.0",
     "istanbul": "0.3.17",
     "jshint-stylish": "^1.0.2",
-    "express-debug": "*",
     "mocha": "*",
     "rewire": "*"
   },
