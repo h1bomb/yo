@@ -1,9 +1,11 @@
-yo
-------
+![yo][6]
 
 yo是一个基于express的前端表现层的框架。
 核心理念是,简化前端开发流程，同时实现前后端分离，分离的准则是基于接口定义而不涉及具体的技术实现细节。
 使用了handlebars作为模板引擎,spm进行前端构建和依赖包管理，使用PJAX的方式，渐进使用history。
+
+
+-------------------------
 
 已实现功能：
 
@@ -108,3 +110,4 @@ require('./stub/routers')(app);//添加桩服务
 [4]: http://git.dev.yoho.cn/uploads/hbomb/yoweb/5e2460048d/CDN.png
 [3]: http://git.dev.yoho.cn/uploads/hbomb/yoweb/86bff00358/frontend_env_.png
 [1]: http://git.dev.yoho.cn/uploads/hbomb/yoweb/645ee01dc9/%E7%B3%BB%E7%BB%9F%E6%8B%93%E6%89%91%E5%9B%BE.png
+[6]: http://dn-coding-net-production-static.qbox.me/53f0ad7f-76b1-4045-b146-a0b67e5730a9.png?imageView/2/w/180/q/90

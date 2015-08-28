@@ -1,6 +1,6 @@
 var expect = require("expect.js");
 var rewire = require("rewire");
-var adapter = rewire("../../mid/adapter");
+var adapter = rewire("../../lib/mid/adapter");
 
 describe('adapter', function() {
     it('读取适配器逻辑，装载成功', function() {

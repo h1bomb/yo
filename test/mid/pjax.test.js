@@ -1,6 +1,6 @@
 var expect = require("expect.js");
 var rewire = require("rewire");
-var pjax = rewire("../../mid/pjax");
+var pjax = rewire("../../lib/mid/pjax");
 
 describe('mid/pjax', function() {
     describe('main', function() {
@@ -35,7 +35,8 @@ describe('mid/pjax', function() {
             var res = {
                 render: function(view) {
                     res.view = view;
-                }
+                },
+                proxyData: {}
             };
 
             var next = function() {};
@@ -106,6 +107,47 @@ describe('mid/pjax', function() {
         it('测试获取默认视图', function() {
             expect(pjax.__get__('getView')('/a/b')).to.be('a/b');
             expect(pjax.__get__('getView')('/a/:zd/b:userid')).to.be('a/b');
+        });
+    });
+    describe('genkey', function() {
+        it('输入一个值，期待md值正确', function() {
+            expect(pjax.__get__('genkey')({
+                "a": "b"
+            })).to.be('pagecache:92eff9dda44cb8003ee13990782580ff');
+        });
+    });
+    describe('getPageCache', function() {
+        it('获取页面缓存,如果没有设置cache，则返回false', function(done) {
+            pjax.__get__('getPageCache')('231', {}, function(err, html) {
+                expect(err).to.be(null);
+                expect(html).to.be(false);
+                done();
+            });
+        });
+        it('获取页面缓存,如果设置cache，则返回内容', function(done) {
+            pjax.__get__('getPageCache')('231', {
+                getCache: function(key, callback) {
+                    callback(null, 'aaa')
+                }
+            }, function(err, html) {
+                expect(err).to.be(null);
+                expect(html).to.be('aaa');
+                done();
+            });
+        });
+    });
+    describe('setPageCache', function() {
+        it('设置pagecache，如果没有设置cache，则没有设置上', function() {
+            pjax.__get__('setPageCache')('123', 'aaa', {});
+        });
+        it('设置pagecache，如果设置cache，则设置上', function(done) {
+            pjax.__get__('setPageCache')('123', 'aaa', {
+                setCache: function(key, html) {
+                    expect(key).to.be('123');
+                    expect(html).to.be('aaa');
+                    done();
+                }
+            });
         });
     })
 });

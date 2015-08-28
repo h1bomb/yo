@@ -1,6 +1,6 @@
 var expect = require("expect.js");
 var rewire = require("rewire");
-var validate = rewire("../../mid/validate");
+var validate = rewire("../../lib/mid/validate");
 
 describe('mid/validate', function() {
     describe('main', function() {
@@ -30,7 +30,7 @@ describe('mid/validate', function() {
                     path: 'xxx'
                 }
             };
-            validate = rewire("../../mid/validate");
+            validate = rewire("../../lib/mid/validate");
             validate.__set__('validate', function() {
                 return {
                     ret: 'NO OK!',
@@ -55,7 +55,7 @@ describe('mid/validate', function() {
                     path: 'xxx'
                 }
             };
-            validate = rewire("../../mid/validate");
+            validate = rewire("../../lib/mid/validate");
             validate.__set__('validate', function() {
                 return {
                     ret: 'NO OK!',
@@ -77,7 +77,7 @@ describe('mid/validate', function() {
         });
     });
     describe('validate', function() {
-        validate = rewire("../../mid/validate");
+        validate = rewire("../../lib/mid/validate");
         valFun = validate.__get__('validate');
         var config = {
             params: [{
