@@ -4,4 +4,4 @@
 
 var $ = require('jquery');
 
-$('body h1').css('color','#eee');
+$('body h1').css('color', '#eee');
