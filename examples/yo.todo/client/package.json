@@ -1,0 +1,48 @@
+{
+  "name": "demo",
+  "version": "0.1.0",
+  "description": "yo demo",
+  "keywords": [],
+  "homepage": "",
+  "author": "demo",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "spm": {
+    "main": "index.js",
+    "dependencies": {
+      "jquery": "1.8.3"
+    },
+    "devDependencies": {
+      "expect.js": "0.3.1"
+    },
+    "buildArgs": "--idleading {{name}}"
+  },
+  "devDependencies": {
+    "father": "^1.0.0",
+    "gulp": "^3.8.11",
+    "gulp-compass": "^2.0.4",
+    "gulp-concat": "^2.5.2",
+    "gulp-develop-server": "^0.4.2",
+    "gulp-ftp": "^1.0.3",
+    "gulp-md5": "^0.1.1",
+    "gulp-spm": "^0.11.3",
+    "gulp-uglify": "^1.2.0",
+    "gulp-util": "^3.0.4",
+    "mkdirp": "^0.5.1",
+    "request": "^2.57.0",
+    "rmdir": "^1.1.0"
+  },
+  "scripts": {
+    "test": "spm test",
+    "build": "spm build"
+  },
+  "main": "app.js",
+  "directories": {
+    "example": "examples",
+    "test": "tests"
+  },
+  "license": "ISC",
+  "dependencies": {}
+}

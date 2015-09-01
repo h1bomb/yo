@@ -1,0 +1,5 @@
+{{#if _env.production}}
+<link rel="stylesheet" href="{{../_env.production.css}}">
+{{else}}
+<link rel="stylesheet" href="/css/index.css">
+{{/if}}
