@@ -1,34 +1,37 @@
 var list = [];
 module.exports = function(app) {
 
-    //设置所有状态切换
-    app.post('/stub/toggleAll', function(req, res) {
-        for (var i = 0; i < list.length; i++) {
-            if (list[i]) {
-                list[i].state = list[i].state ? 0 : 1;
-            }
+    //批量设置todo
+    app.put('/todos', function(req, res) {
+        var batch = req.body.batch,
+            doneNum = 0,
+            state;
+        try {
+            batch = JSON.parse(batch);
+        } catch (err) {
+            return res.send(ret(false));
         }
-        res.send(ret(true));
-    });
 
-    //设置当前状态切换
-    app.post('/stub/toggle', function(req, res) {
-        var done = false;
-        if (req.body.id) {
+        if (batch && batch.length > 0) {
             for (var i = 0; i < list.length; i++) {
-                if (list[i].id === req.body.id) {
-                    list[i].state = list[i].state ? 0 : 1;
-                    done = true;
+                for (var k = 0; k < batch.length; k++) {
+                    if (batch[k].id && list[i].id === batch[k].id) {
+                        setval(batch[k].todo, batch[k].state, list[i]);
+                        doneNum++;
+                    }
                 }
             }
-        }
 
-        res.send(ret(done));
+            if (doneNum === batch.length) {
+                return res.send(ret(true));
+
+            }
+        }
+        res.send(ret(false));
     });
 
     //添加
-    app.post('/stub/add', function(req, res) {
-        console.log(req.params);
+    app.post('/todo', function(req, res) {
         if (req.body.todo) {
             list.push({
                 id: uuid(),
@@ -42,45 +45,49 @@ module.exports = function(app) {
     });
 
     //编辑保存
-    app.post('/stub/save', function(req, res) {
-        var saved = false;
-        if (req.body.id) {
+    app.put('/todo/:id', function(req, res) {
+        var saved = false,
+            state;
+        if (req.params.id) {
             for (var i = 0; i < list.length; i++) {
-                if (req.body.id === list[i].id) {
-                    list[i].todo = req.body.todo;
-                    list[i].state = req.body.state;
+                if (req.params.id === list[i].id) {
+                    setval(req.body.todo, req.body.state, list[i]);
+                    saved = true;
                 }
             }
         }
-        res.send(ret(save));
+        res.send(ret(saved));
     });
 
     //首页
-    app.get('/stub', function(req, res) {
+    app.get('/todos', function(req, res) {
         var data = ret(true, list);
         res.send(data);
     });
 
     //过滤
-    app.get('/stub/filter', function(req, res) {
-        if (req.body.state) {
-            var retData = [];
+    app.get('/state/:state/todos', function(req, res) {
+        var retData = [],
+            state;
+        if (procState(state)) {
             for (var i = 0; i < list.length; i++) {
-                if (req.body.state === list[i].state) {
+                if (req.params.state === list[i].state) {
                     retData.push(list[i]);
                 }
             }
         }
+
         res.send(ret(true, retData));
     });
 
     //删除
-    app.post('/stub/delete', function(req, res) {
+    app.delete('/todo/:id', function(req, res) {
         var isDel = false;
-        if (req.body.id) {
+        if (req.params.id) {
             for (var i = 0; i < list.length; i++) {
-                if (req.body.id === list[i].id) {
+                if (req.params.id === list[i].id) {
                     list.splice(i, 1);
+                    isDel = true;
                     break;
                 }
             }
@@ -89,6 +96,32 @@ module.exports = function(app) {
     });
 }
 
+/**
+ * 处理状态码
+ * @param  {Number} state 状态
+ * @return {Boolean} 返回判断值
+ */
+function procState(state) {
+    state = Number(state);
+    return !isNaN(state);
+}
+
+/**
+ * 设置结果集
+ * @param  {String} todo  事项
+ * @param  {Number} state 状态
+ * @param  {Object} ret   结果集
+ * @return {void}
+ */
+function setval(todo, state, ret) {
+    if (todo) {
+        ret.todo = todo;
+    }
+
+    if (procState(state)) {
+        ret.state = state;
+    }
+}
 /**
  * 生成唯一键
  * @return number
