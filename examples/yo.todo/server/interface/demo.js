@@ -4,6 +4,6 @@ exports.res =
     route: '/',
     method: 'GET',
     view: 'pages/index',
-    url: '/todo/',
+    url: '/todos/',
     params: []
 }];

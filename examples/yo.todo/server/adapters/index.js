@@ -1,10 +1,6 @@
 exports.get = function(data, req, res) {
-    data.list = [{
-        'name':'aaa',
-        'age':23
-    },{
-        'name':'aadsfa',
-        'age':2334
-    }];
+    for (var i = 0; i < data.data.length; i++) {
+
+    }
     return data;
 }

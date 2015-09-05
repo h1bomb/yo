@@ -2,15 +2,15 @@
     <input id="toggle-all" type="checkbox">
     <label for="toggle-all">Mark all as complete</label>
     <ul id="todo-list">
-         {{#list}}
+         {{#data}}
             <li {{#if completed}}class="completed"{{/if}} data-id="{{id}}">
                 <div class="view">
                     <input class="toggle" type="checkbox" {{#if completed}}checked{{/if}}>
-                    <label>{{title}}</label>
+                    <label>{{todo}}</label>
                     <button class="destroy"></button>
                 </div>
-                <input class="edit" value="{{title}}">
+                <input class="edit" value="{{todo}}">
             </li>
-        {{/list}}
+        {{/data}}
     </ul>
 </section>
