@@ -1,5 +1,7 @@
 <section id="main">
-    <input id="toggle-all" type="checkbox">
+    {{#if data}}
+    <input id="toggle-all" type="checkbox" {{#if toggleAll}}checked{{/if}}>
+    {{/if}}
     <label for="toggle-all">Mark all as complete</label>
     <ul id="todo-list">
          {{#data}}

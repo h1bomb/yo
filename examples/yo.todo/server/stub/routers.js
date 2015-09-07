@@ -94,6 +94,27 @@ module.exports = function(app) {
         }
         res.send(ret(isDel));
     });
+
+    //批量删除
+    app.delete('/todos', function(req, res) {
+        var ids = req.body.ids;
+        try {
+            ids = JSON.parse(ids);
+        } catch (err) {
+            return res.send(ret(false));
+        }
+
+        for (var i = 0; i < list.length; i++) {
+            for (var j = 0; j < ids.length; j++) {
+                if (list[i].id === ids[j]) {
+                    list.splice(i, 1);
+                    if (i > 0) {
+                        i--;
+                    }
+                }
+            }
+        }
+    });
 }
 
 /**
