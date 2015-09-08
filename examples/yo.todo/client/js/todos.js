@@ -18,7 +18,13 @@ function initPjax() {
     });
 }
 
-var $newTodoInput = $("#new-todo");
+var $newTodoInput = $("#new-todo"), //新建一个todo
+    $listLi = $("#todo-list li"), //列表单元
+    $listToggle = $("#todo-list .togggle"), //切换todo状态
+    $listLiEdit = $("#todo-list .edit"), //编辑输入
+    $toggleall = $("#toggle-all"), //切换所有的todo状态
+    $listDestroy = $("#todo-list .destroy"), //删除todo
+    $clearCompleted = $("#clear-completed"); //清除完成的
 
 
 
@@ -37,8 +43,13 @@ var actions = {
     edit: {
         url: '/todo/',
         method: 'PUT',
-        event: ev: function(elem) {
-            this.url += elem.parents('li').attr('data-id');
+        ev: function(elem) {
+            this.url += elem.attr('data-id');
+            var state = elem.find('.togggle').attr('checked') ? 1 : 0;
+            this.data = {
+                todo: elem.find('label').text(),
+                state: state
+            }
         },
         callback: function() {}
     },
