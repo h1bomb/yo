@@ -1,34 +1,6 @@
 var list = [];
+var toggleAll = false;
 module.exports = function(app) {
-
-    //批量设置todo
-    app.put('/todos', function(req, res) {
-        var batch = req.body.batch,
-            doneNum = 0,
-            state;
-        try {
-            batch = JSON.parse(batch);
-        } catch (err) {
-            return res.send(ret(false));
-        }
-
-        if (batch && batch.length > 0) {
-            for (var i = 0; i < list.length; i++) {
-                for (var k = 0; k < batch.length; k++) {
-                    if (batch[k].id && list[i].id === batch[k].id) {
-                        setval(batch[k].todo, batch[k].state, list[i]);
-                        doneNum++;
-                    }
-                }
-            }
-
-            if (doneNum === batch.length) {
-                return res.send(ret(true));
-
-            }
-        }
-        res.send(ret(false));
-    });
 
     //添加
     app.post('/todo', function(req, res) {
@@ -65,21 +37,6 @@ module.exports = function(app) {
         res.send(data);
     });
 
-    //过滤
-    app.get('/state/:state/todos', function(req, res) {
-        var retData = [],
-            state;
-        if (procState(state)) {
-            for (var i = 0; i < list.length; i++) {
-                if (req.params.state === list[i].state) {
-                    retData.push(list[i]);
-                }
-            }
-        }
-
-        res.send(ret(true, retData));
-    });
-
     //删除
     app.delete('/todo/:id', function(req, res) {
         var isDel = false;
@@ -95,25 +52,29 @@ module.exports = function(app) {
         res.send(ret(isDel));
     });
 
-    //批量删除
-    app.delete('/todos', function(req, res) {
-        var ids = req.body.ids;
-        try {
-            ids = JSON.parse(ids);
-        } catch (err) {
-            return res.send(ret(false));
-        }
-
+    //切换状态
+    app.put('/todos/toggleall', function(req, res) {
         for (var i = 0; i < list.length; i++) {
-            for (var j = 0; j < ids.length; j++) {
-                if (list[i].id === ids[j]) {
-                    list.splice(i, 1);
-                    if (i > 0) {
-                        i--;
-                    }
-                }
+            if (!toggleAll) {
+                list[i].state = 1;
+                toggleAll = true;
+            } else {
+                list[i].state = 0;
+                toggleAll = false;
             }
         }
+    });
+
+    //清除完成项
+    app.delete('/todos/completed', function(req, res) {
+        var unCompleted = [];
+        for (var i = 0; i < list.length; i++) {
+            if (list[i].state === 0) {
+                unCompleted.push(list[i]);
+            }
+        }
+        list = unCompleted;
+        return res.send(ret(true, list));
     });
 }
 
@@ -170,7 +131,8 @@ function uuid() {
  */
 function ret(flag, data) {
     var ret = {
-        opts: flag
+        opts: flag,
+        toggleAll: toggleAll
     }
     if (data) {
         ret.data = data;

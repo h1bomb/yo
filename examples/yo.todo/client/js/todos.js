@@ -18,23 +18,28 @@ function initPjax() {
     });
 }
 
+var $newTodoInput = $("#new-todo");
+
 
 
 var actions = {
     toggleAll: {
-        url: '/todos',
-        method: 'PUT',
-        ev: function() {
-
-        },
-        callback: function() {
-
-        }
+        url: '/todos/toggleall',
+        method: 'PUT'
     },
     add: {
         url: '/todo',
         method: 'POST',
-        ev: function() {},
+        data: {
+            todo: $newTodoInput.val()
+        }
+    },
+    edit: {
+        url: '/todo/',
+        method: 'PUT',
+        event: ev: function(elem) {
+            this.url += elem.parents('li').attr('data-id');
+        },
         callback: function() {}
     },
     remove: {
@@ -44,13 +49,13 @@ var actions = {
         callback: function() {}
     },
     clearCompleted: {
-        url: '/todo',
-        method: 'POST',
+        url: '/todos/completed',
+        method: 'DELETE',
         ev: function() {},
         callback: function() {}
     },
     completed: {
-        url: '/todo',
+        url: '/todo/',
         method: 'PUT',
         ev: function() {},
         callback: function() {}
