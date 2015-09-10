@@ -1,11 +1,19 @@
 /**
  * todos
+ *
+ * todos的前端代码
+ * 只提交todo的操作，服务端维护todo状态
  */
 
 var $ = require('jquery');
 var NProgress = require('nprogress-183');
 require('jquery-pjax-183');
 
+/**
+ * 初始化Pjax
+ *
+ * @return void
+ */
 function initPjax() {
     $(document).pjax('a', '#pjax-container');
 
@@ -18,8 +26,8 @@ function initPjax() {
     });
 }
 
-var ENTER_KEY = 13;
-var ESCAPE_KEY = 27;
+var ENTER_KEY = 13; //回车键
+var ESCAPE_KEY = 27; //esc键
 
 var $newTodoInput = $("#new-todo"), //新建一个todo
     $listLi = $("#todo-list li"), //列表单元
@@ -30,26 +38,34 @@ var $newTodoInput = $("#new-todo"), //新建一个todo
     $clearCompleted = $("#clear-completed"); //清除完成的
 
 
-
+/**
+ * 界面操作对象
+ * @type {Object}
+ */
 var actions = {
-        toggleAll: {
-            url: '/todos/toggleall',
-            method: 'PUT',
-            eventHandle: [{
-                event: click,
-                elem: $toggleall
-            }]
-        }
+    toggleAll: {
+        url: '/todos/toggleall',
+        method: 'PUT',
+        eventHandle: [{
+            event: click,
+            elem: $toggleall
+        }]
     },
     add: {
         url: '/todo',
         method: 'POST',
-        data: {
-            todo: $newTodoInput.val()
-        },
         eventHandle: [{
-            event: 'click',
-            elem: $newTodoInput
+            event: 'keyup',
+            elem: $newTodoInput,
+            handle: function(e) {
+                if (e.which === ENTER_KEY) {
+                    actions.add.data = {
+                        todo: $(e.target).val() + ''
+                    };
+                    $(e.target).val('');
+                    return true;
+                }
+            }
         }]
     },
     edit: {
@@ -112,6 +128,10 @@ var actions = {
     }
 }
 
+/**
+ * 事件绑定操作
+ * @return {void}
+ */
 function bind() {
     $.each(actions, function(key, value) {
         $.each(value.eventHandle, function(index, hb) {
@@ -120,11 +140,39 @@ function bind() {
                 if (e.handle) {
                     isSend = e.handle(e);
                 }
+                if (isSend) {
+                    if (hb.ev) {
+                        hb.ev();
+                    }
+                    send(hb);
+                }
             });
         });
     });
 }
 
-function reload() {
+/**
+ * 发送操作信息
+ * @param  {Object} hb
+ * @return {void}
+ */
+function send(hb) {
+    $.ajax({
+        url: hb.url,
+        method: hb.method,
+        data: hb.data ? hb.data : null
+    }).done(function(data) {
+        if (data.opts) {
+            reload();
+        } else {
+            alert('something wrong!');
+        }
+        $.pjax.reload('#pjax-container');
 
+    }).fail(function() {
+        alert('something wrong!');
+    });
 }
+
+
+bind();
