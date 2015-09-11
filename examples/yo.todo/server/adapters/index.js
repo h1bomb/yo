@@ -5,7 +5,7 @@ exports.get = function(data, req, res) {
     data.completedTodos = false;
     data.activeTodoWord = 'items';
     data.activeTodoCount = 0;
-    data.toggleAll = toggleAll;
+    data.module = 'todos';
     var curData = [];
 
     for (var j = 0; j < states.length; j++) { //判断过滤条件

@@ -47,7 +47,7 @@ var actions = {
         url: '/todos/toggleall',
         method: 'PUT',
         eventHandle: [{
-            event: click,
+            event: 'click',
             elem: $toggleall
         }]
     },
@@ -114,7 +114,7 @@ var actions = {
             this.url += elem.attr('data-id');
         },
         eventHandle: [{
-            event: click,
+            event: 'click',
             elem: $listDestroy
         }]
     },
