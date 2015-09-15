@@ -96,9 +96,11 @@ var actions = {
             event: 'keyup',
             elem: $listLiEdit,
             handle: function(e) {
+                var val = e.target.value;
                 if (e.which === ENTER_KEY) {
                     $(e.target).blur();
-                    $(e.target).parents('li').find('label').text();
+
+                    $(e.target).parents('li').find('label').text(val);
                     return true;
                 }
 

@@ -24,7 +24,6 @@ module.exports = function(app) {
             for (var i = 0; i < list.length; i++) {
                 if (req.params.id === list[i].id) {
                     setval(req.body.todo, req.body.state, list[i]);
-                    console.log(list[i]);
                     saved = true;
                 }
             }
