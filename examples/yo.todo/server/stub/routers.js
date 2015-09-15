@@ -24,6 +24,7 @@ module.exports = function(app) {
             for (var i = 0; i < list.length; i++) {
                 if (req.params.id === list[i].id) {
                     setval(req.body.todo, req.body.state, list[i]);
+                    console.log(list[i]);
                     saved = true;
                 }
             }
@@ -57,12 +58,12 @@ module.exports = function(app) {
         for (var i = 0; i < list.length; i++) {
             if (!toggleAll) {
                 list[i].state = 1;
-                toggleAll = true;
             } else {
                 list[i].state = 0;
-                toggleAll = false;
             }
         }
+        toggleAll = !toggleAll;
+        res.send(ret(true));
     });
 
     //清除完成项
@@ -101,7 +102,7 @@ function setval(todo, state, ret) {
     }
 
     if (procState(state)) {
-        ret.state = state;
+        ret.state = Number(state);
     }
 }
 /**

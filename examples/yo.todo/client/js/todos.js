@@ -31,7 +31,7 @@ var ESCAPE_KEY = 27; //esc键
 
 var $newTodoInput = $("#new-todo"), //新建一个todo
     $listLi = $("#todo-list li"), //列表单元
-    $listToggle = $("#todo-list .togggle"), //切换todo状态
+    $listToggle = $("#todo-list .toggle"), //切换todo状态
     $listLiEdit = $("#todo-list .edit"), //编辑输入
     $toggleall = $("#toggle-all"), //切换所有的todo状态
     $listDestroy = $("#todo-list .destroy"), //删除todo
@@ -71,21 +71,19 @@ var actions = {
     edit: {
         url: '/todo/',
         method: 'PUT',
-        ev: function(elem) {
+        before: function(elem) {
             this.params = elem.parents('li').attr('data-id');
 
-            var state = elem.parents('li').find('.togggle').attr('checked') ? 1 : 0;
+            var state = elem.parents('li').find('.toggle').attr('checked') ? 1 : 0;
+
             this.data = {
-                todo: elem.val(),
+                todo: elem.parents('li').find('label').text(),
                 state: state
             };
         },
         eventHandle: [{
             event: 'click',
-            elem: $listToggle,
-            handle: function() {
-                return true;
-            }
+            elem: $listToggle
         }, {
             event: 'dblclick',
             elem: $listLi,
@@ -100,6 +98,7 @@ var actions = {
             handle: function(e) {
                 if (e.which === ENTER_KEY) {
                     $(e.target).blur();
+                    $(e.target).parents('li').find('label').text();
                     return true;
                 }
 
@@ -121,7 +120,7 @@ var actions = {
     remove: {
         url: '/todo/',
         method: 'DELETE',
-        ev: function(elem) {
+        before: function(elem) {
             this.params = elem.parents('li').attr('data-id');
         },
         eventHandle: [{
@@ -153,16 +152,19 @@ function bind() {
                 var isSend = false;
                 if (hb.handle) {
                     isSend = hb.handle(e);
+                } else {
+                    isSend = true;
                 }
                 if (isSend) {
-                    if (value.ev) {
-                        value.ev($(e.target));
+                    if (value.before) {
+                        value.before($(e.target));
                     }
                     send(value);
                 }
             });
         });
     });
+    initPjax();
 }
 
 /**
@@ -171,7 +173,7 @@ function bind() {
  * @return {void}
  */
 function send(hb) {
-    var url = hb.url + hb.params;
+    var url = hb.url + (hb.params || '');
     $.ajax({
         url: url,
         type: hb.method,

@@ -5,14 +5,18 @@ exports.get = function(data, req, res) {
     data.completedTodos = false;
     data.activeTodoWord = 'items';
     data.activeTodoCount = 0;
+    data.allCount = data.data.length;
     data.module = 'todos';
     var curData = [];
 
     for (var j = 0; j < states.length; j++) { //判断过滤条件
-        if (states[j] === req.params.state) {
+        if (states[j] === req.proxyParams.params.state) {
             curState = states[j];
             curStateVal = j;
             break;
+        } else {
+            curState = 'all';
+            curStateVal = 3;
         }
     }
 
@@ -31,7 +35,7 @@ exports.get = function(data, req, res) {
         }
     }
 
-    if (curData.length > 0) { //设置过滤后的数据
+    if (curStateVal !== 3) { //设置过滤后的数据
         data.data = curData;
     }
 

@@ -1,3 +1,4 @@
+{{# if allCount}}
 <footer id="footer">
     <span id="todo-count"><strong>{{activeTodoCount}}</strong> {{activeTodoWord}} left</span>
     <ul id="filters">
@@ -13,3 +14,4 @@
     </ul>
     {{#if completedTodos}}<button id="clear-completed">Clear completed</button>{{/if}}
 </footer>
+{{/if}}
