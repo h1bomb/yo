@@ -72,16 +72,20 @@ var actions = {
         url: '/todo/',
         method: 'PUT',
         ev: function(elem) {
-            this.url += elem.attr('data-id');
-            var state = elem.find('.togggle').attr('checked') ? 1 : 0;
+            this.params = elem.parents('li').attr('data-id');
+
+            var state = elem.parents('li').find('.togggle').attr('checked') ? 1 : 0;
             this.data = {
-                todo: elem.find('label').text(),
+                todo: elem.val(),
                 state: state
             };
         },
         eventHandle: [{
             event: 'click',
-            elem: $listToggle
+            elem: $listToggle,
+            handle: function() {
+                return true;
+            }
         }, {
             event: 'dblclick',
             elem: $listLi,
@@ -105,24 +109,34 @@ var actions = {
 
                 return false;
             }
+
+        }, {
+            event: 'blur',
+            elem: $listLiEdit,
+            handle: function(e) {
+                $(e.target).parents('li').removeClass('editing');
+            }
         }]
     },
     remove: {
         url: '/todo/',
         method: 'DELETE',
         ev: function(elem) {
-            this.url += elem.attr('data-id');
+            this.params = elem.parents('li').attr('data-id');
         },
         eventHandle: [{
             event: 'click',
-            elem: $listDestroy
+            elem: $listDestroy,
+            handle: function() {
+                return true;
+            }
         }]
     },
     clearCompleted: {
         url: '/todos/completed',
         method: 'DELETE',
         eventHandle: [{
-            event: click,
+            event: 'click',
             elem: $clearCompleted
         }]
     }
@@ -135,16 +149,16 @@ var actions = {
 function bind() {
     $.each(actions, function(key, value) {
         $.each(value.eventHandle, function(index, hb) {
-            hb.elem.on(hb.event, function(e) {
+            hb.elem.live(hb.event, function(e) {
                 var isSend = false;
-                if (e.handle) {
-                    isSend = e.handle(e);
+                if (hb.handle) {
+                    isSend = hb.handle(e);
                 }
                 if (isSend) {
-                    if (hb.ev) {
-                        hb.ev();
+                    if (value.ev) {
+                        value.ev($(e.target));
                     }
-                    send(hb);
+                    send(value);
                 }
             });
         });
@@ -157,18 +171,18 @@ function bind() {
  * @return {void}
  */
 function send(hb) {
+    var url = hb.url + hb.params;
     $.ajax({
-        url: hb.url,
-        method: hb.method,
-        data: hb.data ? hb.data : null
+        url: url,
+        type: hb.method,
+        data: hb.data ? hb.data : null,
+        dataType: "json"
     }).done(function(data) {
         if (data.opts) {
-            reload();
+            $.pjax.reload('#pjax-container');
         } else {
             alert('something wrong!');
         }
-        $.pjax.reload('#pjax-container');
-
     }).fail(function() {
         alert('something wrong!');
     });

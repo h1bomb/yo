@@ -38,6 +38,5 @@ exports.get = function(data, req, res) {
     if (data.activeTodoCount === 1) { //设置展示单复数
         data.activeTodoWord = 'item';
     }
-    console.log(data);
     return data;
 }
