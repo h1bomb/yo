@@ -1,4 +1,4 @@
-var yo = require('yo.js'); //引用YO框架
+var yo = require('../../../index'); //引用YO框架
 var staticDir = require('./staticConfig').staticDir; //获取静态文件的不同环境配置
 
 var app = yo({ //初始化yo的app

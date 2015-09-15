@@ -1,7 +1,7 @@
 {
-  "name": "demo",
+  "name": "todos",
   "version": "0.1.0",
-  "description": "yo demo",
+  "description": "yo todo",
   "keywords": [],
   "homepage": "",
   "author": "demo",
@@ -12,7 +12,10 @@
   "spm": {
     "main": "index.js",
     "dependencies": {
-      "jquery": "1.8.3"
+      "jquery": "1.8.3",
+      "jquery-pjax-183": "1.0.0",
+      "nprogress-183": "0.1.6",
+      "import-style": "1.0.0"
     },
     "devDependencies": {
       "expect.js": "0.3.1"
@@ -37,11 +40,6 @@
   "scripts": {
     "test": "spm test",
     "build": "spm build"
-  },
-  "main": "app.js",
-  "directories": {
-    "example": "examples",
-    "test": "tests"
   },
   "license": "ISC",
   "dependencies": {}

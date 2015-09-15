@@ -1,4 +1,4 @@
-var demo;
+var todos;
 
-require('./js/index');
-module.exports = demo;
+require('./js/todos');
+module.exports = todos;
