@@ -116,6 +116,12 @@ var actions = {
             elem: $listLiEdit,
             handle: function(e) {
                 $(e.target).parents('li').removeClass('editing');
+                var oldValue =  $(e.target).parents('li').find('label').text();
+                var newValue  = e.target.value;
+                if(oldValue !== newValue){
+                    $(e.target).parents('li').find('label').text(newValue);
+                    return true;
+                }
             }
         }]
     },
