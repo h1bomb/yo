@@ -61,6 +61,7 @@ yo.todo
 ### 新建一个空项目
 ```
 mkdir todos
+cd todos
 slush yo
 cd client
 spm install
