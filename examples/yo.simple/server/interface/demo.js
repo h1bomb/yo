@@ -6,4 +6,9 @@ exports.res =
         view: 'pages/index',
         url: '/stub/',
         params: []
+    },{
+        route: '/noapi',
+        view: 'pages/noapi',
+        method: 'GET',
+        noApi:true,
     }];

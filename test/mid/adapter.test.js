@@ -12,6 +12,11 @@ describe('adapter', function() {
             method: 'get',
             route: {
                 path: '/a'
+            },
+            input:{
+                config:{
+
+                }
             }
         }
         var next = function() {};
@@ -28,6 +33,32 @@ describe('adapter', function() {
             method: 'get',
             route: {
                 path: '/a/b'
+            },
+            input:{
+                config:{
+                    
+                }
+            }
+        }
+        var next = function() {};
+        call(req, res, next);
+        expect(res.proxyData).to.be(2);
+    });
+
+    it('测试配置固定适配器',function(){
+        var call = adapter(__dirname + '/../mock/adapter');
+        var res = {
+            proxyData: {}
+        };
+        var req = {
+            method: 'get',
+            route: {
+                path: '/a/f'
+            },
+            input:{
+                config:{
+                    adapter:'a_b'
+                }
             }
         }
         var next = function() {};

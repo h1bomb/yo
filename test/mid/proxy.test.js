@@ -58,6 +58,20 @@ describe('mid/proxy', function() {
 
             });
         });
+
+        it('如果是设置noapi=true,直接跳过',function(done){
+            proxy({
+                input: {
+                    config: {
+                        domain: 'zzz',
+                        noApi : true
+                    },
+                    params: [1]
+                }
+            }, {}, function() {
+                done();
+            });
+        });
     });
     describe('procRet', function() {
         it('处理结果，如果接口数大于1设置接口字典对象', function() {
