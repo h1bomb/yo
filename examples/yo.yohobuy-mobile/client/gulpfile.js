@@ -33,9 +33,9 @@ var dist_dir = {
 var cdn_domain = 'http://cdn.yoho.cn/';
 
 var ftpConfig = {
-    host: '218.94.75.58',
-    user: 'php',
-    pass: 'yoho9646'
+    host: '#your ftp ip#',
+    user: '#ftpUser#',
+    pass: '#password#'
 };
 
 // 本地运行时
