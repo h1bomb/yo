@@ -5,6 +5,10 @@
   "main": "index.js",
   "author": "hbomb",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/h1bomb/yo.git"
+  },
   "dependencies": {
     "body-parser": "^1.12.4",
     "connect-redis": "^2.4.0",
@@ -31,6 +35,7 @@
     "istanbul": "0.3.17",
     "jshint-stylish": "^1.0.2",
     "mocha": "*",
+    "mocha-lcov-reporter": "^1.0.0",
     "rewire": "*"
   },
   "scripts": {

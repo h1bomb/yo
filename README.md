@@ -1,5 +1,6 @@
 ![yo][6]
 
+[![NPM Status](https://img.shields.io/npm/v/yo.js.svg)](https://www.npmjs.com/package/yo.js)
 [![Build Status](https://travis-ci.org/h1bomb/yo.svg)](https://travis-ci.org/h1bomb/yo)
 [![Coverage Status](https://coveralls.io/repos/h1bomb/yo/badge.svg?branch=master&service=github)](https://coveralls.io/github/h1bomb/yo?branch=master)
 
