@@ -1,6 +1,7 @@
 ![yo][6]
 
 [![Build Status](https://travis-ci.org/h1bomb/yo.svg)](https://travis-ci.org/h1bomb/yo)
+[![Coverage Status](https://coveralls.io/repos/h1bomb/yo/badge.svg?branch=master&service=github)](https://coveralls.io/github/h1bomb/yo?branch=master)
 
 yo是一个基于express的前端表现层的框架。
 核心理念是,简化前端开发流程，同时实现前后端分离，分离的准则是基于接口定义而不涉及具体的技术实现细节。
