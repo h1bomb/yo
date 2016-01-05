@@ -11,16 +11,18 @@ describe('mid/pjax', function() {
                 }
             };
             var res = {
-                status: function() {
+                status: function(code) {
                     return {
-                        send: function(ret) {
+                        json: function(ret) {
                             res.ret = ret;
+                            res.ret.code = code;
+                            res.ret = JSON.stringify(res.ret);
                         }
                     }
                 }
             };
             var next = function() {};
-            pjax(req, res, next);
+            pjax({})(req, res, next);
 
             expect(res.ret).to.be('{"code":404,"message":""}');
         });
@@ -40,7 +42,7 @@ describe('mid/pjax', function() {
             };
 
             var next = function() {};
-            pjax(req, res, next);
+            pjax({})(req, res, next);
 
             expect(res.locals.reloadUrl).to.be('a');
             expect(res.view).to.be('error/error');
@@ -60,16 +62,19 @@ describe('mid/pjax', function() {
 
             };
             var res = {
-                send: function(ret) {
-                    res.ret = ret;
+                status:function(){
+                    return {
+                        json: function(ret) {
+                            res.ret = ret;
+                        }
+                    }
                 },
                 proxyData: '1'
             };
 
             var next = function() {};
-            pjax(req, res, next);
-            expect(res.locals).to.be('1');
-            expect(res.ret).to.be('"1"');
+            pjax({})(req, res, next);
+            expect(res.ret.data).to.be('1');
         });
 
         it('当正确的返回，期待返回html', function() {
@@ -95,12 +100,93 @@ describe('mid/pjax', function() {
             };
 
             var next = function() {};
-            pjax(req, res, next);
+            pjax({})(req, res, next);
             expect(res.locals).to.eql({
                 a: 1,
                 layout: false
             });
             expect(res.view).to.be('a');
+        });
+    });
+    describe('jsonRet',function(){
+        var jsonRet = pjax.__get__('jsonRet');
+        var ret;
+        function mockStatus(code){
+            return {
+                json:function(data){
+                    ret = data;
+                }
+            }
+         }
+        var res = {status: mockStatus};   
+
+        it('404的情况',function(){
+            var req = {};
+            jsonRet(req,res);
+            expect(ret.code).to.be(404);
+            expect(ret.message).to.be("");
+        });
+
+        it('500的情况',function(){
+            var req = {input:{error:true,message:'error'}};
+            jsonRet(req,res);
+            expect(ret.code).to.be(500);
+            expect(ret.message).to.be('error');
+        });
+
+        it('正常返回的情况',function(){
+            var req = {input:{}};
+            res.proxyData = 1;
+            jsonRet(req,res);
+            expect(ret.code).to.be(200);
+            expect(ret.data).to.be(1);
+        });
+    });
+    describe('renderView',function(){
+        var renderView = pjax.__get__('renderView');
+        var ret={};
+        var str='';
+        var isError = null;
+        var res = {
+            render:function(view,cb){
+                ret.view = view;
+                cb(isError,str);
+            },
+            send:function(str){
+                ret.html = str;
+            },
+            locals:{}
+        }
+        it('返回错误页面的HTML',function(){
+            renderView({headers:{}},res);
+            expect(ret.view).to.be('error/error');
+            expect(ret.html).to.be('');
+        });
+        it('获取正常视图',function(){
+            str = 'test';
+            renderView({headers:{},input:{config:{view:'test'}}},res);
+            expect(ret.view).to.be('test');
+            expect(ret.html).to.be('test');
+        });
+        it('是pjax，期待layout不加载',function(){
+            renderView({headers:{'x-pjax':true},input:{config:{view:'test'}}},res);
+            expect(ret.view).to.be('test');
+            expect(res.locals.layout).to.be(false);
+        });
+        it('加载视图失败',function(){
+            isError = true;
+            renderView({headers:{},input:{config:{view:'test'}},next:function(err){
+                ret.error = err;
+            }},res);
+            expect(ret.error).to.be(true);
+        });
+        it('有afterRender方法，期待执行',function(){
+            isError = false;
+            str = 'test';
+            renderView({headers:{},input:{config:{view:'test'}}},res,function(res,str){
+                return str+'1';
+            });
+            expect(ret.html).to.be('test1');
         });
     });
     describe('getView', function() {
@@ -109,45 +195,4 @@ describe('mid/pjax', function() {
             expect(pjax.__get__('getView')('/a/:zd/b:userid')).to.be('a/b');
         });
     });
-    describe('genkey', function() {
-        it('输入一个值，期待md值正确', function() {
-            expect(pjax.__get__('genkey')({
-                "a": "b"
-            })).to.be('pagecache:92eff9dda44cb8003ee13990782580ff');
-        });
-    });
-    describe('getPageCache', function() {
-        it('获取页面缓存,如果没有设置cache，则返回false', function(done) {
-            pjax.__get__('getPageCache')('231', {}, function(err, html) {
-                expect(err).to.be(null);
-                expect(html).to.be(false);
-                done();
-            });
-        });
-        it('获取页面缓存,如果设置cache，则返回内容', function(done) {
-            pjax.__get__('getPageCache')('231', {
-                getCache: function(key, callback) {
-                    callback(null, 'aaa')
-                }
-            }, function(err, html) {
-                expect(err).to.be(null);
-                expect(html).to.be('aaa');
-                done();
-            });
-        });
-    });
-    describe('setPageCache', function() {
-        it('设置pagecache，如果没有设置cache，则没有设置上', function() {
-            pjax.__get__('setPageCache')('123', 'aaa', {});
-        });
-        it('设置pagecache，如果设置cache，则设置上', function(done) {
-            pjax.__get__('setPageCache')('123', 'aaa', {
-                setCache: function(key, html) {
-                    expect(key).to.be('123');
-                    expect(html).to.be('aaa');
-                    done();
-                }
-            });
-        });
-    })
 });

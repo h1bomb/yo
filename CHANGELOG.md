@@ -51,3 +51,8 @@ v1.0.9
 * 支持不调用接口的服务配置
 * 修复适配器的单元测试
 
+v1.0.10
+
+* 重新写了pjax中间件，去掉了缓存view的逻辑，把json和html render区分处理
+* 重写了pjax中间件的单元测试
+* 加入了两个可以注入的句柄（beforeMid，afterRender）
