@@ -56,3 +56,9 @@ v1.0.10
 * 重新写了pjax中间件，去掉了缓存view的逻辑，把json和html render区分处理
 * 重写了pjax中间件的单元测试
 * 加入了两个可以注入的句柄（beforeMid，afterRender）
+
+v1.0.12
+
+* 修改了adapter中间件，添加了不next的配置
+* 修改了proxy中间件，如果不是GET方法，采用表单提交
+* 修改了pjax中间件，如果存在appendData，附件vo，合并到proxyData
