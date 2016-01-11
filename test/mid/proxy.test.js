@@ -182,8 +182,7 @@ describe('mid/proxy', function() {
                 callback(true, null, null);
             });
             var callServer = proxy.__get__('callServer');
-
-            callServer({
+            var params = {
                 domain: 'xxx',
                 api: {
                     url: 'xxx',
@@ -191,10 +190,13 @@ describe('mid/proxy', function() {
                 },
                 params: {},
                 next: function(error) {
-                    expect(error).to.eql(new Error('api server error!'));
                     done();
-                }
-            });
+                },
+                req:{input:{}}
+            };
+            callServer(params);
+            expect(params.req.input.message).to.eql('api server error!');
+
         });
 
         it('请求返回失败，有response，期待异常', function(done) {
@@ -206,8 +208,7 @@ describe('mid/proxy', function() {
             });
 
             var callServer = proxy.__get__('callServer');
-
-            callServer({
+            var params = {
                 domain: 'xxx',
                 api: {
                     url: 'xxx',
@@ -215,11 +216,12 @@ describe('mid/proxy', function() {
                 },
                 params: {},
                 next: function(error) {
-                    expect(error).to.eql(new Error('error: 500'));
+                    
                     done();
-                }
-            });
-
+                },req:{input:{}}
+            };
+            callServer(params);
+            expect(params.req.input.message).to.eql('error: 500');
         });
         it('请求返回成功，有使用缓存，期待设置缓存并设置结果', function(done) {
             var proxy = rewire("../../lib/mid/proxy");

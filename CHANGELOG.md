@@ -62,3 +62,8 @@ v1.0.12
 * 修改了adapter中间件，添加了不next的配置
 * 修改了proxy中间件，如果不是GET方法，采用表单提交
 * 修改了pjax中间件，如果存在appendData，附件vo，合并到proxyData
+
+v1.0.13
+
+* 修改proxy中间件, 添加配置访问页面和实际接口方法不一致可以配置，增加配置项：apiMethod
+* proxy，中支持json raw方式调用接口，配置方式：isJsonRaw，如果是true则为json raw方式
