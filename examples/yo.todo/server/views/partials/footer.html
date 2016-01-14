@@ -4,20 +4,10 @@
  seajs.use('js/{{../module}}');
 </script>
 {{/ _env.development}}
-{{# _env.test}}
-<script src="{{libs}}"></script>
-<script src="{{js}}"></script>
+{{#if _env.cur.libs}}
+<script src="{{_env.cur.libs}}"></script>
+<script src="{{_env.cur.js}}"></script>
 <script type="text/javascript">
- seajs.use('todos/js/{{../module}}');
+ seajs.use('todos/js/{{module}}');
 </script>
-{{/ _env.test}}
-{{# _env.production}}
-<script src="{{libs}}"></script>
-<script src="{{js}}"></script>
-<script type="text/javascript">
- seajs.use('todos/js/{{../module}}');
-</script>
-{{/ _env.production}}
-{{# module}}
-
-{{/ module}}
+{{/if}}

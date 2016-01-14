@@ -179,6 +179,10 @@ gulp.task('config-libs', ['libs-build'], function() {
                 test: {
                     libs: '/dist/libs-all.js',
                     js: '/dist/index-debug.js'
+                },preview: {
+                    libs: cdn_domain + 'libs/' + files[i],
+                    js: cdn_domain + config.name + '/' + config.version + '/index.js',
+                    css: cdn_domain + config.name + '/' + config.version + '/index.css'
                 },
                 production: {
                     libs: cdn_domain + 'libs/' + files[i],
