@@ -1,6 +1,6 @@
 {
   "name": "yo.js",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "Construction of the presentation layer solution is based on express, handlebars",
   "main": "index.js",
   "author": "hbomb",

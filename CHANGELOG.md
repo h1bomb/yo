@@ -67,3 +67,8 @@ v1.0.13
 
 * 修改proxy中间件, 添加配置访问页面和实际接口方法不一致可以配置，增加配置项：apiMethod
 * proxy，中支持json raw方式调用接口，配置方式：isJsonRaw，如果是true则为json raw方式
+
+v1.0.14
+
+* 在beforeCustMid的处理句柄添加proxyRoute的传参，方便中间件获取当前的路由表
+* proxy中间件调整，错误信息的组装。
