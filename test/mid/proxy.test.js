@@ -30,9 +30,7 @@ describe('mid/proxy', function() {
                 input: {
                     config: {
                         domain: 'zzz',
-                        apis: [
-                            1, 2, 3
-                        ]
+                        apis: {1:1,2:2,3:3}
                     },
                     params: [1]
 
@@ -43,6 +41,7 @@ describe('mid/proxy', function() {
         });
 
         it('调用单接口', function(done) {
+            var proxy = rewire("../../lib/mid/proxy");
             proxy.__set__('callApi', function() {
                 done();
             });
@@ -59,17 +58,18 @@ describe('mid/proxy', function() {
             });
         });
 
-        it('如果是设置noapi=true,直接跳过',function(done){
+        it('如果没有设置URL,设置了获取在res.proxyData',function(){
+            var res = {};
             proxy({
                 input: {
                     config: {
                         domain: 'zzz',
-                        noApi : true
+                        data:1
                     },
                     params: [1]
                 }
-            }, {}, function() {
-                done();
+            }, res, function() {
+                expect(res.proxyData).to.be(1);
             });
         });
     });
@@ -86,8 +86,8 @@ describe('mid/proxy', function() {
                 res: {},
                 next: function() {}
             }
-            proxy.__get__('procRet')(params);
-            expect(params.res.proxyData).to.have.property('getxxxa');
+            proxy.__get__('procRet')(params,'aaa');
+            expect(params.res.proxyData).to.have.property('aaa');
             expect(proxy.__get__('count')).to.be(1);
         });
         it('如果接口数和调用次数相同，期待被next回调', function(done) {
@@ -110,10 +110,23 @@ describe('mid/proxy', function() {
     });
 
     describe('callApi', function() {
+        it('如果没有设置URL,直接返回',function(done){
+            var proxy = rewire("../../lib/mid/proxy");
+            proxy.__set__('procRet', function() {
+                done();
+            });
+            var params = {
+                res: {},
+                api:{}
+            };
+            proxy.__get__("callApi")(params);
+        });
+
         it('如果没有加载cache中间件，则直接调用server', function(done) {
             var proxy = rewire("../../lib/mid/proxy");
             var params = {
-                res: {}
+                res: {},
+                api:{url:'/asda'}
             };
             proxy.__set__("callServer", function() {
                 done();

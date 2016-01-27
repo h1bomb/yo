@@ -76,3 +76,9 @@ v1.0.14
 v1.0.15
 
 * proxy中间件无论是是否代理后台接口，都可以加默认数据：data
+
+v1.0.16
+
+* proxy如果在配置文件不传url，默认不会调用服务接口
+* validate和proxy调整调用多个接口时，采用map的key-value
+* 调整了Demo例子
