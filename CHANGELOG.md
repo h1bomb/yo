@@ -67,3 +67,21 @@ v1.0.13
 
 * 修改proxy中间件, 添加配置访问页面和实际接口方法不一致可以配置，增加配置项：apiMethod
 * proxy，中支持json raw方式调用接口，配置方式：isJsonRaw，如果是true则为json raw方式
+
+v1.0.14
+
+* 在beforeCustMid的处理句柄添加proxyRoute的传参，方便中间件获取当前的路由表
+* proxy中间件调整，错误信息的组装。
+
+v1.0.15
+
+* proxy中间件无论是是否代理后台接口，都可以加默认数据：data
+
+v1.0.16
+
+* proxy如果在配置文件不传url，默认不会调用服务接口
+* validate和proxy调整调用多个接口时，采用map的key-value
+* 调整了Demo例子
+
+v1.0.17
+* 修复proxy的错误，如果没有设置URL，不需要序列化返回结果

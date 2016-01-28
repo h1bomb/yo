@@ -1,5 +1,5 @@
 var apis = {
-    getList: {
+    list: {
         route: '/tag',
         method: 'GET',
         view: 'pages/guang',
@@ -28,7 +28,7 @@ var apis = {
             message: '必须是1位的数字'
         }]
     },
-    getCat: {
+    cat: {
         id: 'getCat',
         route: '/cat',
         method: 'GET',
@@ -43,5 +43,5 @@ exports.res =
         route: '/guang',
         method: 'GET',
         view: 'pages/guang',
-        apis: [apis.getList, apis.getCat]
-    }, apis.getList];
+        apis: apis
+    }, apis.list];

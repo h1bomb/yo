@@ -4,6 +4,9 @@ exports.res =
     route: '/book/:id',
     method: 'GET',
     url: '/v2/book/1220562',
+    data:{
+        'aa':'aaa'
+    },
     params: [{
         name: 'id',
         type: 'Number',
