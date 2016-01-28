@@ -82,3 +82,6 @@ v1.0.16
 * proxy如果在配置文件不传url，默认不会调用服务接口
 * validate和proxy调整调用多个接口时，采用map的key-value
 * 调整了Demo例子
+
+v1.0.17
+* 修复proxy的错误，如果没有设置URL，不需要序列化返回结果
