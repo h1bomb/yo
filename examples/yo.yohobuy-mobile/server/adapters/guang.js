@@ -6,7 +6,6 @@ exports.get = function(data, req, res) {
     var sort_id = req.proxyParams.params.sort_id ? req.proxyParams.params.sort_id : 0;
 
     var tagRet = tag.get(data['list']);
-
     tagRet.data.cat = [];
     _.forEach(data['cat'].data, function(val) {
         var cur = val.id == sort_id ? 'on' : '';

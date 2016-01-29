@@ -85,6 +85,7 @@ describe('mid/validate', function() {
                 maxLength: 10,
                 minLength: 1,
                 reg: /^\d{1,10}$/,
+                type:'Number',
                 def: 10,
                 require: true
             }]
@@ -139,6 +140,13 @@ describe('mid/validate', function() {
             config.params[0].def = false;
             var ret = valFun(config, req);
             expect(ret.err).to.be(true);
-        })
+        });
+        it('如果传参是数字型，期待传参是数字型',function(){
+            req.proxyParams.params = {
+                a:123
+            };
+            var ret = valFun(config,req);
+            expect(ret.ret['a']).to.be(123);
+        });
     });
 });

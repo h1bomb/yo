@@ -107,6 +107,42 @@ describe('mid/proxy', function() {
             }
             proxy.__get__('procRet')(params);
         });
+
+        it('如果返回值不是JSON格式，期待返回空对象',function(done){
+            proxy.__set__('count', 0);
+            var params = {
+                apiNum: 1,
+                domain: 'xxx',
+                body: 'xxx',
+                res: {},
+                next: function() {
+                    expect(params.res.proxyData).to.eql({});
+                    done();
+                }
+            };
+            proxy.__get__('procRet')(params);
+        });
+
+        it('如果没有调用接口，不对body做JSON序列化',function(done){
+            proxy.__set__('count', 0);
+            var params = {
+                apiNum: 1,
+                req:{
+                    input:{
+                        config:{
+                            'data':{"a":1}
+                        }
+                    }
+                },
+                domain: 'xxx',
+                res: {},
+                next: function() {
+                    expect(params.res.proxyData).to.eql({"a":1});
+                    done();
+                }
+            };
+            proxy.__get__('procRet')(params);
+        });
     });
 
     describe('callApi', function() {
