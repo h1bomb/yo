@@ -1,5 +1,5 @@
 var routes = [];
-module.exports = {
+var app = {
     get: function(route, call) {
         routes.push({
             method: 'get',
@@ -14,5 +14,20 @@ module.exports = {
             call: call
         });
     },
-    routes: routes
-}
+    engine:function(){},
+    set:function(){},
+    yolog: {
+        log:function(){},
+        profile:function(){},
+        api:{log:function(){}}
+    },
+    listen: function() {
+        return 3000
+    },
+    use: function() {},
+    routes: routes,
+    req:{
+        app:app
+    }
+};
+module.exports = app;

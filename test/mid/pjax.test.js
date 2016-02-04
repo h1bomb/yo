@@ -1,15 +1,12 @@
 var expect = require("expect.js");
 var rewire = require("rewire");
 var pjax = rewire("../../lib/mid/pjax");
+var reqMock = require("../mock/req");
 
 describe('mid/pjax', function() {
     describe('main', function() {
         it('当出错了，返回json错误信息', function() {
-            var req = {
-                headers: {
-                    accept: 'json'
-                }
-            };
+            var req = reqMock({headers: {accept: 'json'},input:false});
             var res = {
                 status: function(code) {
                     return {
@@ -28,12 +25,7 @@ describe('mid/pjax', function() {
         });
 
         it('当出错了，返回一般错误信息', function() {
-            var req = {
-                headers: {
-                    accept: 'html'
-                },
-                url: 'a'
-            };
+            var req = reqMock({headers: {accept: 'html'},url:'a',input:false});
             var res = {
                 render: function(view) {
                     res.view = view;
@@ -50,7 +42,7 @@ describe('mid/pjax', function() {
         });
 
         it('当正确的返回，期待返回json', function() {
-            var req = {
+            var req = reqMock({
                 headers: {
                     accept: 'json'
                 },
@@ -59,8 +51,7 @@ describe('mid/pjax', function() {
                         view: 'a'
                     }
                 }
-
-            };
+            });
             var res = {
                 status:function(){
                     return {
@@ -78,7 +69,7 @@ describe('mid/pjax', function() {
         });
 
         it('当正确的返回，期待返回html', function() {
-            var req = {
+            var req = reqMock({
                 headers: {
                     accept: 'html',
                     'x-pjax': true
@@ -88,8 +79,7 @@ describe('mid/pjax', function() {
                         view: 'a'
                     }
                 }
-
-            };
+            });
             var res = {
                 render: function(view) {
                     res.view = view;
@@ -121,21 +111,21 @@ describe('mid/pjax', function() {
         var res = {status: mockStatus};   
 
         it('404的情况',function(){
-            var req = {};
+            var req = reqMock({input:false});
             jsonRet(req,res);
             expect(ret.code).to.be(404);
             expect(ret.message).to.be("");
         });
 
         it('500的情况',function(){
-            var req = {input:{error:true,message:'error'}};
+            var req = reqMock({input:{error:true,message:'error'}});
             jsonRet(req,res);
             expect(ret.code).to.be(500);
             expect(ret.message).to.be('error');
         });
 
         it('正常返回的情况',function(){
-            var req = {input:{}};
+            var req = reqMock({input:{}});
             res.proxyData = 1;
             jsonRet(req,res);
             expect(ret.code).to.be(200);
@@ -158,32 +148,34 @@ describe('mid/pjax', function() {
             locals:{}
         }
         it('返回错误页面的HTML',function(){
-            renderView({headers:{}},res);
+            renderView(reqMock({headers:{},input:false}),res);
             expect(ret.view).to.be('error/error');
             expect(ret.html).to.be('');
         });
         it('获取正常视图',function(){
             str = 'test';
-            renderView({headers:{},input:{config:{view:'test'}}},res);
+            var req = reqMock({headers:{},input:{config:{view:'test'}}});
+            renderView(req,res);
             expect(ret.view).to.be('test');
             expect(ret.html).to.be('test');
         });
         it('是pjax，期待layout不加载',function(){
-            renderView({headers:{'x-pjax':true},input:{config:{view:'test'}}},res);
+            var req = reqMock({headers:{'x-pjax':true},input:{config:{view:'test'}}});
+            renderView(req,res);
             expect(ret.view).to.be('test');
             expect(res.locals.layout).to.be(false);
         });
         it('加载视图失败',function(){
             isError = true;
-            renderView({headers:{},input:{config:{view:'test'}},next:function(err){
-                ret.error = err;
-            }},res);
+            var req = reqMock({headers:{},next:function(err){ret.error = err;},input:{config:{view:'test'}}});
+            renderView(req,res);
             expect(ret.error).to.be(true);
         });
         it('有afterRender方法，期待执行',function(){
             isError = false;
             str = 'test';
-            renderView({headers:{},input:{config:{view:'test'}}},res,function(res,str){
+            var req = reqMock({headers:{},input:{config:{view:'test'}}});
+            renderView(req,res,function(res,str){
                 return str+'1';
             });
             expect(ret.html).to.be('test1');

@@ -17,6 +17,13 @@ describe('adapter', function() {
                 config:{
 
                 }
+            },
+            app:{
+                yolog:{
+                    log:function(){
+
+                    }
+                }
             }
         }
         var next = function() {};
@@ -38,6 +45,13 @@ describe('adapter', function() {
                 config:{
                     
                 }
+            },
+            app:{
+                yolog:{
+                    log:function(){
+
+                    }
+                }
             }
         }
         var next = function() {};
@@ -58,6 +72,13 @@ describe('adapter', function() {
             input:{
                 config:{
                     adapter:'a_b'
+                }
+            },
+            app:{
+                yolog:{
+                    log:function(){
+
+                    }
                 }
             }
         }

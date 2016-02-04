@@ -1,7 +1,15 @@
 var yo = require('../../../index');
 
 var app = yo({
-    appPath: __dirname + '/../'
+    appPath: __dirname + '/../',
+    loggers:{
+        app:{
+            level:'info'
+        }
+    },
+    interfaceDefConfig:{
+        test:true
+    }
 });
 
 app.get('/', function(req, res) {

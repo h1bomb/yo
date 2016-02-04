@@ -62,22 +62,33 @@ describe('lib/proxyRoute', function() {
 
     describe('loadConfig', function() {
         it('测试解析接口路由配置，当路径不存在，期待报错', function(done) {
-            proxyRoute.__get__('loadConfig')('./xxx', function(err) {
+            proxyRoute.__get__('loadConfig')('./xxx',{}, function(err) {
                 expect(err.code).to.be('ENOENT');
                 done();
             });
         });
 
         it('接口配置参数不全，期待报错', function(done) {
-            proxyRoute.__get__('loadConfig')(__dirname + '/../mock/emptyinterface', function(err) {
+            proxyRoute.__get__('loadConfig')(__dirname + '/../mock/emptyinterface',{}, function(err) {
                 expect(err).to.eql(new Error('空的接口依赖'));
                 done();
             })
         });
 
         it('接口参数正确的，期待得到正确的值', function(done) {
-            proxyRoute.__get__('loadConfig')(__dirname + '/../mock/interfaces', function(err) {
+            proxyRoute.__get__('loadConfig')(__dirname + '/../mock/interfaces',{}, function(err) {
                 var key = proxyRoute.genKey('GET', '/book/:id');
+                expect(proxyRoute.interfacesConfig[key].url).to.be('/v2/book/1220562');
+                done();
+            });
+        });
+
+        it('接口参数配置默认属性，期待可以访问获取默认配置',function(done){
+            proxyRoute.__get__('loadConfig')(__dirname + '/../mock/interfaces',{a:123,b:456,c:'haha'}, function(err) {
+                var key = proxyRoute.genKey('GET', '/book/:id');
+                expect(proxyRoute.interfacesConfig[key].a).to.be(123);
+                expect(proxyRoute.interfacesConfig[key].b).to.be(456);
+                expect(proxyRoute.interfacesConfig[key].c).to.be('haha');
                 expect(proxyRoute.interfacesConfig[key].url).to.be('/v2/book/1220562');
                 done();
             });
@@ -92,20 +103,20 @@ describe('lib/proxyRoute', function() {
 
     describe('init', function() {
         it('设置报错', function(done) {
-            proxyRoute.__set__('loadConfig', function(path, call) {
+            proxyRoute.__set__('loadConfig',function(path,dataConfig, call) {
                 call(new Error('error'));
             });
-            proxyRoute.init(mockApp, '', function(err) {
+            proxyRoute.init(mockApp, '',{}, function(err) {
                 expect(err).to.eql(new Error('error'));
                 done();
             });
         });
 
         it('设置没有错', function(done) {
-            proxyRoute.__set__('loadConfig', function(path, call) {
+            proxyRoute.__set__('loadConfig',{}, function(path, call) {
                 call();
             });
-            proxyRoute.__set__('parseConfig', function(app) {});
+            proxyRoute.__set__('parseConfig',function(app) {});
 
             done();
         });
