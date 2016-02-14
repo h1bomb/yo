@@ -8,3 +8,4 @@ require('./mid/validate.test');
 require('./lib/yo.test');
 require('./lib/middlewareLoader.test');
 require('./lib/util.test');
+require('./lib/loggers.test');

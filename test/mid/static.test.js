@@ -20,7 +20,12 @@ describe('mid/static', function() {
         call(req, res, function() {});
         expect(res.proxyData._env['test']).to.be(1);
         process.env.NODE_ENV = 'production';
+        var res = {};
         call(req, res, function() {});
         expect(res.proxyData._env['production']).to.be(2);
+        delete process.env.NODE_ENV;
+        call(req, res, function() {});
+        expect(res.proxyData._env['development']).to.be(true);
+
     });
 });

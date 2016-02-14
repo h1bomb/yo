@@ -15,4 +15,16 @@ describe('/lib/middlewareLoader', function() {
         });
         expect(arr.length).to.be(6);
     });
+    it('不设置cache，期待5个中间件',function(){
+                var arr = [];
+        middlewareLoader.__set__('cache', function() {});
+        middlewareLoader({
+            use: function(obj) {
+                arr.push(obj);
+            }
+        },{
+            
+        });
+        expect(arr.length).to.be(5);
+    });
 });

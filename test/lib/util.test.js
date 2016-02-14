@@ -17,38 +17,4 @@ describe('/lib/util',function(){
             expect(util.jsonParse('xxx')).to.eql({});
         });
     });
-    describe('mkdirsSync ',function(){
-        var retDir = '';
-        var fs = {
-            existsSync:function(dir){
-                if(dir==='xxx') {
-                    return true;
-                }
-                return false
-            },
-            mkdirSync:function (dir) {
-                retDir = dir;
-                return true;
-            }
-        };
-        util.__set__('fs',fs);
-
-        it('多级目录同步创建,如果目录不存在，直接返回true',function(){
-            expect(util.mkdirsSync('xxx')).to.be(true);
-            expect(retDir).to.eql('');
-        });
-
-        it('多级目录,创建成功',function(){
-            expect(util.mkdirsSync('a/a/a')).to.be(true);
-            expect(retDir).to.eql('a/a/a');
-        });
-
-        it('目录创建失败',function(){
-            fs.mkdirSync = function(){
-                return false;
-            };
-            util.__set__('fs',fs);
-            expect(util.mkdirsSync('bad/path')).to.be(false);
-        });
-    });
 });

@@ -20,6 +20,7 @@
     "express-session": "^1.11.3",
     "hbs": "^3.0.1",
     "lodash": "^3.10.0",
+    "mkdirp": "^0.5.1",
     "morgan": "^1.5.3",
     "redis": "^0.12.1",
     "request": "^2.55.0",

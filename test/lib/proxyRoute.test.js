@@ -26,13 +26,12 @@ describe('lib/proxyRoute', function() {
             proxyRoute.__set__('exports.interfacesConfig', {
                 abc: {
                     method: 'POST',
-                    route: '/abc',
                     url: '/aa'
                 }
             });
             proxyRoute.__get__('parseConfig')(mockApp);
             expect(mockApp.routes[1].method).to.be('post');
-            expect(mockApp.routes[1].route).to.be('/abc');
+            expect(mockApp.routes[1].route).to.be('/aa');
         });
         it('测试对请求参数预处理的结果', function() {
             var req = {
@@ -113,12 +112,14 @@ describe('lib/proxyRoute', function() {
         });
 
         it('设置没有错', function(done) {
-            proxyRoute.__set__('loadConfig',{}, function(path, call) {
+            proxyRoute.__set__('loadConfig', function(path,dataConfig, call) {
                 call();
             });
             proxyRoute.__set__('parseConfig',function(app) {});
 
-            done();
+            proxyRoute.init(mockApp, '',{}, function(err) {
+                done();
+            });
         });
     });
 });
