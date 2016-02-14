@@ -1,6 +1,7 @@
 var expect = require("expect.js");
 var rewire = require("rewire");
 var validate = rewire("../../lib/mid/validate");
+var reqMock = require('../mock/req');
 
 describe('mid/validate', function() {
     describe('main', function() {
@@ -14,22 +15,13 @@ describe('mid/validate', function() {
                 'genKey': function() {},
                 'interfacesConfig': []
             });
-            validate({
-                method: 'get',
-                route: {
-                    path: 'xxx'
-                }
-            }, {}, function() {
+            var req = reqMock();
+            validate(req, {}, function() {
                 done();
             });
         });
         it('没有配置apis，期待一个错误的验证信息', function() {
-            var req = {
-                method: 'get',
-                route: {
-                    path: 'xxx'
-                }
-            };
+            var req = reqMock();
             validate = rewire("../../lib/mid/validate");
             validate.__set__('validate', function() {
                 return {
@@ -49,12 +41,7 @@ describe('mid/validate', function() {
             expect(req.input.message[0]).to.be('no ok!');
         });
         it('配置了apis,期待一个错误返回', function() {
-            var req = {
-                method: 'get',
-                route: {
-                    path: 'xxx'
-                }
-            };
+            var req = reqMock();
             validate = rewire("../../lib/mid/validate");
             validate.__set__('validate', function() {
                 return {
@@ -85,20 +72,21 @@ describe('mid/validate', function() {
                 maxLength: 10,
                 minLength: 1,
                 reg: /^\d{1,10}$/,
+                type:'Number',
                 def: 10,
                 require: true
             }]
         };
-        var req = {
+        var req = reqMock({
             proxyParams: {
-                params: {
-                    a: '12'
-                },
-                body: {
-                    b: '12'
-                }
-            }
-        };
+                    params: {
+                        a: '12'
+                    },
+                    body: {
+                        b: '12'
+                    }
+                }   
+            });
         it('设置了最大和最小值，并且在这个范围', function() {
             config.params[0].reg = null;
             var ret = valFun(config, req);
@@ -139,6 +127,13 @@ describe('mid/validate', function() {
             config.params[0].def = false;
             var ret = valFun(config, req);
             expect(ret.err).to.be(true);
-        })
+        });
+        it('如果传参是数字型，期待传参是数字型',function(){
+            req.proxyParams.params = {
+                a:123
+            };
+            var ret = valFun(config,req);
+            expect(ret.ret['a']).to.be(123);
+        });
     });
 });

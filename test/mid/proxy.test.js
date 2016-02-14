@@ -1,6 +1,7 @@
 var expect = require("expect.js");
 var rewire = require("rewire");
 var proxy = rewire("../../lib/mid/proxy");
+var reqMock = require("../mock/req");
 
 describe('mid/proxy', function() {
     describe('main', function() {
@@ -10,11 +11,10 @@ describe('mid/proxy', function() {
             });
         });
         it('输入错误，期待出错', function(done) {
-            proxy({
-                input: {
-                    error: true
-                }
-            }, {}, function() {
+            var req = reqMock({
+                input:{error:true}
+            });
+            proxy(req, {}, function() {
                 done();
             });
         });
@@ -26,7 +26,7 @@ describe('mid/proxy', function() {
                     done();
                 }
             });
-            proxy({
+            var req = reqMock({
                 input: {
                     config: {
                         domain: 'zzz',
@@ -35,7 +35,8 @@ describe('mid/proxy', function() {
                     params: [1]
 
                 }
-            }, {}, function() {
+            });
+            proxy(req, {}, function() {
 
             });
         });
@@ -45,30 +46,28 @@ describe('mid/proxy', function() {
             proxy.__set__('callApi', function() {
                 done();
             });
-            proxy({
-                input: {
+            var req = reqMock({input: {
                     config: {
                         domain: 'zzz'
                     },
                     params: [1]
 
-                }
-            }, {}, function() {
+                }});
+            proxy(req, {}, function() {
 
             });
         });
 
         it('如果没有设置URL,设置了获取在res.proxyData',function(){
             var res = {};
-            proxy({
-                input: {
+            var req = reqMock({input: {
                     config: {
                         domain: 'zzz',
                         data:1
                     },
                     params: [1]
-                }
-            }, res, function() {
+                }});
+            proxy(req, res, function() {
                 expect(res.proxyData).to.be(1);
             });
         });
@@ -84,6 +83,7 @@ describe('mid/proxy', function() {
                 domain: 'xxx',
                 body: '{}',
                 res: {},
+                req:reqMock({input:{config:{data:{}}}}),
                 next: function() {}
             }
             proxy.__get__('procRet')(params,'aaa');
@@ -101,10 +101,42 @@ describe('mid/proxy', function() {
                 domain: 'xxx',
                 body: '{}',
                 res: {},
+                req:reqMock({input:{config:{data:{}}}}),
                 next: function() {
                     done();
                 }
             }
+            proxy.__get__('procRet')(params);
+        });
+
+        it('如果返回值不是JSON格式，期待返回空对象',function(done){
+            proxy.__set__('count', 0);
+            var params = {
+                apiNum: 1,
+                domain: 'xxx',
+                body: 'xxx',
+                res: {},
+                req:reqMock({input:{config:{data:{}}}}),
+                next: function() {
+                    expect(params.res.proxyData).to.eql({});
+                    done();
+                }
+            };
+            proxy.__get__('procRet')(params);
+        });
+
+        it('如果没有调用接口，不对body做JSON序列化',function(done){
+            proxy.__set__('count', 0);
+            var params = {
+                apiNum: 1,
+                domain: 'xxx',
+                res: {},
+                req:reqMock({input:{config:{data:{"a":1}}}}),
+                next: function() {
+                    expect(params.res.proxyData).to.eql({"a":1});
+                    done();
+                }
+            };
             proxy.__get__('procRet')(params);
         });
     });
@@ -117,7 +149,8 @@ describe('mid/proxy', function() {
             });
             var params = {
                 res: {},
-                api:{}
+                api:{},
+                req:reqMock({input:{config:{data:{}}}}),
             };
             proxy.__get__("callApi")(params);
         });
@@ -126,7 +159,8 @@ describe('mid/proxy', function() {
             var proxy = rewire("../../lib/mid/proxy");
             var params = {
                 res: {},
-                api:{url:'/asda'}
+                api:{url:'/asda'},
+                req:reqMock({input:{config:{data:{}}}})
             };
             proxy.__set__("callServer", function() {
                 done();
@@ -148,6 +182,7 @@ describe('mid/proxy', function() {
                 api: {
                     url: 'xxx'
                 },
+                req:reqMock({input:{config:{data:{}}}}),
                 params: {
 
                 }
@@ -170,6 +205,7 @@ describe('mid/proxy', function() {
                         callback(true);
                     }
                 },
+                req:reqMock({input:{config:{data:{}}}}),
                 domain: 'xxx',
                 api: {
                     url: 'xxx'
@@ -205,7 +241,7 @@ describe('mid/proxy', function() {
                 next: function(error) {
                     done();
                 },
-                req:{input:{}}
+                req:reqMock({input:{config:{data:{}}}})
             };
             callServer(params);
             expect(params.req.input.message).to.eql('api server error!');
@@ -231,7 +267,7 @@ describe('mid/proxy', function() {
                 next: function(error) {
                     
                     done();
-                },req:{input:{}}
+                },req:reqMock({input:{config:{data:{}}}})
             };
             callServer(params);
             expect(params.req.input.message).to.eql('error: 500');
@@ -264,6 +300,7 @@ describe('mid/proxy', function() {
                         return 'key';
                     }
                 },
+                req:reqMock({input:{config:{data:{}}}}),
                 params: {},
                 next: function() {
 

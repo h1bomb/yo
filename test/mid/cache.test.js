@@ -3,9 +3,10 @@ var rewire = require("rewire");
 var cache = rewire("../../lib/mid/cache");
 var EE = require('events').EventEmitter;
 var util = require('util');
+var reqMock = require('../mock/req');
 
 var call,
-    req = {},
+    req = reqMock({}),
     res = {},
     data = {},
     times = {},

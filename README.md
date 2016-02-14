@@ -23,9 +23,12 @@ yo是一个基于express的前端表现层的框架。
 * PageCache的实现
 * 服务端处理逻辑,以接口单元组，实现多个无关联接口的组合,异步获取
 * yo框架的适配层中间件，可以对接口返回数据二次加工
+* 优化log记录，统一使用winston，分文件记录（按接口调用，error信息，warn信息，info信息）
 
 待实现功能：
-* 后端mock服务的自动生成
+
+* 根据interface接口文件，生成接口文档和调试工具
+
 
 
 ## 关于YO应用在整个系统架构体系的位置和作用
@@ -108,6 +111,113 @@ require('./stub/routers')(app);//添加桩服务
 运行服务：`gulp` 。
 
 具体的gulp的任务可以看下gulpfile。
+
+
+## 关于日志
+yo采用了[winston](https://github.com/winstonjs/winston),作为日志记录，日志默认会保存四个文件：
+
+* 接口调用的日志记录：`yo-api.log`
+* 错误日志记录：`yo-err.log`
+* yo框架日志记录：`yo.log`
+* 应用日志记录：`app.log`
+
+默认配置日志文件保存到应用的根目录下的`logs`目录，同时配置日志文件的上限是50M，默认日志级别是`info`,出异常不退出记录
+配置可以通过应用配置`loggers`进行修改。
+范例：
+``` javascript
+var app = yo({
+    appPath: __dirname + '/../',
+    loggers:{
+        app:{
+            level:'info'
+        }
+    },
+    logsFile:'/Data/logs/node'
+});
+```
+如果日志目录不存在，会自动创建。同样可以配置更多的winston的日志配置（含日志的transport）。
+
+默认配置如下：
+```javascript
+/**
+ * 默认配置
+ * @type {Object}
+ */
+var defaultOptions = {
+    Console: {
+        handleExceptions:true,
+        colorize: 'all',
+        prettyPrint:true
+    },
+    File:{
+        maxsize:50*1024*1024
+    },
+    exitOnError:false,
+    level:'info'
+}  
+
+
+/**
+ * 日志默认配置
+ * @type {Object}
+ */
+exports.config = {
+    api: {
+        file:'yo-api.log',
+        level:'info',
+        trans: {
+            Console: {
+                handleExceptions:false
+            }
+        }
+    },
+    yo: {
+        file:'yo.log',
+        level:'info',
+        trans: {
+            Console:{
+                handleExceptions:true
+            }
+        }
+    },
+    error: {
+        file: 'yo-err.log',
+        level:'error',
+        trans: {
+             File:{
+                handleExceptions:true
+             }
+        }
+    },
+    app: {
+        file: 'app.log',
+        level:'info',
+        trans: {
+            Console: {
+                handleExceptions:false
+            },
+            File: {
+                handleExceptions:false
+            }
+        }
+    }
+}
+
+```
+
+## 应用使用方法
+
+可以直接使用 `req.app.logger` 进行打日志。
+
+``` javascript
+app.get('/test',function(req,res,next) {
+    req.app.logger.log('info','test %s','hi baby!');//test hi baby!
+});
+
+app.logger.log('info','hi');//hi
+```
+
+
 
 [2]: http://feature.yoho.cn/yojs/Node_APP_Proxy_Server__2_.png
 [5]: http://feature.yoho.cn/yojs/path.png
