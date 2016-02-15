@@ -30,7 +30,7 @@ describe('mid/proxy', function() {
                 input: {
                     config: {
                         domain: 'zzz',
-                        apis: {1:1,2:2,3:3}
+                        apis: {1:1,2:{},3:{domain:'a'}}
                     },
                     params: [1]
 
@@ -89,6 +89,9 @@ describe('mid/proxy', function() {
             proxy.__get__('procRet')(params,'aaa');
             expect(params.res.proxyData).to.have.property('aaa');
             expect(proxy.__get__('count')).to.be(1);
+            params.req.input.config.data = false;
+            proxy.__get__('procRet')(params,'aaa');
+            expect(params.res.proxyData).to.have.property('aaa');
         });
         it('如果接口数和调用次数相同，期待被next回调', function(done) {
             proxy.__set__('count', 0);
@@ -235,7 +238,8 @@ describe('mid/proxy', function() {
                 domain: 'xxx',
                 api: {
                     url: 'xxx',
-                    method: 'get'
+                    method: 'get',
+                    apiMethod:'get'
                 },
                 params: {},
                 next: function(error) {
@@ -261,13 +265,14 @@ describe('mid/proxy', function() {
                 domain: 'xxx',
                 api: {
                     url: 'xxx',
-                    method: 'get'
+                    method: 'POST',
+                    isJsonRaw:true
                 },
                 params: {},
                 next: function(error) {
                     
                     done();
-                },req:reqMock({input:{config:{data:{}}}})
+                },req:reqMock({_yoheaders:{},input:{config:{data:{}}}})
             };
             callServer(params);
             expect(params.req.input.message).to.eql('error: 500');
@@ -279,9 +284,13 @@ describe('mid/proxy', function() {
                     'statusCode': 200
                 }, {});
             });
+            var i = 0;
             proxy.__set__('procRet', function(params) {
                 expect(params.body).to.eql({});
-                done();
+                i++;
+                if(i===2) {
+                    done();
+                }
             });
 
             var callServer = proxy.__get__('callServer');
@@ -290,7 +299,7 @@ describe('mid/proxy', function() {
                 domain: 'xxx',
                 api: {
                     url: 'xxx',
-                    method: 'get'
+                    method: 'GET'
                 },
                 res: {
                     setCache: function() {
@@ -300,6 +309,19 @@ describe('mid/proxy', function() {
                         return 'key';
                     }
                 },
+                req:reqMock({_yoheaders:{},input:{config:{data:{}}}}),
+                params: {},
+                next: function() {
+
+                }
+            });
+            callServer({
+                domain: 'xxx',
+                api: {
+                    url: 'xxx',
+                    method: 'GET'
+                },
+                res: {},
                 req:reqMock({input:{config:{data:{}}}}),
                 params: {},
                 next: function() {

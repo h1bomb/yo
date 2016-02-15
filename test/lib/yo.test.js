@@ -5,6 +5,7 @@ var express = require('express');
 describe('/lib/yo', function() {
     describe('yo 主文件', function() {
         var yo = rewire("../../lib/yo");
+        yo.__set__('console',{log:function(){},error:function(){}});
         yo.__set__('procOptions', function() {
             return {
                 message:'',
@@ -90,6 +91,7 @@ describe('/lib/yo', function() {
     });
     describe('initApp', function() {
         var yo = rewire("../../lib/yo");
+        yo.__set__('console',{log:function(){},error:function(){}});
         it('当是开发环境，期待加载8个中间件，测试环境，7个', function() {
             var arr = [];
             appMock.use = function(obj) {
@@ -150,6 +152,7 @@ describe('/lib/yo', function() {
     describe('procOptions', function() {
         it('如果appPath是空的，返回 false', function() {
             var yo = rewire("../../lib/yo");
+            yo.__set__('console',{log:function(){},error:function(){}});
             var procOptions = yo.__get__('procOptions');
             expect(procOptions({}).value).to.be(false);
             expect(procOptions().value).to.be(false);

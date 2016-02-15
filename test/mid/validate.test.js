@@ -39,6 +39,15 @@ describe('mid/validate', function() {
             validate(req, {}, function() {});
             expect(req.input.error).to.be(true);
             expect(req.input.message[0]).to.be('no ok!');
+            validate.__set__('validate', function() {
+                return {
+                    ret: 'OK!',
+                    err: false,
+                    msgs: ['ok!']
+                }
+            });
+            validate(req, {}, function() {});
+            expect(req.input.error).to.be(false);
         });
         it('配置了apis,期待一个错误返回', function() {
             var req = reqMock();
@@ -61,6 +70,16 @@ describe('mid/validate', function() {
             validate(req, {}, function() {});
             expect(req.input.error).to.be(true);
             expect(req.input.message[0]).to.be('no ok!');
+            validate.__set__('validate', function() {
+                return {
+                    ret: 'OK!',
+                    err: false,
+                    msgs: ['ok!']
+                }
+            });
+            validate(req, {}, function() {});
+            expect(req.input.error).to.be(false);
+            expect(req.input.message[0]).to.be('ok!');
         });
     });
     describe('validate', function() {
@@ -135,5 +154,18 @@ describe('mid/validate', function() {
             var ret = valFun(config,req);
             expect(ret.ret['a']).to.be(123);
         });
+        it('如果没有设置验证，期待附上默认值，返回为空对象',function(){
+            var ret = valFun({params:null},req);
+            expect(ret.ret).to.eql({});
+        });
+        it('如果类型不是数字，不做类型转化',function(){
+            config.params[0].type = 'String';
+            req.proxyParams.params = {
+                a : 123
+            };
+            var ret = valFun(config,req);
+            expect(ret.ret['a']).to.be('123');
+
+        })
     });
 });

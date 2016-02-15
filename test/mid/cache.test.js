@@ -65,6 +65,8 @@ describe('mid/cache', function() {
         ret.attach('connect', null);
         res.setCache('a', 'a', 600);
         expect(data.a).to.be('a');
+        res.setCache('aa','b');
+        expect(data.aa).to.be('b');
     });
     it('期待失效时间和期待值一致', function() {
         ret.attach('connect', null);

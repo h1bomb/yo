@@ -85,5 +85,18 @@ describe('adapter', function() {
         var next = function() {};
         call(req, res, next);
         expect(res.proxyData).to.be(2);
+        delete req.input.config.adapter;
+        req.route.path = '';
+        res = {
+            proxyData:{val:1}
+        }
+        call(req,res,next);
+        expect(res.proxyData.val).to.be(1);
+        var res = {adaptersStop:true};
+        var nextCalled = false;
+        call(req,res,function(){nextCalled = true});
+        expect(res.proxyData).to.be(undefined);
+        expect(nextCalled).to.be(false);
+
     });
 })

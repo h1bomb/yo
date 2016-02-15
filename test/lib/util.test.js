@@ -3,6 +3,7 @@ var rewire = require("rewire");
 
 describe('/lib/util',function(){
     var util = rewire('../../lib/util');
+    util.__set__('console',{log:function(){}});
     describe('md5的hash值',function(){
         it('md5的hash值,期待一致',function(){
             var hash = util.md5('123456');

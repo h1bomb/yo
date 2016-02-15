@@ -4,6 +4,12 @@ var _ = require('lodash');
 
 describe('/lib/loggers',function(){
     var loggers = rewire('../../lib/loggers');
+    loggers.__set__('console',{
+        log:function(){},
+        error:function(){},
+        info:function(){},
+        warn:function(){}
+    });
     loggers.__set__('winston',{
         transports : {
             Console : function(opts) {return opts;},

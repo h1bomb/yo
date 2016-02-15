@@ -71,7 +71,7 @@ describe('mid/pjax', function() {
         it('当正确的返回，期待返回html', function() {
             var req = reqMock({
                 headers: {
-                    accept: 'html',
+                    accept: '',
                     'x-pjax': true
                 },
                 input: {
@@ -85,7 +85,10 @@ describe('mid/pjax', function() {
                     res.view = view;
                 },
                 proxyData: {
-                    a: 1
+                    a : 1
+                },
+                appendData: {
+                    b : 2
                 }
             };
 
@@ -93,6 +96,7 @@ describe('mid/pjax', function() {
             pjax({})(req, res, next);
             expect(res.locals).to.eql({
                 a: 1,
+                b: 2,
                 layout: false
             });
             expect(res.view).to.be('a');
@@ -122,6 +126,9 @@ describe('mid/pjax', function() {
             jsonRet(req,res);
             expect(ret.code).to.be(500);
             expect(ret.message).to.be('error');
+            req.input.message = null;
+            jsonRet(req,res);
+            expect(ret.message).to.be('');
         });
 
         it('正常返回的情况',function(){
@@ -150,14 +157,19 @@ describe('mid/pjax', function() {
         it('返回错误页面的HTML',function(){
             renderView(reqMock({headers:{},input:false}),res);
             expect(ret.view).to.be('error/error');
+            renderView(reqMock({headers:{},input:{error:true,message:'err'}}),res);
             expect(ret.html).to.be('');
+            expect(res.proxyData.message).to.be('err');
         });
         it('获取正常视图',function(){
             str = 'test';
             var req = reqMock({headers:{},input:{config:{view:'test'}}});
+            var req2 = reqMock({headers:{},input:{config:{route:'/a/b'}}});
             renderView(req,res);
             expect(ret.view).to.be('test');
             expect(ret.html).to.be('test');
+            renderView(req2,res);
+            expect(ret.view).to.be('a/b');
         });
         it('是pjax，期待layout不加载',function(){
             var req = reqMock({headers:{'x-pjax':true},input:{config:{view:'test'}}});
@@ -184,6 +196,7 @@ describe('mid/pjax', function() {
     describe('getView', function() {
         it('测试获取默认视图', function() {
             expect(pjax.__get__('getView')('/a/b')).to.be('a/b');
+            expect(pjax.__get__('getView')('/a')).to.be('a/default');
             expect(pjax.__get__('getView')('/a/:zd/b:userid')).to.be('a/b');
         });
     });
