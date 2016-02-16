@@ -6,6 +6,19 @@ describe('/lib/yo', function() {
     describe('yo 主文件', function() {
         var yo = rewire("../../lib/yo");
         yo.__set__('console',{log:function(){},error:function(){}});
+        yo.__set__('loggers',{
+            init:function(app,path){
+                app.logger = {
+                    log : function() {}
+                };
+                app.yolog = {
+                    log :function() {},
+                    profile:function(){},
+                    api:{ log:function(){}}
+                }
+            },
+            config:{}
+        });
         yo.__set__('procOptions', function() {
             return {
                 message:'',
