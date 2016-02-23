@@ -83,18 +83,17 @@ describe('mid/proxy', function() {
                 domain: 'xxx',
                 body: '{}',
                 res: {},
-                req:reqMock({input:{config:{data:{}}}}),
+                req:reqMock({apiCount:0,apiRet:{},input:{config:{data:{}}}}),
                 next: function() {}
             }
             proxy.__get__('procRet')(params,'aaa');
             expect(params.res.proxyData).to.have.property('aaa');
-            expect(proxy.__get__('count')).to.be(1);
+            expect(params.req.apiCount).to.be(1);
             params.req.input.config.data = false;
             proxy.__get__('procRet')(params,'aaa');
             expect(params.res.proxyData).to.have.property('aaa');
         });
         it('如果接口数和调用次数相同，期待被next回调', function(done) {
-            proxy.__set__('count', 0);
             var params = {
                 apiNum: 1,
                 api: {
@@ -104,7 +103,7 @@ describe('mid/proxy', function() {
                 domain: 'xxx',
                 body: '{}',
                 res: {},
-                req:reqMock({input:{config:{data:{}}}}),
+                req:reqMock({apiCount:0,apiRet:{},input:{config:{data:{}}}}),
                 next: function() {
                     done();
                 }
@@ -119,7 +118,7 @@ describe('mid/proxy', function() {
                 domain: 'xxx',
                 body: 'xxx',
                 res: {},
-                req:reqMock({input:{config:{data:{}}}}),
+                req:reqMock({apiCount:0,apiRet:{},input:{config:{data:{}}}}),
                 next: function() {
                     expect(params.res.proxyData).to.eql({});
                     done();
@@ -134,7 +133,7 @@ describe('mid/proxy', function() {
                 apiNum: 1,
                 domain: 'xxx',
                 res: {},
-                req:reqMock({input:{config:{data:{"a":1}}}}),
+                req:reqMock({apiCount:0,apiRet:{},input:{config:{data:{"a":1}}}}),
                 next: function() {
                     expect(params.res.proxyData).to.eql({"a":1});
                     done();
@@ -183,7 +182,8 @@ describe('mid/proxy', function() {
                 },
                 domain: 'xxx',
                 api: {
-                    url: 'xxx'
+                    url: 'xxx',
+                    cache:100
                 },
                 req:reqMock({input:{config:{data:{}}}}),
                 params: {
@@ -211,7 +211,8 @@ describe('mid/proxy', function() {
                 req:reqMock({input:{config:{data:{}}}}),
                 domain: 'xxx',
                 api: {
-                    url: 'xxx'
+                    url: 'xxx',
+                    cache:100
                 },
                 params: {
 
