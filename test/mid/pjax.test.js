@@ -41,6 +41,32 @@ describe('mid/pjax', function() {
 
         });
 
+        it('当是普通返回或者json的加isAppendData，有附加返回值，则返回结果含有该附加返回值',function(){
+            var req = reqMock({headers: {accept: 'html'},url:'a',input:{config:{view:'aa'}}});
+            var res = {
+                render: function(view) {
+                    res.view = view;
+                },
+                appendData:{a:123},
+                proxyData: {},
+                status:function(){ return {
+                    json:function(){}
+                }}
+            };
+            var next = function(){};
+
+            pjax({})(req,res,next);
+
+            expect(res.locals.a).to.be(123);
+
+            req.headers.accept = 'json';
+            req.input.config.isAppendData = true;
+
+            pjax({})(req,res,next);
+            expect(res.locals.a).to.be(123);
+
+        });
+
         it('当正确的返回，期待返回json', function() {
             var req = reqMock({
                 headers: {

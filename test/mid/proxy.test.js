@@ -300,7 +300,8 @@ describe('mid/proxy', function() {
                 domain: 'xxx',
                 api: {
                     url: 'xxx',
-                    method: 'GET'
+                    method: 'GET',
+                    cache:100
                 },
                 res: {
                     setCache: function() {
