@@ -4,6 +4,7 @@ var appMock = require('../mock/app');
 var express = require('express');
 describe('/lib/yo', function() {
     describe('yo 主文件', function() {
+        delete process.env.NODE_ENV;
         var yo = rewire("../../lib/yo");
         yo.__set__('console',{log:function(){},error:function(){}});
         yo.__set__('loggers',{

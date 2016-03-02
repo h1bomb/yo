@@ -65,6 +65,11 @@ describe('mid/pjax', function() {
             pjax({})(req,res,next);
             expect(res.locals.a).to.be(123);
 
+            req.input.config = false;
+            res.locals = {};
+            pjax({})(req,res,next);
+            expect(res.locals.a).to.be(undefined);
+
         });
 
         it('当正确的返回，期待返回json', function() {
