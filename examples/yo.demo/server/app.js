@@ -9,7 +9,8 @@ var app = yo({
     },
     interfaceDefConfig:{
         test:true
-    }
+    },
+    bodyLimit:'5000kb'
 });
 
 app.get('/', function(req, res) {

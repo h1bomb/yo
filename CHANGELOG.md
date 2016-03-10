@@ -113,3 +113,6 @@ v1.1.4
 
 v1.1.5
 * 修复如果request下没有config，抛出异常的问题
+
+v1.1.6
+* 把body-parser的limit配置提到yo的配置里面
