@@ -10,6 +10,9 @@ var app = yo({
     interfaceDefConfig:{
         test:true
     },
+    limitReq:{
+        timeout:5000
+    },
     bodyLimit:'5000kb'
 });
 

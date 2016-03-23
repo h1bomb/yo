@@ -8,7 +8,8 @@ module.exports = function (options) {
         route: {
             path:'xxx'
         },
-        input: {}
+        input: {},
+        session:{}
     };
     var ret = _.merge(defaultValue,options);
     return ret;
