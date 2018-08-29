@@ -1,4 +1,4 @@
-# yoweb [![spm version](http://spm.yoho.cn/badge/yoweb)](http://spm.yoho.cn/package/yoweb)
+# yoweb 
 
 ---
 
